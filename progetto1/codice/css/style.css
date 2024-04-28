@@ -1,0 +1,147 @@
+:root {
+    --main-colour: #8A786F; 
+
+    /* Sfumatura più chiara */
+    --t-1: #E8DFDA;
+    --t-2: #D0C5BE;
+    --t-3: #B8A9A1;
+    --t-4: #A09189;
+    --t-5: #8A786F;
+    --t-6: #725E55;
+    --t-7: #5A443C;
+    /* Sfumatura più scura */
+
+    /* Sfumature più chiare */
+    --ct-1: #bfb4a7;
+    --ct-2: #b2a495;
+    --ct-3: #a59583;
+    --ct-4: #998671;
+    --ct-5: #8c7760;
+
+}
+
+
+/* impostazioni generali */
+body {
+    background-color: var(--t-2);
+    display: flex;
+    flex-direction: column;
+    font-family: "Roboto Mono", monospace;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+
+/* Header */
+.header {
+    background-color: var(--main-colour);
+    display: flex;
+    color: var(--t-3);
+}
+
+/* Logo Header */
+.logoApp {
+    margin: 10px 20px 10px 20px;
+    max-height: 80px;
+}
+
+/* Lista header */
+
+#listaHeader {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+#listaHeader li {
+    display: flex;
+    flex-direction: column;
+    padding: 0px;
+    text-align: center;
+}
+
+#listaHeader li a {
+    padding: 20px 40px 20px 40px;
+    color: var(--t-1);
+}
+
+#listaHeader li a:hover {
+    background-color: var(--t-6);
+}
+
+#listaHeader li .cliccato,
+#listaHeader li .cliccato:hover {
+    background-color: var(--t-7);
+}
+
+/* Contenuto */
+
+.contenuto {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: 100%;
+}
+
+.filtroRicerca,
+.risultati,
+nav {
+    border: solid red 1px;
+    height: 100%;
+}
+
+.filtroRicerca {
+    text-align: center;
+    width: 15%;
+}
+
+.risultati {
+    text-align: center;
+    width: 70%;
+}
+
+nav {
+    text-align: center;
+    width: 15%;
+}
+
+/* Footer */
+
+.footer {
+    background-color: var(--main-colour);
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabellaAutori{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    max-height: 100px;
+}
+
+.tabellaAutori th{
+    font-weight: bold;
+}
+
+.tabellaAutori th , .tabellaAutori td{
+    padding: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+}
+
+.logoUniBg{
+    margin: 5px 10px 5px 10px;
+    max-height: 80px;
+}
