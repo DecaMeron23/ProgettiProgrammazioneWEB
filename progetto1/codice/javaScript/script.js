@@ -1,7 +1,7 @@
 var setHeaderSelected = function () {
     // settiamo le diverse directori
     mieDirectory = {
-        home: "/progetto1", //#sistemare: al momento è progetto 1 poi quando caricherò sul sito sarà ""
+        home: "/",
         utente: "/utente",
         quiz: "/quiz",
         partecipazione: "/partecipazione",
@@ -26,4 +26,13 @@ var setHeaderSelected = function () {
     }
 }
 
+var toggleMenu = function(){
+    $(".navbar").click(function(){
+        $(".nav").toggleClass("wide");
+    })
+};
+
+
 $(setHeaderSelected)
+
+$(toggleMenu)
