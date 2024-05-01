@@ -25,17 +25,30 @@ var setHeaderSelected = function () {
         i++;
     }
 }
+
+function attivaMaschera(){
+    $(".maschera").toggleClass("maschera_on");
+    $("body").toggleClass("menuOpen");
+}
+
 // Funzione viene eseguita quando si apre il menu
 var toggleMenu = function () {
     $(".navbar").click(function () {
         $(".nav").toggleClass("wide");
         $(".navbar").toggleClass("navbar_rotate");
-        $("body").toggleClass("menuOpen");
-        $(".maschera").toggleClass("maschera_on");
-    })
+        attivaMaschera();
+    });
 };
+
+var toggleFilter = function () {
+    $(".iconaRicerca").click(function () {
+        $(".filtroRicerca").toggleClass("ricercaShow");
+        $(".iconaRicerca").toggleClass("iconaRicercaShow");
+        attivaMaschera();
+    });
+}
 
 
 $(setHeaderSelected)
-
+$(toggleFilter)
 $(toggleMenu)

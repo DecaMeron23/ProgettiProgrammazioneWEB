@@ -29,6 +29,9 @@
                 <input type="submit" value="Cerca">
             </form>
         </div>
+        <img class="iconaRicerca" width="50" height="50" src="https://img.icons8.com/ios/50/search--v5.png" />
+
+
         <div class="risultati">
             <?php
             include_once '../php/connessioneDB.php';
@@ -51,7 +54,7 @@
             } else {
 
                 $n_righe = $risultato->rowCount();
-                echo("<h1>Sono state trovate $n_righe</h1>");
+                echo ("<h1>Sono state trovate $n_righe</h1>");
             ?>
                 <table class="tabellaRisultati">
                     <tr>
