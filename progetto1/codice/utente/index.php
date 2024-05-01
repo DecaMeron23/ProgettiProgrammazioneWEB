@@ -12,20 +12,18 @@
 </head>
 
 <body>
-
     <?php include '../elementiPrincipali/header.html' ?>
-
+    <div class="maschera"></div>
+    
     <div class="contenuto">
         <div class="filtroRicerca">
             filtro ricerca
         </div>
         <div class="risultati">
-            risultati
         </div>
-        <nav>
-            navigazione
-        </nav>
     </div>
+    
+    <?php include '../elementiPrincipali/navigazione.html' ?>
 
     <?php include '../elementiPrincipali/footer.html' ?>
 

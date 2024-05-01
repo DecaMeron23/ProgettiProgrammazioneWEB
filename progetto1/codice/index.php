@@ -12,97 +12,19 @@
 </head>
 
 <body>
-
     <?php include 'elementiPrincipali/header.html' ?>
+
+    <div class="maschera"></div>
+
     <div class="contenuto">
         <div class="filtroRicerca">
-            filtro ricerca
+            Filtro Ricerca
         </div>
         <div class="risultati">
-            lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);
-            lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);
-            (date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad, object);lisdasdasdsadasdasascas
-            console.assert(date_subdsad
+            Progetto di Programmazione WEB 2023-2024
         </div>
     </div>
-    
+
     <?php include 'elementiPrincipali/navigazione.html' ?>
 
     <?php include 'elementiPrincipali/footer.html' ?>

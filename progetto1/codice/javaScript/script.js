@@ -15,8 +15,8 @@ var setHeaderSelected = function () {
     // prendiamo la directory
     var loc = window.location.pathname;
     var dir = loc.split('/');
-    dir = "/"+ dir[dir.length-2] ;
-    
+    dir = "/" + dir[dir.length - 2];
+
     var i = 0;
     for (var chiave in mieDirectory) {
         if (mieDirectory[chiave] == dir) {
@@ -25,10 +25,13 @@ var setHeaderSelected = function () {
         i++;
     }
 }
-
-var toggleMenu = function(){
-    $(".navbar").click(function(){
+// Funzione viene eseguita quando si apre il menu
+var toggleMenu = function () {
+    $(".navbar").click(function () {
         $(".nav").toggleClass("wide");
+        $(".navbar").toggleClass("navbar_rotate");
+        $("body").toggleClass("menuOpen");
+        $(".maschera").toggleClass("maschera_on");
     })
 };
 
