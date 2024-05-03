@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * 
  * @param string $codice
@@ -32,10 +33,107 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     if ($data_fine != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.DATA_FINE " . query_data($quale_data_fine, $data_fine);
     }
-    return $query . $lista . " GROUP BY QUIZ.CODICE";
+    $query .=  $lista . " GROUP BY QUIZ.CODICE";
 
-
+    return eseguiQuery($query);
 }
+
+
+
+/**
+ * Funzione che crea la query per le ricerce sugli utenti
+ * 
+ * @param bool $like
+ * @param string $nomeUtente
+ * @param string $nome
+ * @param string $cognome
+ * @param string $email
+ */
+function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
+{
+    $query = "SELECT UTENTE.NOME_UTENTE AS nome_utente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email , COUNT(DISTINCT QUIZ.CODICE) as numero_quiz , COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as numero_partecipazioni 
+    FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE , PARTECIPAZIONE
+    WHERE UTENTE.NOME_UTENTE = PARTECIPAZIONE.UTENTE";
+
+
+    $query .= ($nomeUtente == "") ? "" : ($like ? " AND UTENTE.NOME_UTENTE LIKE '%$nomeUtente%'" : " AND UTENTE.NOME_UTENTE = '$nomeUtente'");
+
+    $query .= ($nome == "") ? "" : ($like ? " AND UTENTE.NOME LIKE '%$nome%'" : "AND UTENTE.NOME = '$nome'");
+
+    $query .= ($cognome == "") ? "" : ($like ? " AND UTENTE.TITOLO LIKE '%$cognome%'" : " AND UTENTE.TITOLO = '$cognome'");
+
+    $query .= ($email == "") ? "" : ($like ? " AND UTENTE.EMAIL LIKE '%$email%'" : " AND UTENTE.EMAIL = '$email'");
+
+    $query .= " GROUP BY UTENTE.NOME_UTENTE;";
+
+    return eseguiQuery($query);
+}
+
+/**
+ * Funzione che crea la query per le ricerce sugli utenti
+ *  
+ * @param bool $like
+ * @param string $codice
+ * @param string $utente
+ * @param string $titolo_quiz
+ * @param string $data
+ * @param int $quale_data solo tra 0 e 4 compresi (0 prima, 1 prima e uguale, 2 uguale, 3 dopo e uguale, 4 dopo)
+ */
+function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $quale_data, $codice_quiz = "" /* inserire altre impostazioni, come bohhh */): string
+{
+    $query = "SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nome_utente , QUIZ.TITOLO AS titolo_quiz, QUIZ.CODICE AS codice_quiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS risposte_utente
+    FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE
+    WHERE 1 = 1 ";
+
+    $query .= ($codice == "") ? "" : ("AND PARTECIPAZIONE.CODICE = '$codice'");
+
+    $query .= ($utente == "") ? "" : ("AND PARTECIPAZIONE.UTENTE " . ($like ? " LIKE '%$utente%'" : "= '$utente'"));
+
+    $query .= ($titolo_quiz == "") ? "" : ("AND QUIZ.TITOLO LIKE '%$titolo_quiz%'");
+
+    $query .= ($codice_quiz == "") ? "" : ("AND QUIZ.CODICE = '$codice_quiz'");
+
+    $query .= ($data == "") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
+
+    $query .= " GROUP BY PARTECIPAZIONE.CODICE"
+        . " ORDER BY PARTECIPAZIONE.UTENTE";
+
+    return eseguiQuery($query);
+}
+
+/**
+ * Funzione che crea la query per le ricerce sulle domande
+ * 
+ * @param string $codice
+ */
+function query_domande_quiz($codice): string
+{
+    $query =
+        "SELECT NUMERO as numero ,  TESTO as testo
+        FROM DOMANDA
+        WHERE QUIZ = $codice
+        ORDER BY NUMERO ASC";
+
+    return eseguiQuery($query);
+}
+/**
+ * Funzione che crea la query per le ricerce sulle domande
+ * 
+ * @param string $id_quiz il codice del quiz
+ * @param string $n_domanda il numero di domanda
+ */
+function query_risposte_quiz($id_quiz , $n_domanda): string
+{
+    $query =
+        "SELECT NUMERO AS numero ,TESTO AS testo, TIPO AS tipo , PUNTEGGIO AS punteggio
+        FROM RISPOSTA
+        WHERE QUIZ = $id_quiz AND DOMANDA = $n_domanda
+        ORDER BY NUMERO ASC";
+
+    return eseguiQuery($query);
+}
+
+
 /**
  * 
  * @param int $indice valore compreso tra 0 e 4
@@ -61,106 +159,48 @@ function query_data($indice, $data): string
             $sql .= ">";
             break;
     }
-    return $sql . $data;
+    return $sql . "'" . $data . "'";
+}
+
+//connessione DB
+
+function connessioneDB()
+{
+    $nomeServer = "localhost";
+    $username = "quizmakeandplay";
+    $dbname = "my_quizmakeandplay";
+    $password = null;
+    $error = false;
+
+    try {
+        $connessione = new PDO(
+            "mysql:host=" . $nomeServer . ";" . "dbname=" . $dbname,
+            $username,
+            $password
+        );
+
+        $connessione->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        echo "<p>DB Error: " . $e->getMessage() . "</p>";
+        $error = true;
+    }
+
+    return $connessione;
+}
+
+// Funzione che prende il singolo QUIZ e lo restituisce in formato json
+function getQUIZ($codie_QUIZ)
+{
+    $query = query_quiz($codie_QUIZ, "", "", "", "", FALSE, "", "");
+    return eseguiQuery($query);
 }
 
 
-/**
- * Funzione che crea la query per le ricerce sugli utenti
- * 
- * @param bool $like
- * @param string $nomeUtente
- * @param string $nome
- * @param string $cognome
- * @param string $email
- */
-function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
+function eseguiQuery($query)
 {
-    $query = "SELECT 	UTENTE.NOME_UTENTE AS nome_utente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email  ,      COUNT(DISTINCT QUIZ.CODICE) as numero_quiz , 	COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as numero_partecipazioni 
-    FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE , PARTECIPAZIONE
-    WHERE UTENTE.NOME_UTENTE = PARTECIPAZIONE.UTENTE";
-
-
-    if ($nomeUtente != "") {
-        if ($like) {
-            $query = $query . " AND QUIZ.NOME_UTENTE LIKE '%$nomeUtente%'";
-        } else {
-            $query = $query . " AND QUIZ.NOME_UTENTE = '$nomeUtente'";
-        }
-    }
-    if ($nome != "") {
-        if ($like) {
-            $query = $query . " AND QUIZ.NOME LIKE '%$nome%'";
-        } else {
-            $query = $query . " AND QUIZ.NOME = '$nome'";
-        }
-    }
-    if ($cognome != "") {
-        if ($like) {
-            $query = $query . " AND QUIZ.TITOLO LIKE '%$cognome%'";
-        } else {
-            $query = $query . " AND QUIZ.TITOLO = '$cognome'";
-        }
-    }
-    if ($email != "") {
-        if ($like) {
-            $query = $query . " AND QUIZ.EMAIL LIKE '%$email%'";
-        } else {
-            $query = $query . " AND QUIZ.EMAIL = '$email'";
-        }
-    }
-
-    $query = $query . "GROUP BY(nome_utente);";
-
-    return $query;
-}
-
-/**
- * Funzione che crea la query per le ricerce sugli utenti
- * 
- * @param bool $like
- * @param string $codice
- * @param string $utente
- * @param string $quiz
- * @param string $data
- * @param int $quale_data solo tra 0 e 4 compresi (0 prima, 1 prima e uguale, 2 uguale, 3 dopo e uguale, 4 dopo)
- */
-function query_partecipazione($codice, $utente, $quiz, $data, $like, $quale_data  /* inserire altre impostazioni, come bohhh */)
-{
-    $query = "SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS utente , PARTECIPAZIONE.QUIZ AS quiz, PARTECIPAZIONE.DATA AS data, COUNT(DISTINCT *)  
-    FROM PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON quiz = RISPOSTA_UTENTE_QUIZ.QUIZ ";
-
-    $lista = "";
-    if ($codice != "") {
-        $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "PARTECIPAZIONE.CODICE = '$codice'";
-    }
-    if ($utente != "") {
-        $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "PARTECIPAZIONE.UTENTE" . ($like ? " LIKE '%$utente%'" : "= '$utente'");
-    }
-    if ($quiz != "") {
-        $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "PARTECIPAZIONE.QUIZ" . ($like ? " LIKE '%$quiz%'" : "= '$quiz'");
-    }
-    if ($data != "") {
-        $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "PARTECIPAZIONE.DATA ";
-        switch ($quale_data) {
-            case 0:
-                $lista .= "<";
-                break;
-            case 1:
-                $lista .= "<=";
-                break;
-            case 2:
-                $lista .= "=";
-                break;
-            case 3:
-                $lista .= ">=";
-                break;
-            case 4:
-                $lista .= ">";
-                break;
-        }
-        $lista .= " '$data'";
-    }
-
-    $query .= $lista . " GROUP BY(codice)";
+    $connessione = connessioneDB();
+    $risultati = $connessione->query($query);
+    $valori = $risultati->fetchAll(PDO::FETCH_ASSOC);
+    $json = json_encode($valori, JSON_PRETTY_PRINT);
+    return $json;
 }

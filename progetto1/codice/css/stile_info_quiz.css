@@ -1,0 +1,120 @@
+:root {
+    --main-colour: #8A786F;
+    --base: #D0C5BE;
+
+    /* Sfumatura più chiara */
+    --t-1: #E8DFDA;
+    --t-2: #D0C5BE;
+    --t-3: #B8A9A1;
+    --t-4: #A09189;
+    --t-5: #8A786F;
+    --t-6: #725E55;
+    --t-7: #5A443C;
+    /* Sfumatura più scura */
+
+    /* Sfumature più chiare */
+    --ct-1: #bfb4a7;
+    --ct-2: #b2a495;
+    --ct-3: #a59583;
+    --ct-4: #998671;
+    --ct-5: #8c7760;
+
+    --menu: #BEBEBE;
+
+
+    --colore-selezione: #B8A9A1;
+
+    /*contrasti */
+    --contrasti-base: #C5D0CF;
+    --contrasti-1: #3E4754;
+
+    --transizione: .3s;
+}
+
+
+.info_QUIZ {
+    min-height: 80%;
+}
+
+.testata_info_QUIZ {
+    display: flex;
+    margin: 50px;
+    margin-top: 42px;
+    margin-left: 50px;
+    padding-right: 74px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.testata_info_QUIZ #info_quiz_nome_utente {
+    margin-left: 20px;
+}
+
+.descrizione_quiz {
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.descrizione_quiz i {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.descrizione_quiz_data {
+    font-weight: 325;
+}
+
+.autore_date {
+    width: 135px;
+}
+
+#bottone_modifica_quiz {
+    width: 135px;
+    transition: 0.2s;
+    font-size: 50px;
+}
+
+#bottone_modifica_quiz:hover {
+    cursor: pointer;
+    transform: scale(105%);
+}
+
+.testata_info_QUIZ #info_quiz_titolo_quiz {
+    font-size: 25px;
+    color: #3E4754;
+    font-weight: 600;
+}
+
+.tutte_domande {
+    background-color: #cdbeb5;
+    /* border: 1px red solid; */
+    margin: 50px 100px 70px 100px;
+    padding: 20px;
+    /* border: 1px solid #ccc; Bordo normale */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    /* Ombra interna */
+}
+
+.domanda_risposte {
+    /* border: red 1px solid; */
+    margin: 20px 50px 30px 50px;
+    padding-top: 20px;
+}
+
+.risposta_quiz {
+    margin: 20px 0px 0px 40px;
+}
+
+.domanda_punteggio {
+    display: flex;
+    justify-content: space-between;
+}
+
+.domanda {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
+
+.punteggio {
+    font-weight: 200;
+}
