@@ -13,8 +13,12 @@
  */
 function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine): string
 {
-    $query = "SELECT 	QUIZ.CODICE AS codice , QUIZ.CREATORE AS creatore , QUIZ.TITOLO AS titolo , QUIZ.DATA_INIZIO AS data_inizio,  QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande  , COUNT(DISTINCT PARTECIPAZIONE.CODICE) as partecipazioni 
-        FROM QUIZ JOIN DOMANDA JOIN PARTECIPAZIONE ON QUIZ.CODICE = DOMANDA.QUIZ AND QUIZ.CODICE = PARTECIPAZIONE.QUIZ";
+    $query = "SELECT QUIZ.CODICE AS codice , QUIZ.CREATORE AS creatore , QUIZ.TITOLO AS titolo , QUIZ.DATA_INIZIO AS data_inizio,  QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande  , COUNT(DISTINCT PARTECIPAZIONE.CODICE) as partecipazioni 
+        FROM QUIZ LEFT JOIN DOMANDA LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = DOMANDA.QUIZ AND QUIZ.CODICE = PARTECIPAZIONE.QUIZ";
+
+    $query = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS data_inizio, QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS partecipazioni
+    FROM  QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ ";
+
 
     // $ordine = ""; da fare
     $lista = "";
@@ -33,9 +37,9 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     if ($data_fine != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.DATA_FINE " . query_data($quale_data_fine, $data_fine);
     }
-    $query .=  $lista . " GROUP BY QUIZ.CODICE";
+    $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE";
 
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 
 
@@ -66,7 +70,7 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
 
     $query .= " GROUP BY UTENTE.NOME_UTENTE;";
 
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 
 /**
@@ -98,7 +102,7 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
     $query .= " GROUP BY PARTECIPAZIONE.CODICE"
         . " ORDER BY PARTECIPAZIONE.UTENTE";
 
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 
 /**
@@ -114,7 +118,7 @@ function query_domande_quiz($codice): string
         WHERE QUIZ = $codice
         ORDER BY NUMERO ASC";
 
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 /**
  * Funzione che crea la query per le ricerce sulle domande
@@ -122,7 +126,7 @@ function query_domande_quiz($codice): string
  * @param string $id_quiz il codice del quiz
  * @param string $n_domanda il numero di domanda
  */
-function query_risposte_quiz($id_quiz , $n_domanda): string
+function query_risposte_quiz($id_quiz, $n_domanda): string
 {
     $query =
         "SELECT NUMERO AS numero ,TESTO AS testo, TIPO AS tipo , PUNTEGGIO AS punteggio
@@ -130,7 +134,7 @@ function query_risposte_quiz($id_quiz , $n_domanda): string
         WHERE QUIZ = $id_quiz AND DOMANDA = $n_domanda
         ORDER BY NUMERO ASC";
 
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 
 
@@ -160,6 +164,40 @@ function query_data($indice, $data): string
             break;
     }
     return $sql . "'" . $data . "'";
+}
+
+
+// Aggiunta QUIZ
+
+/**
+ *  Questa funzione prevede l'aggiunta di un quiz 
+ * 
+ * @param string $autore
+ * @param string $titolo
+ * @param string $data_inizio
+ * @param string $data_fine
+ */
+function aggiungi_quiz($autore, $titolo, $data_inizio, $data_fine)
+{
+    $query = "INSERT INTO QUIZ(CREATORE, TITOLO, DATA_INIZIO, DATA_FINE) VALUES ('$autore','$titolo','$data_inizio','$data_fine')";
+
+    try {
+        eseguiQuery($query, false);
+    } catch (\Throwable $th) {
+        return $th->getMessage();
+    }
+    return "ok";
+}
+
+function elimina_quiz($id_quiz)
+{
+    $query = "DELETE FROM QUIZ WHERE QUIZ.CODICE = $id_quiz";
+    try {
+        eseguiQuery($query, false);
+    } catch (\Throwable $th) {
+        return $th->getMessage();
+    }
+    return "ok";
 }
 
 //connessione DB
@@ -192,15 +230,22 @@ function connessioneDB()
 function getQUIZ($codie_QUIZ)
 {
     $query = query_quiz($codie_QUIZ, "", "", "", "", FALSE, "", "");
-    return eseguiQuery($query);
+    return eseguiQuery($query, true);
 }
 
-
-function eseguiQuery($query)
+/**
+ * 
+ * @param string $query la query da eseguire
+ * @param bool $isSelect se la query è un SELECT
+ */
+function eseguiQuery($query, $isSelect)
 {
     $connessione = connessioneDB();
     $risultati = $connessione->query($query);
-    $valori = $risultati->fetchAll(PDO::FETCH_ASSOC);
-    $json = json_encode($valori, JSON_PRETTY_PRINT);
+    $json = "";
+    if ($isSelect) {
+        $valori = $risultati->fetchAll(PDO::FETCH_ASSOC);
+        $json = json_encode($valori, JSON_PRETTY_PRINT);
+    }
     return $json;
 }

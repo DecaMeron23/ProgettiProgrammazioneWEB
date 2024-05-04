@@ -41,10 +41,10 @@
                 <!-- <div class="descrizione">Titolo:</div> -->
                 <div><? echo ($_POST["titolo"] != "") ? "$_POST[titolo]" : "NO TITOLO" ?></div>
             </div>
-            <div>
-                <div id="bottone_modifica_quiz" onclick="openModificaQUIZ()"><i class="fa-regular fa-pen-to-square"></i>
+            <div id="bottoni_quiz">
+                <div><i class="fa-regular fa-pen-to-square" id="bottone_modifica_quiz" onclick="openModificaQUIZ()"></i>
                 </div>
-                <div id="bottone_elimina_quiz"><i class="fa-regular fa-trash-can"></i></div>
+                <div><i class="fa-regular fa-trash-can" id="bottone_elimina_quiz" onclick="openEliminaQUIZ()"></i></div>
             </div>
         </div>
         <div class="contenuto_info_QUIZ">
@@ -54,7 +54,8 @@
             $domande_quiz = (array)(json_decode($domande_quiz_string));
             $n_righe = count($domande_quiz);
             if ($n_righe == 0) {
-                echo "Nessuna domanda per questo quiz";
+                echo "<div class = 'tutte_domande'>";
+                echo "<div class='domanda_risposte'><div class='domanda_punteggio'><div class='domanda'>Questo quiz attualmente non ha nessuna domanda</div>";
             } else {
                 echo "<div class = 'tutte_domande'>";
                 $risposta_corretta = '<i class="fa-solid fa-circle-check"></i>';
@@ -91,7 +92,7 @@
         </div>
     </div>
 
-    <div class="popup_quiz">
+    <div class="popup_quiz popup_modifica_quiz" id="popup_modifica_quiz">
         <form action="#" method="post">
             <!-- TITOLO -->
             <div class="form-row">
@@ -127,11 +128,28 @@
             <div class="form-row submit-btn">
                 <div class="input-data">
                     <div class="inner"></div>
-                    <input type="button" value="Cancella" onclick="openModificaQUIZ()">
+                    <input type="button" value="Annulla" onclick="openModificaQUIZ()">
                 </div>
                 <div class="input-data">
                     <div class="inner"></div>
                     <input type="submit" value="Salva">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="popup_quiz" id="popup_elimina_quiz">
+        <p class=popup_titolo>Sicuro di Eliminare il QUIZ</p>
+        <p><?echo $_POST["titolo"]?></p>
+        <form action="#"  codice=<? echo $_POST["codice"] ?> id="form_elimina_quiz">
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="button" value="Annulla" onclick="openEliminaQUIZ()">
+                </div>
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="button" value="Elimina" onclick="eliminaQuiz()">
                 </div>
             </div>
         </form>

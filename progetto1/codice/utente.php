@@ -24,7 +24,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" value="<? echo $_POST['nome_utente']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome Utente</label>
                     </div>
@@ -32,7 +32,7 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome" name="mome" placeholder=" " spellcheck="false"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome" name="mome" placeholder=" " spellcheck="false" value="<? echo $_POST['nome']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome</label>
                     </div>
@@ -40,7 +40,7 @@
                 <!-- DATA INIZIO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="cognome" name="cognome" placeholder=" " spellcheck="false"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="cognome" name="cognome" placeholder=" " spellcheck="false" value="<? echo $_POST['cognome']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Cognome</label>
                     </div>
@@ -48,7 +48,7 @@
                 <!-- DATA FINE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="email" name="email" placeholder=" " spellcheck="false"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="email" name="email" placeholder=" " spellcheck="false" value="<? echo $_POST['email']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Email</label>
                     </div>
@@ -68,7 +68,7 @@
             </form>
         </div>
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div>
-
+        <div class= "dove_siamo">Utente</div>
         <div class="risultati">
             <?php
             $codice = "";
@@ -124,7 +124,7 @@
         </div>
     </div>
 
-    <div class="popup_quiz">
+    <div class="popup_quiz" id="popup_cancella_quiz">
         <form action="#" method="post" onsubmit="aggiungiQUIZ(event)">
             <!-- TITOLO -->
             <div class="form-row">
@@ -147,20 +147,20 @@
                 <div class="input-data">
                     <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" required><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
-                    <label for="">Data partecipazione</label>
+                    <label for="">Data Inizio</label>
                 </div>
             </div>
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="data_fine" name="data_fine" placeholder=" " spellcheck="false" required><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
-                    <label for="">Data partecipazione</label>
+                    <label for="">Data Fine</label>
                 </div>
             </div>
             <div class="form-row submit-btn">
                 <div class="input-data">
                     <div class="inner"></div>
-                    <input type="button" value="Cancella" onclick="openModificaQUIZ()">
+                    <input type="button" value="Cancella" onclick="openCancellaQUIZ()">
                 </div>
                 <div class="input-data">
                     <div class="inner"></div>

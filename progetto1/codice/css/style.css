@@ -41,7 +41,7 @@ html {
 body {
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
-    overflow-x: hidden;
+    overflow-x: auto;
     scrollbar-width: thin;
 }
 
@@ -79,12 +79,31 @@ a {
 
 
 /* Header */
-.header {
-    background-color: var(--main-colour);
-    display: flex;
-    color: var(--t-3);
+
+.titolo_header {
+    position: relative;
+    /* transform:translateX(-50%); */
+    align-items:center;
+    
 }
 
+.titolo_header p{
+    font-size:45px;
+    text-align:center;
+}
+.titolo_header p:not(.titolo_header p:first-child){
+    font-size:30px;
+}
+
+
+.header {
+    width: 100%;
+    background-color: var(--main-colour);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--t-3);
+}
 /* Logo Header */
 .logoApp {
     margin: 10px 20px 10px 20px;
@@ -339,9 +358,7 @@ form .form-row .textarea {
 
 .navbar {
     padding: 5px;
-    position: absolute;
-    top: 30px;
-    right: 30px;
+    margin-right: 20px;
     cursor: pointer;
     z-index: 100;
     transition: var(--transizione);
@@ -368,18 +385,17 @@ form .form-row .textarea {
 .nav {
     background-color: #BEBEBE;
     position: fixed;
-    width: 30%;
-    translate: -100%;
-    height: 100dvh;
+    width: 20%;
+    height: 100%;
     top: 0;
     right: 0;
     z-index: 90;
     transition: var(--transizione);
-    transform: translateX(203%);
+    transform: translateX(100%);
 }
 
 .wide {
-    transform: translateX(125%);
+    transform: translateX(0%);
 }
 
 #listaNav {
@@ -439,4 +455,11 @@ form .form-row .textarea {
 .logoUniBg {
     margin: 5px 10px 5px 10px;
     max-height: 80px;
+}
+
+.dove_siamo{
+    margin-top: 5px;
+    margin-left: 5px;
+    color: var(--contrasti-1);
+    font-weight: 300;
 }

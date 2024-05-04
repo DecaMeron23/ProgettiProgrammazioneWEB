@@ -23,7 +23,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo" name="titolo" placeholder=" "><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo" name="titolo" placeholder=" " value="<? echo $_POST['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo</label>
                     </div>
@@ -31,7 +31,7 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="creatore" name="creatore" placeholder=" "><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="creatore" name="creatore" placeholder=" " value="<? echo $_POST['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Autore</label>
                     </div>
@@ -39,7 +39,7 @@
                 <!-- DATA INIZIO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" "><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " value="<? echo $_POST['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Inizio Quiz</label>
                     </div>
@@ -47,7 +47,7 @@
                 <!-- DATA FINE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_fine" name="data_fine" placeholder=" "><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_fine" name="data_fine" placeholder=" " value="<? echo $_POST['data_fine'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Fine Quiz</label>
                     </div>
@@ -68,12 +68,9 @@
         </div>
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div>
 
-
-        <!-- <img class="iconaRicerca" width="50" height="50" src="https://img.icons8.com/ios/50/search--v5.png" /> -->
-
+        <div class="dove_siamo">Quiz</div>
         <div class="risultati">
             <?php
-            $connessione = connessioneDB();
             $codice = "";
             // Prelievo i dati dai campi
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -86,6 +83,7 @@
                     $codice  = $_POST["codice"];
                 }
             }
+
             $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, 3, 3);
             $risultato = (array) json_decode($risultato_query);
             $n_righe = count($risultato);

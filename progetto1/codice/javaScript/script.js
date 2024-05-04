@@ -1,3 +1,4 @@
+src = "https://cdn.jsdelivr.net/npm/flatpickr";
 
 var inizzializzazione = function () {
     flatpickr("#data_inizio", {});
@@ -56,10 +57,57 @@ var toggleFilter = function () {
 }
 
 // Fare funzione reset ricerca
+function resetRicerca() {
+    // Ricarica la pagina
+    location.reload();
+
+    // Rimuove i dati POST dalla history del browser
+    history.replaceState({}, document.title, window.location.href.split("?")[0]);
+}
 
 function openModificaQUIZ() {
     attivaMaschera(1)
-    $(".popup_quiz").toggleClass("popup_quiz_show");
+    $("#popup_modifica_quiz").toggleClass("popup_quiz_show");
+}
+
+function openCancellaQUIZ() {
+    attivaMaschera(1)
+    $("#popup_cancella_quiz").toggleClass("popup_quiz_show");
+}
+
+function openEliminaQUIZ() {
+    attivaMaschera(1)
+    $("#popup_elimina_quiz").toggleClass("popup_quiz_show");
+}
+
+// Funzione che intercetta il submit della della pagina info_quiz, al momento che si vuole modificare un quiz
+function modificaQuiz(event) {
+    event.preventDefault();
+}
+
+/**
+ * Funzione che intercetta il submit della della pagina info_quiz, al momento che si vuole eliminare un quiz
+ * 
+ * 
+ */
+
+function eliminaQuiz() {
+    var id_quiz = $("#form_elimina_quiz").attr("codice");
+    $.ajax({
+        type: "GET",
+        url: 'https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php',
+        dataType: 'text',
+        data: { functionname: 'deleteQUIZ', id_quiz: id_quiz },
+        success: function (obj, textstatus) {
+            if (obj == "ok") {
+                alert("Quiz Eliminato");
+                window.location.replace("https://quizmakeandplay.altervista.org/quiz.php");
+            } else {
+                alert("Qualche cosa è andato storto:" + obj);
+            }
+        }
+    });
+
 }
 
 function aggiungiQUIZ(event) {
@@ -72,16 +120,22 @@ function aggiungiQUIZ(event) {
     dataInizio = new Date(dataInizio_string);
     dataFine = new Date(dataFine_string);
 
-    if (dataFine <= dataInizio_string) {
+    if (dataFine <= dataInizio) {
         alert("Attenzione inserire una data di fine maggiore di data inizo")
     } else {
         $.ajax({
             type: "GET",
             url: 'https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php',
-            dataType: 'json',
+            dataType: 'text',
             data: { functionname: 'addQUIZ', nome_utente: creatore, titolo: titolo, data_inizio: dataInizio_string, data_fine: dataFine_string },
             success: function (obj, textstatus) {
-                reinderizzaINFO_QUIZ(obj[0]);
+                if (obj == "ok") {
+                    alert("Quiz Inserito correttamente");
+                    openModificaQUIZ();
+                } else {
+                    alert("Qualche cosa è andato storto:" + obj);
+                }
+                location.reload()
             }
         });
     }

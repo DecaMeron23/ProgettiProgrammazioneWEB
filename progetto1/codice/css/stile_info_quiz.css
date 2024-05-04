@@ -41,7 +41,6 @@
     margin: 50px;
     margin-top: 42px;
     margin-left: 50px;
-    padding-right: 74px;
     justify-content: space-between;
     align-items: center;
 }
@@ -69,7 +68,7 @@
 }
 
 #bottone_modifica_quiz {
-    width: 135px;
+    margin-right: 20px;
     transition: 0.2s;
     font-size: 50px;
 }
@@ -78,6 +77,18 @@
     cursor: pointer;
     transform: scale(105%);
 }
+
+#bottone_elimina_quiz {
+    margin-left: 20px;
+    transition: 0.2s;
+    font-size: 50px;
+}
+
+#bottone_elimina_quiz:hover {
+    cursor: pointer;
+    transform: scale(105%);
+}
+
 
 .testata_info_QUIZ #info_quiz_titolo_quiz {
     font-size: 25px;
@@ -117,4 +128,8 @@
 
 .punteggio {
     font-weight: 200;
+}
+
+#bottoni_quiz{
+    display: flex;
 }

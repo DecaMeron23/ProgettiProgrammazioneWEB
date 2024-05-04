@@ -6,11 +6,17 @@
     border: 1px solid var(--ct-1);
     background-color: #D3D3D7;
     /*Da cambiare*/
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: none;
+}
+
+#popup_elimina_quiz {
+    min-width: 41%;
+    padding: 17px;
+    padding-bottom: 3px;
 }
 
 .popup_quiz_show{
@@ -86,4 +92,25 @@
     display: flex;
     margin-left: 15px;
     margin-right: 15px;
+}
+
+
+#popup_elimina_quiz p{
+    margin-bottom: 16px;
+    font-weight: 650;
+    color: var(--contrasti-1);
+}
+
+#popup_elimina_quiz form{
+    padding: 0 0 0 0;
+}
+
+#popup_elimina_quiz{
+    text-align:center;
+}
+
+#popup_elimina_quiz p:not(.popup_titolo){
+    font-size:20px;
+    font-weight:800;
+    margin-bottom: 5px;
 }

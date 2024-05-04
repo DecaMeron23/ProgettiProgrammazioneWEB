@@ -62,6 +62,8 @@
         </div>
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div>
 
+        <div class= "dove_siamo">Partecipazioni</div>
+
         <div class="risultati">
             <?php
             $codice = "";
