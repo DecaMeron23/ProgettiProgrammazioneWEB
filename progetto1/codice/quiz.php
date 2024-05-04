@@ -19,11 +19,11 @@
     <?php include_once "php/funzioniDB.php" ?>
     <div class="contenuto">
         <div class="filtroRicerca">
-            <form action="#" method="post">
+            <form id="form_ricerca" action="#" method="get">
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo" name="titolo" placeholder=" " value="<? echo $_POST['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo" name="titolo" placeholder=" " value="<? echo $_GET['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo</label>
                     </div>
@@ -31,7 +31,7 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="creatore" name="creatore" placeholder=" " value="<? echo $_POST['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="creatore" name="creatore" placeholder=" " value="<? echo $_GET['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Autore</label>
                     </div>
@@ -39,18 +39,34 @@
                 <!-- DATA INIZIO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " value="<? echo $_POST['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " value="<? echo $_GET['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Inizio Quiz</label>
                     </div>
                 </div>
+                <div class="radio-button">
+                    <input type="radio" name="quale_data_inizio" value="1" class="radio-form" id="quale_data_inizio_prima" <? echo $_GET["quale_data_inizio"] == 1 ? "checked" : "" ?>>
+                    <input type="radio" name="quale_data_inizio" value="2" class="radio-form" id="quale_data_inizio_uguale" <? echo $_GET["quale_data_inizio"] == 2 ? "checked" : "" ?>>
+                    <input type="radio" name="quale_data_inizio" value="3" class="radio-form" id="quale_data_dopo_dopo" <? echo $_GET["quale_data_inizio"] == 3 ? "checked" : "" ?>>
+                    <div onclick="clickRadio(this)" value="1" name="quale_data_inizio" id="quale_data_inizio_prima_icona" <? echo $_GET["quale_data_inizio"] == 1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="clickRadio(this)" value="2" name="quale_data_inizio" id="quale_data_inizio_uguale_icona" <? echo $_GET["quale_data_inizio"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                    <div onclick="clickRadio(this)" value="3" name="quale_data_inizio" id="quale_data_inizio_dopo_icona" <? echo $_GET["quale_data_inizio"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
+                </div>
                 <!-- DATA FINE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_fine" name="data_fine" placeholder=" " value="<? echo $_POST['data_fine'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_fine" name="data_fine" placeholder=" " value="<? echo $_GET['data_fine'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Fine Quiz</label>
                     </div>
+                </div>
+                <div class="radio-button">
+                    <input type="radio" name="quale_data_fine" value="1" class="radio-form" id="quale_data_fine_prima" <? echo $_GET["quale_data_fine"] == 1 ? "checked" : "" ?>>
+                    <input type="radio" name="quale_data_fine" value="2" class="radio-form" id="quale_data_fine_uguale" <? echo $_GET["quale_data_fine"] == 2 ? "checked" : "" ?>>
+                    <input type="radio" name="quale_data_fine" value="3" class="radio-form" id="quale_data_fine_dopo" <? echo $_GET["quale_data_fine"] == 3 ? "checked" : "" ?>>
+                    <div onclick="clickRadio(this)" value="1" name="quale_data_fine" id="quale_data_fine_prima_icona" <? echo $_GET["quale_data_fine"] == 1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="clickRadio(this)" value="2" name="quale_data_fine" id="quale_data_fine_uguale_icona"  <? echo $_GET["quale_data_fine"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                    <div onclick="clickRadio(this)" value="3" name="quale_data_fine" id="quale_data_fine_dopo_icona"  <? echo $_GET["quale_data_fine"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
                 <div class="form-row submit-btn">
                     <div class="input-data">
@@ -61,7 +77,7 @@
                 <div class="form-row submit-btn">
                     <div class="input-data">
                         <div class="inner"></div>
-                        <input type="submit" value="Reset" onclick=""> <!-- Da implementare -->
+                        <input type="button" value="Reset" onclick="resetRicerca()"> <!-- Da implementare -->
                     </div>
                 </div>
             </form>
@@ -73,18 +89,21 @@
             <?php
             $codice = "";
             // Prelievo i dati dai campi
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $creatore = $_POST["creatore"];
-                $titolo = $_POST["titolo"];
-                $data_inizio = $_POST["data_inizio"];
-                $data_fine = $_POST["data_fine"];
-                $like =  $_POST["like"] == "false" ? FALSE : TRUE;
-                if (isset($_POST["codice"])) {
-                    $codice  = $_POST["codice"];
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                $creatore = $_GET["creatore"];
+                $titolo = $_GET["titolo"];
+                $data_inizio = $_GET["data_inizio"];
+                $data_fine = $_GET["data_fine"];
+                $like =  $_GET["like"] == "false" ? FALSE : TRUE;
+                if (isset($_GET["codice"])) {
+                    $codice  = $_GET["codice"];
                 }
+                $quale_data_inizio = $_GET["quale_data_inizio"];
+                $quale_data_fine = $_GET["quale_data_fine"];
             }
+            // echo $quale_data_inizio . "   " . $quale_data_fine . " ";
 
-            $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, 3, 3);
+            $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine);
             $risultato = (array) json_decode($risultato_query);
             $n_righe = count($risultato);
             if ($n_righe == 0) {

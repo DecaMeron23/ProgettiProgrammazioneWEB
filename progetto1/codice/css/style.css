@@ -83,16 +83,17 @@ a {
 .titolo_header {
     position: relative;
     /* transform:translateX(-50%); */
-    align-items:center;
-    
+    align-items: center;
+
 }
 
-.titolo_header p{
-    font-size:45px;
-    text-align:center;
+.titolo_header p {
+    font-size: 45px;
+    text-align: center;
 }
-.titolo_header p:not(.titolo_header p:first-child){
-    font-size:30px;
+
+.titolo_header p:not(.titolo_header p:first-child) {
+    font-size: 30px;
 }
 
 
@@ -104,6 +105,7 @@ a {
     justify-content: space-between;
     color: var(--t-3);
 }
+
 /* Logo Header */
 .logoApp {
     margin: 10px 20px 10px 20px;
@@ -143,12 +145,12 @@ a {
 }
 
 
-.iconaRicerca>i{
+.iconaRicerca>i {
     transition: var(--transizione);
     font-size: 36px;
 }
 
-.iconaRicerca>i:hover{
+.iconaRicerca>i:hover {
     transform: rotateZ(90deg);
 }
 
@@ -259,8 +261,8 @@ form .form-row .textarea {
     position: absolute;
     left: -100%;
     transition: all 0.4s;
-    background: rgb(118,132,151);
-    background: linear-gradient(90deg, rgba(118,132,151,1) 9%, rgba(62,71,84,1) 100%);
+    background: rgb(118, 132, 151);
+    background: linear-gradient(90deg, rgba(118, 132, 151, 1) 9%, rgba(62, 71, 84, 1) 100%);
 }
 
 .submit-btn .input-data:hover .inner {
@@ -295,9 +297,15 @@ form .form-row .textarea {
 }
 
 .risultati>h1 {
+    border-radius: 25px;
+    padding: 12px;
     font-size: 20px;
     text-align: center;
-    margin: 20px;
+    margin-top: 20px;
+    color: var(--contrasti-1);
+    font-weight: 500;
+    box-shadow: 0px 0px 2px 0px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
 }
 
 .tabellaRisultati {
@@ -328,10 +336,11 @@ form .form-row .textarea {
 
 .tabellaRisultati tr td[implementa='onclick'] {
     cursor: pointer;
-} 
+}
+
 .tabellaRisultati tr td[implementa='niente'] {
     cursor: default;
-} 
+}
 
 
 .tabellaRisultati td {
@@ -341,7 +350,7 @@ form .form-row .textarea {
     margin: 5px;
 }
 
-.tabellaRisultati tr td:first-child{
+.tabellaRisultati tr td:first-child {
     color: var(--contrasti-1);
     font-weight: 800;
 }
@@ -457,7 +466,7 @@ form .form-row .textarea {
     max-height: 80px;
 }
 
-.dove_siamo{
+.dove_siamo {
     margin-top: 5px;
     margin-left: 5px;
     color: var(--contrasti-1);

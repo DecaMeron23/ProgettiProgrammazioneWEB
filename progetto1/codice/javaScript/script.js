@@ -58,11 +58,8 @@ var toggleFilter = function () {
 
 // Fare funzione reset ricerca
 function resetRicerca() {
-    // Ricarica la pagina
-    location.reload();
-
-    // Rimuove i dati POST dalla history del browser
-    history.replaceState({}, document.title, window.location.href.split("?")[0]);
+    var currentPageUrl = window.location.origin + window.location.pathname;
+    window.location.replace(currentPageUrl);
 }
 
 function openModificaQUIZ() {
@@ -138,6 +135,73 @@ function aggiungiQUIZ(event) {
                 location.reload()
             }
         });
+    }
+}
+
+
+/**
+ * 
+ * @param {Element} event 
+ */
+function updateQUIZ(elemento) {
+    var id_quiz = elemento.getAttribute("id-quiz");
+    var creatore = $("#creatore").val();
+    var titolo = $("#titolo").val();
+    var dataInizio_string = $("#data_inizio").val();
+    var dataFine_string = $("#data_fine").val();
+
+    dataInizio = new Date(dataInizio_string);
+    dataFine = new Date(dataFine_string);
+
+    if (dataFine <= dataInizio) {
+        alert("Attenzione inserire una data di fine maggiore di data inizo")
+    } else {
+        $.ajax({
+            type: "GET",
+            url: 'https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php',
+            dataType: 'text',
+            data: { functionname: 'updateQUIZ', id_quiz: id_quiz, nome_utente: creatore, titolo: titolo, data_inizio: dataInizio_string, data_fine: dataFine_string },
+            success: function (obj, textstatus) {
+                if (obj == "ok") {
+                    alert("Quiz Modificato correttamente");
+                    clickTitoloQUIZ(elemento)
+                } else {
+                    alert("Qualche cosa è andato storto:" + obj);
+                }
+            }
+        });
+    }
+}
+
+/**
+ * 
+ * @param {Element} elemento 
+ */
+function clickRadio(elemento) {
+    var name = $(elemento).attr("name");
+    switch ($(elemento).attr("value")) {
+        case '1':
+            radioBTN = "#" + name + "_prima";
+            break;
+        case '2':
+            radioBTN = "#" + name + "_uguale";
+            break;
+        case '3':
+            radioBTN = "#" + name + "_dopo";
+            break;
+    }
+    var isCheck = !$(radioBTN).prop('checked');
+    $(radioBTN).prop('checked', isCheck);
+    $(elemento).toggleClass("selected-radio");
+    var idElemento = "#" + $(elemento).attr("id")
+    pulsanti = ["#" + name + "_prima_icona", "#" + name + "_uguale_icona", "#" + name + "_dopo_icona"];
+    for (let i = 0; i < pulsanti.length; i++) {
+        // alert(pulsanti[i] +"  " + idElemento);
+        if (pulsanti[i] != idElemento) {
+            if ($(pulsanti[i]).hasClass("selected-radio")) {
+                $(pulsanti[i]).toggleClass("selected-radio");
+            }
+        }
     }
 }
 

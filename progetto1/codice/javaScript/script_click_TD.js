@@ -46,7 +46,7 @@ function clickPartecipantiQUIZ(el) {
     } else {
         var codice = el.getAttribute("id-quiz");
         var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php";
-        $.redirectPost(pagina, { id_quiz: codice });
+        $.redirectGET(pagina, { id_quiz: codice });
     }
 }
 
@@ -126,32 +126,32 @@ function clickNumeroPartecipazioniUTENTE(el) {
 
 function reindirizzaPARTECIPAZIONI(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php"
-    $.redirectPost(pagina, dati);
+    $.redirectGET(pagina, dati);
 }
 
 function reindirizzaQUIZ(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/quiz.php"
-    $.redirectPost(pagina, dati);
+    $.redirectGET(pagina, dati);
 }
 
 function reindirizzaUTENTE(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/utente.php";
-    $.redirectPost(pagina, dati);
+    $.redirectGET(pagina, dati);
 }
 
 function reinderizzaINFO_QUIZ(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/info_quiz.php";
-    $.redirectPost(pagina, dati);
+    $.redirectGET(pagina, dati);
 }
 
-// estendo JQUery con la funzione reirectPost la quale reindirizza la pagina inviado il metodo post alla pagina obbiettivo
+// estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
 $.extend(
     {
-        redirectPost: function (location, args) {
+        redirectGET: function (location, args) {
             var form = '';
             $.each(args, function (key, value) {
                 form += `<input type="hidden" name="${key}" value="${value}">`;
             });
-            $(`<form action="${location}"method="POST">${form}</form>`).appendTo($(document.body)).submit();
+            $(`<form action="${location}"method="get">${form}</form>`).appendTo($(document.body)).submit();
         }
     });

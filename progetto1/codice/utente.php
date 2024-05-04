@@ -20,11 +20,11 @@
     <?php include_once "php/funzioniDB.php" ?>
     <div class="contenuto">
         <div class="filtroRicerca">
-            <form action="#" method="post">
+            <form id="form_ricerca" action="#" method="get">
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" value="<? echo $_POST['nome_utente']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" value="<? echo $_GET['nome_utente'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome Utente</label>
                     </div>
@@ -32,23 +32,21 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome" name="mome" placeholder=" " spellcheck="false" value="<? echo $_POST['nome']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome" name="nome" placeholder=" " spellcheck="false" value="<? echo $_GET['nome'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome</label>
                     </div>
                 </div>
-                <!-- DATA INIZIO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="cognome" name="cognome" placeholder=" " spellcheck="false" value="<? echo $_POST['cognome']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="cognome" name="cognome" placeholder=" " spellcheck="false" value="<? echo $_GET['cognome'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Cognome</label>
                     </div>
                 </div>
-                <!-- DATA FINE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="email" name="email" placeholder=" " spellcheck="false" value="<? echo $_POST['email']?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="email" name="email" placeholder=" " spellcheck="false" value="<? echo $_GET['email'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Email</label>
                     </div>
@@ -68,17 +66,17 @@
             </form>
         </div>
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div>
-        <div class= "dove_siamo">Utente</div>
+        <div class="dove_siamo">Utente</div>
         <div class="risultati">
             <?php
             $codice = "";
             // Prelievo i dati dai campi
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $nome_utente = $_POST["nome_utente"];
-                $nome = $_POST["nome"];
-                $cognome = $_POST["cognome"];
-                $email = $_POST["email"];
-                $like =  $_POST["like"] == "false" ? FALSE : TRUE;
+            if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                $nome_utente = $_GET["nome_utente"];
+                $nome = $_GET["nome"];
+                $cognome = $_GET["cognome"];
+                $email = $_GET["email"];
+                $like =  $_GET["like"] == "false" ? FALSE : TRUE;
             }
             $risultato_query = query_utente($nome_utente, $nome, $cognome, $email, $like);
             $risultato = (array) json_decode($risultato_query);
@@ -125,7 +123,7 @@
     </div>
 
     <div class="popup_quiz" id="popup_cancella_quiz">
-        <form action="#" method="post" onsubmit="aggiungiQUIZ(event)">
+        <form action="#" method="get" onsubmit="aggiungiQUIZ(event)">
             <!-- TITOLO -->
             <div class="form-row">
                 <div class="input-data">

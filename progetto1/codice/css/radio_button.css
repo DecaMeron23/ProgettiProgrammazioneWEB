@@ -1,0 +1,28 @@
+.radio-button{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.radio-button div{
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.radio-button div:hover{
+  transform: scale(110%);
+}
+
+.selected-radio{
+  transition: 0.3s;
+  transform: scale(150%);
+}
+div.selected-radio:hover{
+  transform: scale(140%);
+}
+
+.radio-form{
+  display: none;
+}

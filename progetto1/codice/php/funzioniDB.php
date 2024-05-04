@@ -39,6 +39,7 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     }
     $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE";
 
+    // echo $query;
     return eseguiQuery($query, true);
 }
 
@@ -81,9 +82,8 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
  * @param string $utente
  * @param string $titolo_quiz
  * @param string $data
- * @param int $quale_data solo tra 0 e 4 compresi (0 prima, 1 prima e uguale, 2 uguale, 3 dopo e uguale, 4 dopo)
  */
-function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $quale_data, $codice_quiz = "" /* inserire altre impostazioni, come bohhh */): string
+function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $quale_data, $codice_quiz = ""): string
 {
     $query = "SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nome_utente , QUIZ.TITOLO AS titolo_quiz, QUIZ.CODICE AS codice_quiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS risposte_utente
     FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE
@@ -101,6 +101,8 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
 
     $query .= " GROUP BY PARTECIPAZIONE.CODICE"
         . " ORDER BY PARTECIPAZIONE.UTENTE";
+
+    // echo $query;
 
     return eseguiQuery($query, true);
 }
@@ -140,30 +142,26 @@ function query_risposte_quiz($id_quiz, $n_domanda): string
 
 /**
  * 
- * @param int $indice valore compreso tra 0 e 4
+ * @param int $indice valore compreso tra 1 e 3
  * @param string $data la data
  */
 function query_data($indice, $data): string
 {
     $sql = "";
     switch ($indice) {
-        case 0:
-            $sql .= "<";
-            break;
         case 1:
-            $sql .= "<=";
+            $sql .= "<";
             break;
         case 2:
             $sql .= "=";
             break;
         case 3:
-            $sql .= ">=";
-            break;
-        case 4:
             $sql .= ">";
             break;
     }
-    return $sql . "'" . $data . "'";
+    $return = $sql . "'" . $data . "'";
+    // echo $return +"\n";
+    return $return;
 }
 
 
@@ -197,6 +195,37 @@ function elimina_quiz($id_quiz)
     } catch (\Throwable $th) {
         return $th->getMessage();
     }
+    return "ok";
+}
+
+/**
+ * Le date vengono verificate prima
+ * 
+ * @param string $codice
+ * @param string $nome_utente
+ * @param string $titolo
+ * @param string $data_inizio
+ * @param string $data_fine
+ */
+function update_quiz($codice, $nome_utente, $titolo, $data_inizio, $data_fine): string
+{
+    // Verifichiamo se l'utente esiste
+    $query_utente = "SELECT COUNT(*) AS utenti FROM UTENTE WHERE NOME_UTENTE = '$nome_utente' GROUP BY(NOME_UTENTE)";
+    $risultati = eseguiQuery($query_utente, true);
+    // Verificare se esiste l'utente
+    $risultati = (array)json_decode($risultati);
+    $risultati = (array)$risultati[0];
+    if ($risultati["utenti"] == 0) {
+        return "L'utente non esiste: $risultati[utenti]";
+    }
+
+    // Eliminiamo il vecchio
+    $query = "UPDATE QUIZ
+    SET CREATORE ='$nome_utente', TITOLO ='$titolo', DATA_INIZIO ='$data_inizio', DATA_FINE ='$data_fine'
+    WHERE CODICE = $codice";
+
+    eseguiQuery($query, false);
+
     return "ok";
 }
 
