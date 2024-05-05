@@ -65,11 +65,13 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
 
     $query .= ($nome == "") ? "" : ($like ? " AND UTENTE.NOME LIKE '%$nome%'" : "AND UTENTE.NOME = '$nome'");
 
-    $query .= ($cognome == "") ? "" : ($like ? " AND UTENTE.TITOLO LIKE '%$cognome%'" : " AND UTENTE.TITOLO = '$cognome'");
+    $query .= ($cognome == "") ? "" : ($like ? " AND UTENTE.COGNOME LIKE '%$cognome%'" : " AND UTENTE.COGNOME = '$cognome'");
 
     $query .= ($email == "") ? "" : ($like ? " AND UTENTE.EMAIL LIKE '%$email%'" : " AND UTENTE.EMAIL = '$email'");
 
-    $query .= " GROUP BY UTENTE.NOME_UTENTE;";
+    $query .= " GROUP BY UTENTE.NOME_UTENTE";
+
+    // echo $query;
 
     return eseguiQuery($query, true);
 }
