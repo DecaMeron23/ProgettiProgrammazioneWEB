@@ -31,10 +31,10 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     if ($titolo != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.TITOLO" . ($like ? " LIKE '%$titolo%'" : "= '$titolo'");
     }
-    if ($data_inizio != "") {
+    if ($data_inizio != "" && $quale_data_inizio != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.DATA_INIZIO " . query_data($quale_data_inizio, $data_inizio);
     }
-    if ($data_fine != "") {
+    if ($data_fine != "" && $quale_data_fine != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.DATA_FINE " . query_data($quale_data_fine, $data_fine);
     }
     $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE";
@@ -97,7 +97,7 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
 
     $query .= ($codice_quiz == "") ? "" : ("AND QUIZ.CODICE = '$codice_quiz'");
 
-    $query .= ($data == "") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
+    $query .= ($data == "" || $quale_data =="") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
 
     $query .= " GROUP BY PARTECIPAZIONE.CODICE"
         . " ORDER BY PARTECIPAZIONE.UTENTE";
