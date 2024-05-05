@@ -32,7 +32,7 @@
 }
 
 .contenuto {
-    margin: 50px;
+    margin: 30px 50px 30px 50px;
 }
 
 .intro {
@@ -40,6 +40,7 @@
     font-weight: 700;
     font-size: 25px;
     margin-bottom: 30px;
+    margin-top: 40px;
 }
 
 .small-intro {

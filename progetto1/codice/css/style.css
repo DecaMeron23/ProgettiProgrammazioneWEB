@@ -434,11 +434,24 @@ form .form-row .textarea {
 /* Footer */
 
 .footer {
+    height: 150px;   
     background-color: var(--main-colour);
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
+}
+
+.footer-sopra{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.copyright{
+    font-weight: 300;
+    font-size: 12px;
 }
 
 .tabellaAutori {
