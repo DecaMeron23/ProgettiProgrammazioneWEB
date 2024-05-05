@@ -11,7 +11,7 @@
  * 
  * @return string
  */
-function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine): string
+function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine, $domande = "",$partecipazioni ="" , $quali_partecipazioni ="" , $quali_domande =""): string
 {
     $query = "SELECT QUIZ.CODICE AS codice , QUIZ.CREATORE AS creatore , QUIZ.TITOLO AS titolo , QUIZ.DATA_INIZIO AS data_inizio,  QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande  , COUNT(DISTINCT PARTECIPAZIONE.CODICE) as partecipazioni 
         FROM QUIZ LEFT JOIN DOMANDA LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = DOMANDA.QUIZ AND QUIZ.CODICE = PARTECIPAZIONE.QUIZ";
@@ -37,7 +37,17 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     if ($data_fine != "" && $quale_data_fine != "") {
         $lista .= (strlen($lista) == 0 ? " WHERE " : " AND ") . "QUIZ.DATA_FINE " . query_data($quale_data_fine, $data_fine);
     }
-    $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE";
+    $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE ";
+
+
+
+$sql_domande = (($domande == "" || $quali_domande ="")? "" : (" domande ". query_equazione($quali_damande) . $domande));
+
+$sql_partecipazioni = (($partecipazioni == "" || $quali_partecipazioni ="")? "" : (" partecipazioni ". query_equazione($quali_partecipazioni) . $partecipazioni));
+
+if($sql_domande != "" || $sql_partecipazioni != ""){
+ $query .= "HAVING " . (($sql_domande == "")? $sql_partecipazioni : (($sql_partecipazioni == "") ? $sql_domande : ($sql_domande . " AND " . $sql_partecipazioni)));
+}
 
     // echo $query;
     return eseguiQuery($query, true);
@@ -164,6 +174,24 @@ function query_data($indice, $data): string
     $return = $sql . "'" . $data . "'";
     // echo $return +"\n";
     return $return;
+}
+
+function query_equazione($indice)
+{
+    $sql = "";
+    switch ($indice) {
+        case 1:
+            $sql .= "<";
+            break;
+        case 2:
+            $sql .= "=";
+            break;
+        case 3:
+            $sql .= ">";
+            break;
+    }
+    // echo $return +"\n";
+    return $sql;
 }
 
 
