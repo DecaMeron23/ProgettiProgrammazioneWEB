@@ -89,12 +89,12 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like, $quiz_creati 
     }
 
     if ($quiz_giocati != "" && $quali_quiz_giocati != "") {
-        $having .= (($having == "") ? " HAVING " : " AND ") . "numero_partecipanti " . $quali_quiz_giocati . " " . $quiz_giocati;
+        $having .= (($having == "") ? " HAVING " : " AND ") . "numero_partecipazioni " . $quali_quiz_giocati . " " . $quiz_giocati;
     }
 
     $query .= $having;
 
-    // echo $query;
+    echo $query;
 
     return eseguiQuery($query, true);
 }
