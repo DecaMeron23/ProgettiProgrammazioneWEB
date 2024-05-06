@@ -25,7 +25,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome_untente" name="nome_untente" placeholder=" " <? echo ((isset($_GET["nome_utente"]) && ($_GET["nome_utente"] != "")) ? "value = $_GET[nome_utente]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " <? echo ((isset($_GET["nome_utente"]) && ($_GET["nome_utente"] != "")) ? "value = $_GET[nome_utente]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome Utente</label>
                     </div>
