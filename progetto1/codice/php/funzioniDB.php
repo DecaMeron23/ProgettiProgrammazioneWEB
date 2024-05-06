@@ -41,7 +41,7 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
 
 
 
-$sql_domande = (($domande == "" || $quali_domande ="")? "" : (" domande ". query_equazione($quali_damande) . $domande));
+$sql_domande = (($domande == "" || $quali_domande ="")? "" : (" domande ". query_equazione($quali_domande) . $domande));
 
 $sql_partecipazioni = (($partecipazioni == "" || $quali_partecipazioni ="")? "" : (" partecipazioni ". query_equazione($quali_partecipazioni) . $partecipazioni));
 
