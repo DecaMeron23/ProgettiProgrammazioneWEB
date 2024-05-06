@@ -68,6 +68,38 @@
                     <div onclick="clickRadio(this)" value="2" name="quale_data_fine" id="quale_data_fine_uguale_icona"  <? echo $_GET["quale_data_fine"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
                     <div onclick="clickRadio(this)" value="3" name="quale_data_fine" id="quale_data_fine_dopo_icona"  <? echo $_GET["quale_data_fine"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
+                <!-- QUIZ domande -->
+                <div class="form-row">
+                    <div class="input-data">
+                        <input type="number" id="domande" name="domande" placeholder=" " <? echo ((isset($_GET["domande"]) && ($_GET["domande"] != "")) ? "value = $_GET[domande]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <div class="underline"></div>
+                        <label for="">Domande Quiz</label>
+                    </div>
+                </div>
+                <div class="radio-button">
+                    <input type="radio" name="quali_domande" value="<" class="radio-form" id="quali_domande_prima" <? echo $_GET["quali_domande"] == 1 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_domande" value="=" class="radio-form" id="quali_domande_uguale" <? echo $_GET["quali_domande"] == 2 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_domande" value=">" class="radio-form" id="quali_domande_dopo" <? echo $_GET["quali_domande"] == 3 ? "checked" : "" ?>>
+                    <div onclick="clickRadio(this)" value="<" name="quali_domande" id="quali_domande_prima_icona" <? echo $_GET["quali_domande"] == 1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="clickRadio(this)" value="=" name="quali_domande" id="quali_domande_uguale_icona" <? echo $_GET["quali_domande"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                    <div onclick="clickRadio(this)" value=">" name="quali_domande" id="quali_domande_dopo_icona" <? echo $_GET["quale_data"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
+                </div>
+                 <!-- QUIZ partecipazioni -->
+                 <div class="form-row">
+                    <div class="input-data">
+                        <input type="number" id="partecipazioni" name="partecipazioni" placeholder=" " <? echo ((isset($_GET["partecipazioni"]) && ($_GET["partecipazioni"] != "")) ? "value = $_GET[partecipazioni]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <div class="underline"></div>
+                        <label for="">N° di partecipanti</label>
+                    </div>
+                </div>
+                <div class="radio-button">
+                    <input type="radio" name="quali_partecipazioni" value="<" class="radio-form" id="quali_partecipazioni_prima" <? echo $_GET["quali_partecipazioni"] == 1 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_partecipazioni" value="=" class="radio-form" id="quali_partecipazioni_uguale" <? echo $_GET["quali_partecipazioni"] == 2 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_partecipazioni" value=">" class="radio-form" id="quali_partecipazioni_dopo" <? echo $_GET["quali_partecipazioni"] == 3 ? "checked" : "" ?>>
+                    <div onclick="clickRadio(this)" value="<" name="quali_partecipazioni" id="quali_partecipazioni_prima_icona" <? echo $_GET["quali_partecipazioni"] == 1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="clickRadio(this)" value="=" name="quali_partecipazioni" id="quali_partecipazioni_uguale_icona" <? echo $_GET["quali_partecipazioni"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                    <div onclick="clickRadio(this)" value=">" name="quali_partecipazioni" id="quali_partecipazioni_dopo_icona" <? echo $_GET["quale_data"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
+                </div>
                 <div class="form-row submit-btn">
                     <div class="input-data">
                         <div class="inner"></div>
@@ -100,10 +132,14 @@
                 }
                 $quale_data_inizio = $_GET["quale_data_inizio"];
                 $quale_data_fine = $_GET["quale_data_fine"];
+                $domande = $_GET["domande"];
+                $quali_domande = $_GET["quali_domande"];
+                $partecipazioni = $_GET["partecipazioni"];
+                $quali_partecipazioni = $_GET["quali_partecipazioni"];
             }
             // echo $quale_data_inizio . "   " . $quale_data_fine . " ";
 
-            $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine);
+            $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine , $domande , $quali_domande , $partecipazioni , $quali_partecipazioni);
             $risultato = (array) json_decode($risultato_query);
             $n_righe = count($risultato);
             if ($n_righe == 0) {
