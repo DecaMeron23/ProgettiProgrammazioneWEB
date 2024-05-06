@@ -11,11 +11,8 @@
  * 
  * @return string
  */
-function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine, $domande = "",$partecipazioni ="" , $quali_partecipazioni ="" , $quali_domande =""): string
+function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine, $domande = "", $partecipazioni = "", $quali_partecipazioni = "", $quali_domande = ""): string
 {
-    $query = "SELECT QUIZ.CODICE AS codice , QUIZ.CREATORE AS creatore , QUIZ.TITOLO AS titolo , QUIZ.DATA_INIZIO AS data_inizio,  QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande  , COUNT(DISTINCT PARTECIPAZIONE.CODICE) as partecipazioni 
-        FROM QUIZ LEFT JOIN DOMANDA LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = DOMANDA.QUIZ AND QUIZ.CODICE = PARTECIPAZIONE.QUIZ";
-
     $query = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS data_inizio, QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS partecipazioni
     FROM  QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ ";
 
@@ -41,13 +38,13 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
 
 
 
-$sql_domande = (($domande == "" || $quali_domande ="")? "" : (" domande ". query_equazione($quali_domande) . $domande));
+    $sql_domande = (($domande == "" || $quali_domande = "") ? "" : (" domande " . query_equazione($quali_domande) . $domande));
 
-$sql_partecipazioni = (($partecipazioni == "" || $quali_partecipazioni ="")? "" : (" partecipazioni ". query_equazione($quali_partecipazioni) . $partecipazioni));
+    $sql_partecipazioni = (($partecipazioni == "" || $quali_partecipazioni = "") ? "" : (" partecipazioni " . query_equazione($quali_partecipazioni) . $partecipazioni));
 
-if($sql_domande != "" || $sql_partecipazioni != ""){
- $query .= "HAVING " . (($sql_domande == "")? $sql_partecipazioni : (($sql_partecipazioni == "") ? $sql_domande : ($sql_domande . " AND " . $sql_partecipazioni)));
-}
+    if ($sql_domande != "" || $sql_partecipazioni != "") {
+        $query .= "HAVING " . (($sql_domande == "") ? $sql_partecipazioni : (($sql_partecipazioni == "") ? $sql_domande : ($sql_domande . " AND " . $sql_partecipazioni)));
+    }
 
     // echo $query;
     return eseguiQuery($query, true);
@@ -109,7 +106,7 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
 
     $query .= ($codice_quiz == "") ? "" : ("AND QUIZ.CODICE = '$codice_quiz'");
 
-    $query .= ($data == "" || $quale_data =="") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
+    $query .= ($data == "" || $quale_data == "") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
 
     $query .= " GROUP BY PARTECIPAZIONE.CODICE"
         . " ORDER BY PARTECIPAZIONE.UTENTE";
