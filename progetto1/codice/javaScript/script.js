@@ -189,6 +189,16 @@ function clickRadio(elemento) {
         case '3':
             radioBTN = "#" + name + "_dopo";
             break;
+        case '<':
+            radioBTN = "#" + name + "_prima";
+            break;
+        case '=':
+            radioBTN = "#" + name + "_uguale";
+            break;
+        case '>':
+            radioBTN = "#" + name + "_dopo";
+            break;
+
     }
     var isCheck = !$(radioBTN).prop('checked');
     $(radioBTN).prop('checked', isCheck);
