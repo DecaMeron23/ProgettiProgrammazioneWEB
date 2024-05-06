@@ -136,7 +136,7 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
 
     $query .= " ORDER BY PARTECIPAZIONE.UTENTE ";
 
-    echo $query;
+    // echo $query;
 
     return eseguiQuery($query, true);
 }
