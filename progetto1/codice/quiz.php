@@ -84,7 +84,7 @@
                     <div onclick="clickRadio(this)" value="=" name="quali_domande" id="quali_domande_uguale_icona" <? echo $_GET["quali_domande"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
                     <div onclick="clickRadio(this)" value=">" name="quali_domande" id="quali_domande_dopo_icona" <? echo $_GET["quale_data"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
-                 <!-- QUIZ partecipazioni -->
+                <!-- QUIZ partecipazioni -->
                  <div class="form-row">
                     <div class="input-data">
                         <input type="number" id="partecipazioni" name="partecipazioni" placeholder=" " <? echo ((isset($_GET["partecipazioni"]) && ($_GET["partecipazioni"] != "")) ? "value = $_GET[partecipazioni]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->

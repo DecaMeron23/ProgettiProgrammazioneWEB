@@ -55,7 +55,7 @@
                 <!-- QUIZ CREATI -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="quiz_creati" name="quiz_creati" placeholder=" " <? echo ((isset($_GET["quiz_creati"]) && ($_GET["quiz_creati"] != "")) ? "value = $_GET[quiz_creati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="number" id="quiz_creati" name="quiz_creati" placeholder=" " <? echo ((isset($_GET["quiz_creati"]) && ($_GET["quiz_creati"] != "")) ? "value = $_GET[quiz_creati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Quiz Creati</label>
                     </div>
@@ -71,7 +71,7 @@
                 <!-- QUIZ Partecipati -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="quiz_partecipati" name="quiz_partecipati" placeholder=" " <? echo ((isset($_GET["quiz_partecipati"]) && ($_GET["quiz_partecipati"] != "")) ? "value = $_GET[quiz_partecipati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="number" id="quiz_partecipati" name="quiz_partecipati" placeholder=" " <? echo ((isset($_GET["quiz_partecipati"]) && ($_GET["quiz_partecipati"] != "")) ? "value = $_GET[quiz_partecipati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Quiz Partecipati</label>
                     </div>
