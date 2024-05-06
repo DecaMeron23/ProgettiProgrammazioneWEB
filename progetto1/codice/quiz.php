@@ -41,7 +41,7 @@
                     <div class="input-data">
                         <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" value="<? echo $_GET['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Data Inizio Quiz</label>
+                        <label for="">Data Inizio</label>
                     </div>
                 </div>
                 <div class="radio-button">
@@ -57,7 +57,7 @@
                     <div class="input-data">
                         <input type="text" id="data_fine" name="data_fine" placeholder=" " value="<? echo $_GET['data_fine'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Data Fine Quiz</label>
+                        <label for="">Data Fine</label>
                     </div>
                 </div>
                 <div class="radio-button">
@@ -73,7 +73,7 @@
                     <div class="input-data">
                         <input type="number" id="domande" name="domande" placeholder=" " <? echo ((isset($_GET["domande"]) && ($_GET["domande"] != "")) ? "value = $_GET[domande]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Domande Quiz</label>
+                        <label for="">N° di Domande</label>
                     </div>
                 </div>
                 <div class="radio-button">
@@ -151,7 +151,7 @@
                 <table class="tabellaRisultati">
                     <tr>
                         <th>Titolo</th>
-                        <th>Creatore</th>
+                        <th>Autore</th>
                         <th>Data Inizio</th>
                         <th>Data Fine</th>
                         <th>N° di <br>

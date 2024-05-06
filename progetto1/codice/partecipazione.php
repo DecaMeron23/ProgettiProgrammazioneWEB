@@ -27,7 +27,7 @@
                     <div class="input-data">
                         <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" <? echo ((isset($_GET["nome_utente"]) && ($_GET["nome_utente"] != "")) ? "value = $_GET[nome_utente]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Nome Utente</label>
+                        <label for="">Nickname</label>
                     </div>
                 </div>
                 <!-- CREATORE -->
@@ -35,7 +35,7 @@
                     <div class="input-data">
                         <input type="text" id="titolo_quiz" name="titolo_quiz" placeholder=" " spellcheck="false" <? echo ((isset($_GET["titolo_quiz"]) && ($_GET["titolo_quiz"] != "")) ? "value = $_GET[titolo_quiz]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Titolo Quiz</label>
+                        <label for="">Quiz</label>
                     </div>
                 </div>
                 <!-- DATA -->
@@ -43,7 +43,7 @@
                     <div class="input-data">
                         <input type="text" id="data" name="data" placeholder=" "  <? echo ((isset($_GET["data"]) && ($_GET["data"] != "")) ? "value = $_GET[data]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Data partecipazione</label>
+                        <label for="">Data</label>
                     </div>
                 </div>
                 <div class="radio-button">
@@ -86,7 +86,7 @@
         </div>
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div>
 
-        <div class="dove_siamo">Partecipazioni</div>
+        <div class="dove_siamo">Partecipazione</div>
 
         <div class="risultati">
             <?php

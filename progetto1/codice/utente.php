@@ -26,7 +26,7 @@
                     <div class="input-data">
                         <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" value="<? echo $_GET['nome_utente'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Nome Utente</label>
+                        <label for="">Nickname</label>
                     </div>
                 </div>
                 <!-- CREATORE -->
@@ -57,7 +57,7 @@
                     <div class="input-data">
                         <input type="number" id="quiz_creati" name="quiz_creati" placeholder=" " <? echo ((isset($_GET["quiz_creati"]) && ($_GET["quiz_creati"] != "")) ? "value = $_GET[quiz_creati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Quiz Creati</label>
+                        <label for="">N° Quiz Creati</label>
                     </div>
                 </div>
                 <div class="radio-button">
@@ -73,7 +73,7 @@
                     <div class="input-data">
                         <input type="number" id="quiz_partecipati" name="quiz_partecipati" placeholder=" " <? echo ((isset($_GET["quiz_partecipati"]) && ($_GET["quiz_partecipati"] != "")) ? "value = $_GET[quiz_partecipati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
-                        <label for="">Quiz Partecipati</label>
+                        <label for="">N° Quiz Giocati</label>
                     </div>
                 </div>
                 <div class="radio-button">
