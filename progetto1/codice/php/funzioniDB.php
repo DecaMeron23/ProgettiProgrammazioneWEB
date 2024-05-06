@@ -11,7 +11,7 @@
  * 
  * @return string
  */
-function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine, $domande = "", $partecipazioni = "", $quali_partecipazioni = "", $quali_domande = ""): string
+function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine, $domande = "", $quali_domande = "", $partecipazioni = "", $quali_partecipazioni = ""): string
 {
     $query = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS data_inizio, QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS partecipazioni
     FROM  QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ ";
@@ -94,7 +94,7 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like, $quiz_creati 
 
     $query .= $having;
 
-    echo $query;
+    // echo $query;
 
     return eseguiQuery($query, true);
 }
