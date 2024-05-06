@@ -37,14 +37,17 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     $query .=  $lista . " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE ";
 
 
+    $having = "";
 
-    $sql_domande = (($domande == "" || $quali_domande = "") ? "" : (" domande " . query_equazione($quali_domande) . $domande));
-
-    $sql_partecipazioni = (($partecipazioni == "" || $quali_partecipazioni = "") ? "" : (" partecipazioni " . query_equazione($quali_partecipazioni) . $partecipazioni));
-
-    if ($sql_domande != "" || $sql_partecipazioni != "") {
-        $query .= "HAVING " . (($sql_domande == "") ? $sql_partecipazioni : (($sql_partecipazioni == "") ? $sql_domande : ($sql_domande . " AND " . $sql_partecipazioni)));
+    if ($domande != "" && $quali_domande != "") {
+        $having .= " HAVING domande " . $quali_domande . " " . $domande;
     }
+
+    if ($partecipazioni != "" && $quali_partecipazioni != "") {
+        $having .= (($having == "") ? " HAVING" : " AND ") . " partecipazioni " . $quali_partecipazioni . " " . $partecipazioni;
+    }
+
+    $query .= $having;
 
     // echo $query;
     return eseguiQuery($query, true);
@@ -61,7 +64,7 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
  * @param string $cognome
  * @param string $email
  */
-function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
+function query_utente($nomeUtente, $nome, $cognome, $email, $like, $quiz_creati = "", $quali_quiz_creati = "", $quiz_giocati = "", $quali_quiz_giocati = ""): string
 {
     $query = "SELECT UTENTE.NOME_UTENTE AS nome_utente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email , COUNT(DISTINCT QUIZ.CODICE) as numero_quiz , COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as numero_partecipazioni 
     FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE , PARTECIPAZIONE
@@ -76,7 +79,20 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
 
     $query .= ($email == "") ? "" : ($like ? " AND UTENTE.EMAIL LIKE '%$email%'" : " AND UTENTE.EMAIL = '$email'");
 
-    $query .= " GROUP BY UTENTE.NOME_UTENTE";
+    $query .= " GROUP BY UTENTE.NOME_UTENTE ";
+
+
+    $having = "";
+
+    if ($quiz_creati != "" && $quali_quiz_creati != "") {
+        $having .= " HAVING numero_quiz " . $quali_quiz_creati . " " . $quiz_creati;
+    }
+
+    if ($quiz_giocati != "" && $quali_quiz_giocati != "") {
+        $having .= (($having == "") ? " HAVING " : " AND ") . "numero_partecipanti " . $quali_quiz_giocati . " " . $quiz_giocati;
+    }
+
+    $query .= $having;
 
     // echo $query;
 
@@ -92,7 +108,7 @@ function query_utente($nomeUtente, $nome, $cognome, $email, $like): string
  * @param string $titolo_quiz
  * @param string $data
  */
-function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $quale_data, $codice_quiz = ""): string
+function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $quale_data, $codice_quiz = "", $risposte = "", $quali_risposte = ""): string
 {
     $query = "SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nome_utente , QUIZ.TITOLO AS titolo_quiz, QUIZ.CODICE AS codice_quiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS risposte_utente
     FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE
@@ -109,7 +125,15 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
     $query .= ($data == "" || $quale_data == "") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
 
     $query .= " GROUP BY PARTECIPAZIONE.CODICE"
-        . " ORDER BY PARTECIPAZIONE.UTENTE";
+        . " ORDER BY PARTECIPAZIONE.UTENTE ";
+
+    $having = "";
+
+    if ($risposte != "" && $quali_risposte != "") {
+        $having .= "HAVING risposte_utente " . $quali_risposte . " " . $risposte;
+    }
+
+    $query .= $having;
 
     // echo $query;
 
