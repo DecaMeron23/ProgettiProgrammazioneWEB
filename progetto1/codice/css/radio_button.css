@@ -8,20 +8,13 @@
 }
 
 .radio-button div{
-  transition: 0.3s;
+  transition: 0.05s;
   cursor: pointer;
 }
 
-.radio-button div:hover{
-  transform: scale(110%);
-}
-
 .selected-radio{
-  transition: 0.3s;
+  transition: 0.05s;
   transform: scale(150%);
-}
-div.selected-radio:hover{
-  transform: scale(140%);
 }
 
 .radio-form{
