@@ -23,7 +23,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo" name="titolo" placeholder=" " value="<? echo $_GET['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="<? echo $_GET['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo</label>
                     </div>
@@ -31,7 +31,7 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="creatore" name="creatore" placeholder=" " value="<? echo $_GET['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false" value="<? echo $_GET['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Autore</label>
                     </div>
@@ -39,7 +39,7 @@
                 <!-- DATA INIZIO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " value="<? echo $_GET['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" value="<? echo $_GET['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Inizio Quiz</label>
                     </div>

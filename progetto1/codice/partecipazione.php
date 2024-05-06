@@ -25,7 +25,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " <? echo ((isset($_GET["nome_utente"]) && ($_GET["nome_utente"] != "")) ? "value = $_GET[nome_utente]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" <? echo ((isset($_GET["nome_utente"]) && ($_GET["nome_utente"] != "")) ? "value = $_GET[nome_utente]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Nome Utente</label>
                     </div>
@@ -33,7 +33,7 @@
                 <!-- CREATORE -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo_quiz" name="titolo_quiz" placeholder=" " <? echo ((isset($_GET["titolo_quiz"]) && ($_GET["titolo_quiz"] != "")) ? "value = $_GET[titolo_quiz]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo_quiz" name="titolo_quiz" placeholder=" " spellcheck="false" <? echo ((isset($_GET["titolo_quiz"]) && ($_GET["titolo_quiz"] != "")) ? "value = $_GET[titolo_quiz]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo Quiz</label>
                     </div>
@@ -41,7 +41,7 @@
                 <!-- DATA -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data" name="data" placeholder=" " <? echo ((isset($_GET["data"]) && ($_GET["data"] != "")) ? "value = $_GET[data]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data" name="data" placeholder=" "  <? echo ((isset($_GET["data"]) && ($_GET["data"] != "")) ? "value = $_GET[data]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data partecipazione</label>
                     </div>
