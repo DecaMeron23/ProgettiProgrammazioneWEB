@@ -124,18 +124,19 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
 
     $query .= ($data == "" || $quale_data == "") ? "" : ("AND PARTECIPAZIONE.DATA " . query_data($quale_data, $data));
 
-    $query .= " GROUP BY PARTECIPAZIONE.CODICE"
-        . " ORDER BY PARTECIPAZIONE.UTENTE ";
+    $query .= " GROUP BY PARTECIPAZIONE.CODICE ";
 
     $having = "";
 
     if ($risposte != "" && $quali_risposte != "") {
-        $having .= "HAVING risposte_utente " . $quali_risposte . " " . $risposte;
+        $having .= " HAVING risposte_utente " . $quali_risposte . " " . $risposte;
     }
 
     $query .= $having;
 
-    // echo $query;
+    $query .= " ORDER BY PARTECIPAZIONE.UTENTE ";
+
+    echo $query;
 
     return eseguiQuery($query, true);
 }
