@@ -51,6 +51,23 @@
                         <label for="">Email</label>
                     </div>
                 </div>
+
+                <!-- QUIZ CREATI -->
+                <div class="form-row">
+                    <div class="input-data">
+                        <input type="text" id="quiz_creati" name="quiz_creati" placeholder=" " <? echo ((isset($_GET["quiz_creati"]) && ($_GET["quiz_creati"] != "")) ? "value = $_GET[quiz_creati]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <div class="underline"></div>
+                        <label for="">Quiz Creati</label>
+                    </div>
+                </div>
+                <div class="radio-button">
+                    <input type="radio" name="quali_quiz_creati" value="<" class="radio-form" id="quali_quiz_creati_prima" <? echo $_GET["quali_quiz_creati"] == 1 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_quiz_creati" value="=" class="radio-form" id="quali_quiz_creati_uguale" <? echo $_GET["quali_quiz_creati"] == 2 ? "checked" : "" ?>>
+                    <input type="radio" name="quali_quiz_creati" value=">" class="radio-form" id="quali_quiz_creati_dopo" <? echo $_GET["quali_quiz_creati"] == 3 ? "checked" : "" ?>>
+                    <div onclick="clickRadio(this)" value="<" name="quali_quiz_creati" id="quali_quiz_creati_prima_icona" <? echo $_GET["quali_quiz_creati"] == 1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                    <div onclick="clickRadio(this)" value="=" name="quali_quiz_creati" id="quali_quiz_creati_uguale_icona" <? echo $_GET["quali_quiz_creati"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                    <div onclick="clickRadio(this)" value=">" name="quali_quiz_creati" id="quali_quiz_creati_dopo_icona" <? echo $_GET["quale_data"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
+                </div>
                 <div class="form-row submit-btn">
                     <div class="input-data">
                         <div class="inner"></div>
@@ -77,8 +94,10 @@
                 $cognome = $_GET["cognome"];
                 $email = $_GET["email"];
                 $like =  $_GET["like"] == "false" ? FALSE : TRUE;
+                $quali_quiz_creati = $_GET["quali_quiz_creati"];
+                $quiz_creati = $_GET["quiz_creati"];
             }
-            $risultato_query = query_utente($nome_utente, $nome, $cognome, $email, $like);
+            $risultato_query = query_utente($nome_utente, $nome, $cognome, $email, $like, $quiz_creati , $quali_quiz_creati);
             $risultato = (array) json_decode($risultato_query);
             $n_righe = count($risultato);
             if ($n_righe == 0) {
