@@ -50,6 +50,8 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
 
     $query .= $having;
 
+    // $query .= " ORDER BY QUIZ.TITOLO ASC";
+
     // echo $query;
     return eseguiQuery($query, true);
 }
@@ -226,6 +228,16 @@ function aggiungi_quiz($autore, $titolo, $data_inizio, $data_fine)
 
 function elimina_quiz($id_quiz)
 {
+    $query_elimina_risposte = "DELETE FROM RISPOSTA WHERE QUIZ = $id_quiz";
+    $query_elimina_risposte_utenti = "DELETE FROM RISPOSTA_UTENTE_QUIZ WHERE QUIZ = $id_quiz";
+    $query_elimina_partecipazioni = "DELETE FROM PARTECIPAZIONE WHERE QUIZ = $id_quiz";
+    $query_elimina_domanda = "DELETE FROM DOMANDA WHERE QUIZ = $id_quiz";
+
+    eseguiQuery($query_elimina_risposte , false);
+    eseguiQuery($query_elimina_risposte_utenti , false);
+    eseguiQuery($query_elimina_partecipazioni , false);
+    eseguiQuery($query_elimina_domanda , false);
+
     $query = "DELETE FROM QUIZ WHERE QUIZ.CODICE = $id_quiz";
     try {
         eseguiQuery($query, false);
@@ -253,7 +265,7 @@ function update_quiz($codice, $nome_utente, $titolo, $data_inizio, $data_fine): 
     $risultati = (array)json_decode($risultati);
     $risultati = (array)$risultati[0];
     if ($risultati["utenti"] == 0) {
-        return "L'utente non esiste: $risultati[utenti]";
+        return " L'utente non esiste";
     }
 
     $titolo = str_replace("'", "''", $titolo);
