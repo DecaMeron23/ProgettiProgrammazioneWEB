@@ -16,6 +16,7 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
     $query = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS data_inizio, QUIZ.DATA_FINE AS data_fine, COUNT(DISTINCT DOMANDA.NUMERO) AS domande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS partecipazioni
     FROM  QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ ";
 
+    $titolo = str_replace("'", "''", $titolo);
 
     // $ordine = ""; da fare
     $lista = "";
@@ -114,6 +115,8 @@ function query_partecipazione($codice, $utente, $titolo_quiz, $data, $like, $qua
     FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE
     WHERE 1 = 1 ";
 
+    $titolo_quiz = str_replace("'", "''", $titolo_quiz);
+
     $query .= ($codice == "") ? "" : ("AND PARTECIPAZIONE.CODICE = '$codice'");
 
     $query .= ($utente == "") ? "" : ("AND PARTECIPAZIONE.UTENTE " . ($like ? " LIKE '%$utente%'" : "= '$utente'"));
@@ -198,25 +201,6 @@ function query_data($indice, $data): string
     return $return;
 }
 
-function query_equazione($indice)
-{
-    $sql = "";
-    switch ($indice) {
-        case 1:
-            $sql .= "<";
-            break;
-        case 2:
-            $sql .= "=";
-            break;
-        case 3:
-            $sql .= ">";
-            break;
-    }
-    // echo $return +"\n";
-    return $sql;
-}
-
-
 // Aggiunta QUIZ
 
 /**
@@ -229,6 +213,7 @@ function query_equazione($indice)
  */
 function aggiungi_quiz($autore, $titolo, $data_inizio, $data_fine)
 {
+    $titolo = str_replace("'", "''", $titolo);
     $query = "INSERT INTO QUIZ(CREATORE, TITOLO, DATA_INIZIO, DATA_FINE) VALUES ('$autore','$titolo','$data_inizio','$data_fine')";
 
     try {
@@ -270,6 +255,8 @@ function update_quiz($codice, $nome_utente, $titolo, $data_inizio, $data_fine): 
     if ($risultati["utenti"] == 0) {
         return "L'utente non esiste: $risultati[utenti]";
     }
+
+    $titolo = str_replace("'", "''", $titolo);
 
     // Eliminiamo il vecchio
     $query = "UPDATE QUIZ

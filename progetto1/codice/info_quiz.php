@@ -39,7 +39,7 @@
             </div>
             <div id="info_quiz_titolo_quiz">
                 <!-- <div class="descrizione">Titolo:</div> -->
-                <div><? echo ($_GET["titolo"] != "") ? "$_GET[titolo]" : "NO TITOLO" ?></div>
+                <div><? echo ($_GET["titolo"] != "") ? "".$_GET["titolo"] : "NO TITOLO" ?></div>
             </div>
             <div id="bottoni_quiz">
                 <div><i class="fa-regular fa-pen-to-square" id="bottone_modifica_quiz" onclick="openModificaQUIZ()"></i>
@@ -94,7 +94,7 @@
 
     <div class="popup_quiz popup_modifica_quiz" id="popup_modifica_quiz">
         <form action="#" method="get">
-            <!-- TITOLO -->
+            <!-- Creatore -->
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false" <? echo "value = '$_GET[creatore]'" ?> require><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -102,15 +102,15 @@
                     <label for="">Autore</label>
                 </div>
             </div>
-            <!-- CREATORE -->
+            <!-- Titolo -->
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" <? echo "value = '$_GET[titolo]'" ?> require><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="<? echo $_GET["titolo"]?>" require><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Titolo Quiz</label>
                 </div>
             </div>
-            <!-- DATA -->
+            <!-- DATA inizio-->
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" <? echo "value = '$_GET[data_inizio]'" ?> require><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -125,6 +125,7 @@
                     <label for="">Data partecipazione</label>
                 </div>
             </div>
+            <!-- Data fine -->
             <div class="form-row submit-btn">
                 <div class="input-data">
                     <div class="inner"></div>

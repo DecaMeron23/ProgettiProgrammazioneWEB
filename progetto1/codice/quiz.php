@@ -23,7 +23,7 @@
                 <!-- TITOLO -->
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="<? echo $_GET['titolo'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="<? echo $_GET["titolo"]?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo</label>
                     </div>
