@@ -21,7 +21,7 @@
     <div class="contenuto">
         <div class="filtroRicerca">
             <form id="form_ricerca" action="#" method="get">
-                <!-- TITOLO -->
+                <!-- Nome Utente -->
                 <div class="form-row">
                     <div class="input-data">
                         <input type="text" id="nome_utente" name="nome_utente" placeholder=" " spellcheck="false" value="<? echo $_GET['nome_utente'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -29,7 +29,7 @@
                         <label for="">Nickname</label>
                     </div>
                 </div>
-                <!-- CREATORE -->
+                <!-- nome -->
                 <div class="form-row">
                     <div class="input-data">
                         <input type="text" id="nome" name="nome" placeholder=" " spellcheck="false" value="<? echo $_GET['nome'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -37,6 +37,7 @@
                         <label for="">Nome</label>
                     </div>
                 </div>
+                <!-- Cognome -->
                 <div class="form-row">
                     <div class="input-data">
                         <input type="text" id="cognome" name="cognome" placeholder=" " spellcheck="false" value="<? echo $_GET['cognome'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -44,6 +45,7 @@
                         <label for="">Cognome</label>
                     </div>
                 </div>
+                <!-- Email -->
                 <div class="form-row">
                     <div class="input-data">
                         <input type="text" id="email" name="email" placeholder=" " spellcheck="false" value="<? echo $_GET['email'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -51,7 +53,6 @@
                         <label for="">Email</label>
                     </div>
                 </div>
-
                 <!-- QUIZ CREATI -->
                 <div class="form-row">
                     <div class="input-data">
