@@ -78,6 +78,27 @@ a {
     color: black;
 }
 
+.pulsanti_gioca{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    margin: 50px 0px 20px 0px;
+}
+
+.pulsante{
+    color: #cdbeb5;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 20px;
+    border-radius: 2px;
+    background-color: var(--contrasti-1);
+}
+
+.pulsante:hover{
+    transform: scale(110%);
+}
+
+
 
 /* Header */
 

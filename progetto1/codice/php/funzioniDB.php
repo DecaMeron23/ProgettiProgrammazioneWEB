@@ -50,7 +50,7 @@ function query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like
 
     $query .= $having;
 
-    // $query .= " ORDER BY QUIZ.TITOLO ASC";
+    $query .= " ORDER BY QUIZ.TITOLO ASC";
 
     // echo $query;
     return eseguiQuery($query, true);
@@ -162,10 +162,12 @@ function query_domande_quiz($codice): string
     return eseguiQuery($query, true);
 }
 /**
- * Funzione che crea la query per le ricerce sulle domande
+ * Funzione che crea la query per le ricerce sulle domande, i nomi delle variabili sono: "numero", "testo", "tipo" e "punteggio" 
  * 
  * @param string $id_quiz il codice del quiz
  * @param string $n_domanda il numero di domanda
+ * 
+ * @return string in formato JSON
  */
 function query_risposte_quiz($id_quiz, $n_domanda): string
 {
@@ -176,6 +178,17 @@ function query_risposte_quiz($id_quiz, $n_domanda): string
         ORDER BY NUMERO ASC";
 
     return eseguiQuery($query, true);
+}
+
+/**
+ * Funzione che cerca tutte le risposte corrette per il quiz riponde con: "numero" il numero della singola risposta
+ * 
+ * @param string $quiz il codice del quiz
+ */
+function get_risposte_corrette($quiz){
+    $query = " SELECT NUMERO AS numero FROM RISPOSTA WHERE QUIZ = $quiz AND TIPO = 1 ORDER BY DOMANDA ASC";
+
+    return eseguiQuery($query , true);
 }
 
 
