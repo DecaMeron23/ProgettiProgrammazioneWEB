@@ -104,6 +104,7 @@ function risposta_sbagliata(elemento) {
  */
 function verifica_quiz() {
     // prendiamo tutte le domande
+    pulsante_invia_attiva(false);
     var domande = $(".domanda_risposte");
 
     dati = { functionname: "get_risposte_corrette", codice: id_quiz };
@@ -192,6 +193,8 @@ function reset_risposte() {
     // prendiamo tutte le domande
     var domande = $(".domanda_risposte");
 
+    pulsante_invia_attiva(true);
+
     // scorriamo tutte le domande
     for (let i = 0; i < domande.length; i++) {
         const element = domande[i];
@@ -226,7 +229,7 @@ function inserisci_partecipazione(partecipazione, id_quiz, utente) {
     dati = { functionname: "aggiungi_partecipazione", partecipazione: partecipazione, utente: utente, id_quiz: id_quiz, data: data };
 
     $.get("./php/funzionalitaPHP_JS.php", dati,
-        function (data, textStatus, jqXHR) {});
+        function (data, textStatus, jqXHR) { });
 }
 
 /**
@@ -253,4 +256,20 @@ function inserisci_risposta_utente(partecipazione, id_quiz, domanda, risposta) {
     data = { functionname: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
     $.getJSON("./php/funzionalitaPHP_JS.php", data,
         function (data, textStatus, jqXHR) { });
+}
+
+/**
+ * Funzione che attiva o disattiva il pulsante invia
+ * 
+ * @param {Boolean} bool 
+ */
+function pulsante_invia_attiva(bool) {
+    var element = $("#pulsane_invia");
+    if (bool && !$(element).get(0).hasAttribute("onclick")) {
+        $(element).addClass("pulsante_hover");
+        $(element).attr("onclick", "verifica_quiz()");
+    } else {
+        $(element).removeClass("pulsante_hover");
+        remove_on_click(element)
+    }
 }

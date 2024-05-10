@@ -86,9 +86,9 @@
             ?>
 
             <div class="pulsanti_gioca">
-                <div class="pulsante" onclick="restart_quiz()">Riprova</div>
-                <div class="pulsante" onclick="reset_risposte()">Cancella</div>
-                <div class="pulsante" onclick="verifica_quiz()">Invia</div>
+                <div class="pulsante pulsante_hover" onclick="restart_quiz()">Riprova</div>
+                <div class="pulsante pulsante_hover" onclick="reset_risposte()">Cancella</div>
+                <div class="pulsante pulsante_hover" id="pulsane_invia" onclick="verifica_quiz()">Invia</div>
 
             </div>
             <?

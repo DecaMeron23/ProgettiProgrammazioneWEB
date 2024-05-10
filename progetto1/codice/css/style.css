@@ -94,7 +94,7 @@ a {
     background-color: var(--contrasti-1);
 }
 
-.pulsante:hover{
+.pulsante_hover:hover{
     transform: scale(110%);
 }
 
