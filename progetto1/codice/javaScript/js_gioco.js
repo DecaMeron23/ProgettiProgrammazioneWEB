@@ -4,6 +4,9 @@ const pallino_vuoto = "fa-regular fa-circle";
 const pallino_errato = "fa-solid fa-circle-xmark";
 
 var id_quiz = get_id_quiz();
+var utente = "utenteMain";
+var codice_partecipazione = 0;
+get_codice_partecipazione();
 
 /**
  * Funzione che preleva il codice del quiz
@@ -104,21 +107,23 @@ function verifica_quiz() {
     var domande = $(".domanda_risposte");
 
     dati = { functionname: "get_risposte_corrette", codice: id_quiz };
-    
+
     // * Esecuzione chiamata ajax
     $.getJSON("./php/funzionalitaPHP_JS.php", dati,
         function (data, textStatus, jqXHR) {
             var corretta = data;
+
+            inserisci_partecipazione(codice_partecipazione, id_quiz, utente);
 
             // scorriamo tutte le domande
             for (let i = 0; i < domande.length; i++) {
                 const element = domande[i];
 
                 // * Estraiamo il numero di domanda, le domande partono a contare da 1
-                var domanda = parseInt($(element).attr("domanda_numero"))-1;
+                var domanda = parseInt($(element).attr("domanda_numero"));
 
                 // * Verifichiamo se la risposta data è gista
-                verifica_risposte(element, parseInt(corretta[domanda]["numero"]));
+                verifica_risposte(element, parseInt(corretta[domanda - 1]["numero"]), parseInt(domanda));
             }
         }
     );
@@ -130,8 +135,10 @@ function verifica_quiz() {
  * Funzione che verifca le risposte per una determinata domanda, in particolare colora di verde la risposta giusta, e se si ha sbagliato si colora di rosso la risposta data
  * 
  * @param {Element} domande
+ * @param {strign} corretta 
+ * @param {strign} numero_domanda 
  */
-function verifica_risposte(domande, corretta) {
+function verifica_risposte(domande, corretta, numero_domanda) {
     var risposte = estrai_risposte(domande);
     for (var i = 0; i < risposte.length; i++) {
         var opzione = $(risposte[i]).children(".opzione");
@@ -141,6 +148,9 @@ function verifica_risposte(domande, corretta) {
 
         remove_on_click(pallino);
 
+        if (is_selezionato(pallino)) {
+            inserisci_risposta_utente(codice_partecipazione, id_quiz, numero_domanda, numero_risposta);
+        }
         if (numero_risposta == corretta) {
             colora_risposta(risposte[i], pallino, true);
         } else if (is_selezionato(pallino)) { // * se la risposta attuale non è quella corretta ma è selezionata vuol dire che è sbagliata 
@@ -178,7 +188,7 @@ function remove_on_click(element) {
 /**
  * Funzione che resetta tutte le risposte date
  */
-function reset_risposte(){
+function reset_risposte() {
     // prendiamo tutte le domande
     var domande = $(".domanda_risposte");
 
@@ -194,6 +204,53 @@ function reset_risposte(){
 /**
  * Funzione che resetta il quiz
  */
-function restart_quiz(){
+function restart_quiz() {
     location.reload();
+}
+
+
+/**
+ * Funzione che inserisce la pertecipazione dell'utente
+ * 
+ * @param {int} partecipazione 
+ * @param {string} id_quiz
+ * @param {strign} utente  
+ * 
+ */
+function inserisci_partecipazione(partecipazione, id_quiz, utente) {
+
+    //* prendiamo la data di oggi
+    let data = new Date();
+    data = data.toISOString().split('T')[0];
+
+    dati = { functionname: "aggiungi_partecipazione", partecipazione: partecipazione, utente: utente, id_quiz: id_quiz, data: data };
+
+    $.get("./php/funzionalitaPHP_JS.php", dati,
+        function (data, textStatus, jqXHR) {});
+}
+
+/**
+ * Funzione che setta il codice partecipazione della partecipazione
+ */
+function get_codice_partecipazione() {
+    data = { functionname: "get_max_partecipazione" };
+    $.getJSON("./php/funzionalitaPHP_JS.php", data,
+        function (data, textStatus, jqXHR) {
+            // * Aggiorniamo il codice partecipazione
+            codice_partecipazione = parseInt(data[0]["codice"]) + 1;
+        });
+}
+
+/**
+ * Funzione che inserisce la singola risposta
+ * 
+ * @param {string} domanda
+ * @param {string} id_quiz
+ * @param {strign} partecipazione
+ * @param {string} risposta    
+ */
+function inserisci_risposta_utente(partecipazione, id_quiz, domanda, risposta) {
+    data = { functionname: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
+    $.getJSON("./php/funzionalitaPHP_JS.php", data,
+        function (data, textStatus, jqXHR) { });
 }

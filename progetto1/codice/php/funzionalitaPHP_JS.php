@@ -20,6 +20,18 @@ switch ($_GET["functionname"]) {
         break;
     case 'get_risposte_corrette':
         $aResult = get_risposte_corrette($_GET["codice"]);
+        break;
+    case 'aggiungi_partecipazione':
+        $aResult = aggiunti_partecipazione($_GET["partecipazione"] ,$_GET["utente"], $_GET["id_quiz"], $_GET["data"]);
+        break;
+
+    case 'inserisci_risposta_utente':
+        $aResult = aggiungi_risposta_utente($_GET["partecipazione"], $_GET["id_quiz"], $_GET["domanda"], $_GET["risposta"]);
+        break;
+
+    case 'get_max_partecipazione':
+        $aResult = get_max_partecipazione();
+        break;
 }
 echo $aResult;
 return $aResult;

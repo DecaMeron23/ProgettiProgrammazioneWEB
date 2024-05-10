@@ -185,9 +185,20 @@ function query_risposte_quiz($id_quiz, $n_domanda): string
  * 
  * @param string $quiz il codice del quiz
  */
-function get_risposte_corrette($quiz){
-    $query = " SELECT NUMERO AS numero FROM RISPOSTA WHERE QUIZ = $quiz AND TIPO = 1 ORDER BY DOMANDA ASC";
+function get_risposte_corrette($quiz)
+{
+    $query = "SELECT NUMERO AS numero FROM RISPOSTA WHERE QUIZ = '$quiz' AND TIPO = 1 ORDER BY DOMANDA ASC";
 
+    return eseguiQuery($query, true);
+}
+
+/**
+ * Funzione che ritorna il massimo id di pertecipazione
+ * 
+ * @return string in fomato json con l'id massimo di partecipazione
+ */
+function get_max_partecipazione(){
+    $query =  "SELECT MAX(CODICE) as codice FROM `PARTECIPAZIONE` WHERE 1";
     return eseguiQuery($query , true);
 }
 
@@ -239,6 +250,40 @@ function aggiungi_quiz($autore, $titolo, $data_inizio, $data_fine)
     return "ok";
 }
 
+/**
+ * Funzione che aggiunge una partecipazione
+ * 
+ * @param string $codice il codice della partecipazione
+ * @param string $nome_utente
+ * @param string $id_quiz
+ * @param string $data
+ */
+function aggiunti_partecipazione($codice , $nome_utente, $id_quiz, $data)
+{
+    $query = "INSERT INTO `PARTECIPAZIONE`( `CODICE`, `UTENTE`, `QUIZ`, `DATA`) VALUES ( '$codice', '$nome_utente','$id_quiz','$data')";
+
+    // echo $query;
+
+    eseguiQuery($query, false);
+}
+
+/**
+ * Funzione che aggiunge una risposta ad una partecipazione
+ * 
+ * @param string $partecipazione
+ * @param string $id_quiz
+ * @param string $domanda
+ * @param string $risposta
+ * 
+ */
+function aggiungi_risposta_utente($partecipazione, $id_quiz, $domanda, $risposta)
+{
+    $query = "INSERT INTO `RISPOSTA_UTENTE_QUIZ`(`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES ($partecipazione,$id_quiz,$domanda,$risposta)";
+    echo $query;
+    eseguiQuery($query , false);
+}
+
+
 function elimina_quiz($id_quiz)
 {
     $query_elimina_risposte = "DELETE FROM RISPOSTA WHERE QUIZ = $id_quiz";
@@ -246,10 +291,10 @@ function elimina_quiz($id_quiz)
     $query_elimina_partecipazioni = "DELETE FROM PARTECIPAZIONE WHERE QUIZ = $id_quiz";
     $query_elimina_domanda = "DELETE FROM DOMANDA WHERE QUIZ = $id_quiz";
 
-    eseguiQuery($query_elimina_risposte , false);
-    eseguiQuery($query_elimina_risposte_utenti , false);
-    eseguiQuery($query_elimina_partecipazioni , false);
-    eseguiQuery($query_elimina_domanda , false);
+    eseguiQuery($query_elimina_risposte, false);
+    eseguiQuery($query_elimina_risposte_utenti, false);
+    eseguiQuery($query_elimina_partecipazioni, false);
+    eseguiQuery($query_elimina_domanda, false);
 
     $query = "DELETE FROM QUIZ WHERE QUIZ.CODICE = $id_quiz";
     try {
