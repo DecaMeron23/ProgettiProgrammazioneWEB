@@ -84,8 +84,8 @@
             Nella pagina partecipazioni visualizzeremo: il nickname del partecipante, il titolo del quiz, la data di partecipazione e le risposte date <br>
             Come specificato in precedenza il <span class="evidenzia">nickname</span> e il <span class="evidenzia">titolo del quiz</span> saranno linkati.
         </p>
-        <div class="intro small-intro">Gioca!!</div>
-        <p class="notm-text">Per finire è presente la sezione <span class="evidenzia big">gioca!!</span> la quale, se cliccata, selezionerà automaticamente un quiz a caso tra tutti quelli presenti; da la possibilità di ripondere alle domande e verificare le risposte. <br>Al click del pulsante invio la partecipazione verrà <span class="evidenzia">inserita</span> all'interno del <span class="evidenzia">data base</span>.</p>
+        <div class="intro small-intro">Gioca</div>
+        <p class="notm-text">Per finire è presente la sezione <span class="evidenzia big">gioca</span> la quale, se cliccata, selezionerà automaticamente un quiz a caso tra tutti quelli presenti; da la possibilità di ripondere alle domande e verificare le risposte. <br>Al click del pulsante invio la partecipazione verrà <span class="evidenzia">inserita</span> all'interno del <span class="evidenzia">data base</span>.</p>
 
     </div>
 
