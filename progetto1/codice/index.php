@@ -80,10 +80,12 @@
             Infine, al click del numero di partecipanti si verrà portati in una pagina che visualizza tutte le partecipazioni di quel quiz.
         </p>
         <div class="intro small-intro">Partecipazione</div>
-        <p class="norm-tex">
+        <p class="norm-text">
             Nella pagina partecipazioni visualizzeremo: il nickname del partecipante, il titolo del quiz, la data di partecipazione e le risposte date <br>
-            Come specificato in precedenza il <span class="evidenzia">nickname</span> e il <span class="evidenzia">titolo del quiz</span> saranno linkati   .
+            Come specificato in precedenza il <span class="evidenzia">nickname</span> e il <span class="evidenzia">titolo del quiz</span> saranno linkati.
         </p>
+        <div class="intro small-intro">Gioca!!</div>
+        <p class="notm-text">Per finire è presente la sezione <span class="evidenzia big">gioca!!</span> la quale, se cliccata, selezionerà automaticamente un quiz a caso tra tutti quelli presenti; da la possibilità di ripondere alle domande e verificare le risposte.</p>
 
     </div>
 

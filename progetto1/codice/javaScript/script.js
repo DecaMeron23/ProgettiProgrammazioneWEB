@@ -215,6 +215,34 @@ function clickRadio(elemento) {
     }
 }
 
+/**
+ * Funzione che strae un quiz a caso e ci fa giocare
+ */
+function gioca_quiz() {
+    // * Richiesta di tutti i quiz
+    $.getJSON("https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php", { functionname: 'getQUIZ'},
+        function (data, textStatus, jqXHR) {
+            //* seleziono un quiz a caso
+            codice = data[Math.floor(Math.random()*data.length)];
+            codice = codice["codice"];
+            //*per quel quiz apro la pagina gioca
+            $.ajax({
+                type: "GET",
+                url: 'https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php',
+                dataType: 'json',
+                data: { functionname: 'getQUIZ', id_quiz: codice },
+                success: function (obj, textstatus) {
+                    reinderizzaGIOCA(obj[0]);
+                }
+            });
+        }
+    );
+
+
+
+}
+
+
 
 $(inizzializzazione);
 $(toggleFilter);

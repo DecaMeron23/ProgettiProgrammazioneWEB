@@ -40,7 +40,9 @@
             <div id="info_quiz_titolo_quiz">
                 <div><? echo ($_GET["titolo"] != "") ? "" . $_GET["titolo"] : "NO TITOLO" ?></div>
             </div>
-            <div></div>
+            <div>
+                <div class="pulsante" onclick="gioca_quiz()">Cambia QUIZ</div>
+            </div>
         </div>
         <div class="contenuto_info_QUIZ">
             <?
@@ -54,7 +56,7 @@
             } else {
                 echo "<div class = 'tutte_domande'>";
                 $pallino_risposta = '<i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i>';
-                $i =0;
+                $i = 0;
                 shuffle($domande_quiz);
                 foreach ($domande_quiz as $riga) {
                     $i++;

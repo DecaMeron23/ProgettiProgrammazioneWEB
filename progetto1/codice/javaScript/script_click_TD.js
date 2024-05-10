@@ -144,6 +144,11 @@ function reinderizzaINFO_QUIZ(dati) {
     $.redirectGET(pagina, dati);
 }
 
+function reinderizzaGIOCA(dati) {
+    var pagina = "https://quizmakeandplay.altervista.org/gioca.php";
+    $.redirectGET(pagina, dati);
+}
+
 // estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
 $.extend(
     {

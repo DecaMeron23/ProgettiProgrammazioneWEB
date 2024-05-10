@@ -161,6 +161,7 @@ a {
 }
 
 .iconaRicerca {
+    cursor: pointer;
     z-index: 100;
     transition: var(--transizione);
     position: fixed;
