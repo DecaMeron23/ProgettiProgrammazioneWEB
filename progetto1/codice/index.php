@@ -57,12 +57,12 @@
             </ol>
         </div>
         <div class="stacca-sopra norm-text">
-            Le ricerce vengono eseguite in modalità <span class="evidenzia">like</span> (cerca tutti i testi che includono la porzione di testo), mentre per le ricerche sulla <span class="evidenzia">data</span> si hanno 3 opzioni:
+            Le ricerce vengono eseguite in modalità <span class="evidenzia">like</span> (cerca tutti i testi che includono la porzione di testo), mentre per le ricerche sulle <span class="evidenzia">date</span>, oppure sui valori <span class="evidenzia">numerici</span>, si hanno 3 opzioni:
         </div>
-        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-backward"></i></span>Ricerca tutte le data precedenti alla data specificata</div>
-        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-arrows-to-circle"></i></span>Ricerca tutte le data che sonon uguali alla data specificata</div>
-        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-forward"></i></span>Ricerca tutte le data successive alla data specificata</div>
-        <div class="stacca-sopra norm-text">se non viene specificata nessuna opzione la ricerca per data viene <span class="evidenzia">ignorata</span>.</div>
+        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-backward"></i></span>Ricerca tutte le corrispondenze precedenti al valore specificato</div>
+        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-arrows-to-circle"></i></span>Ricerca tutte le corrispondenze che sono uguali al valore specificato</div>
+        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-forward"></i></span>Ricerca tutte le corrispondenze successive al valore specificato</div>
+        <div class="stacca-sopra norm-text">se non viene specificata nessuna opzione la ricerca viene <span class="evidenzia">ignorata</span>.</div>
 
         <div class="intro small-intro">Utente</div>
         <div class="norm-text">

@@ -3,7 +3,7 @@ const pallino_check = "fa-solid fa-circle-check";
 const pallino_vuoto = "fa-regular fa-circle";
 const pallino_errato = "fa-solid fa-circle-xmark";
 
-var id_quiz = get_id_quiz();
+var id_quiz;
 var utente = "utenteMain";
 var codice_partecipazione = 0;
 get_codice_partecipazione();
@@ -14,10 +14,14 @@ get_codice_partecipazione();
  * @returns il codice del quiz
  */
 function get_id_quiz() {
-    var urlParams = new URLSearchParams(window.location.search);
-    var codice = urlParams.get('codice');
-    return codice;
+    
 }
+
+$(document).ready(function() {
+    var id =$(".info_QUIZ").attr("id_quiz");
+    // alert(id); 
+    id_quiz = id;
+});
 
 
 /**

@@ -153,8 +153,10 @@ function updateQUIZ(elemento) {
     dataInizio = new Date(dataInizio_string);
     dataFine = new Date(dataFine_string);
 
-    if (dataFine <= dataInizio) {
-        alert("Attenzione inserire una data di fine maggiore di data inizo")
+    if(dataInizio_string == "" || dataFine_string == "" || titolo == "" || creatore == ""){
+        alert("Completare tutti i campi!")
+    } else if (dataFine <= dataInizio) {
+        alert("Attenzione inserire una data di fine maggiore di data inizo!")
     } else {
         $.ajax({
             type: "GET",

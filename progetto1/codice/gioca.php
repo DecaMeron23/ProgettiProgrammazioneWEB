@@ -21,24 +21,24 @@
 
     <?php include_once "php/funzioniDB.php" ?>
 
-    <div class="info_QUIZ">
+    <div class="info_QUIZ" id_quiz ="<?echo $_POST["codice"]?>" >
         <div class="testata_info_QUIZ">
             <div id="autore_date">
                 <div class="descrizione_quiz">
                     <div><i class="fa-regular fa-user"></i></div>
-                    <div><? echo ($_GET["creatore"] != "") ? "$_GET[creatore]" : "NO UTENTE" ?></div>
+                    <div><? echo ($_POST["creatore"] != "") ? "$_POST[creatore]" : "NO UTENTE" ?></div>
                 </div>
                 <div class="descrizione_quiz">
                     <div><i class="fa-regular fa-calendar-check"></i></div>
-                    <div class="descrizione_quiz_data"><? echo ($_GET["data_inizio"] != "") ? "$_GET[data_inizio]" : "NO DATA INIZIO" ?></div>
+                    <div class="descrizione_quiz_data"><? echo ($_POST["data_inizio"] != "") ? "$_POST[data_inizio]" : "NO DATA INIZIO" ?></div>
                 </div>
                 <div class="descrizione_quiz">
                     <div><i class="fa-regular fa-calendar-xmark"></i></div>
-                    <div class="descrizione_quiz_data"><? echo ($_GET["data_fine"] != "") ? "$_GET[data_fine]" : "NO DATA" ?></div>
+                    <div class="descrizione_quiz_data"><? echo ($_POST["data_fine"] != "") ? "$_POST[data_fine]" : "NO DATA" ?></div>
                 </div>
             </div>
             <div id="info_quiz_titolo_quiz">
-                <div><? echo ($_GET["titolo"] != "") ? "" . $_GET["titolo"] : "NO TITOLO" ?></div>
+                <div><? echo ($_POST["titolo"] != "") ? "" . $_POST["titolo"] : "NO TITOLO" ?></div>
             </div>
             <div>
                 <div class="pulsante" onclick="gioca_quiz()">Cambia QUIZ</div>
@@ -46,15 +46,14 @@
         </div>
         <div class="contenuto_info_QUIZ">
             <?
-            $id_quiz = $_GET["codice"];
+            $id_quiz = $_POST["codice"];
             $domande_quiz_string = query_domande_quiz($id_quiz);
             $domande_quiz = (array)(json_decode($domande_quiz_string));
             $n_righe = count($domande_quiz);
+            echo "<div class ='tutte_domande'>";
             if ($n_righe == 0) {
-                echo "<div class ='tutte_domande'>";
-                echo "<div class='domanda_risposte'><div class='domanda_punteggio'><div class='domanda'>Questo quiz attualmente non ha nessuna domanda</div>";
+                echo "<div class='domanda_risposte'><div class='domanda_punteggio'><div class='domanda'>Questo quiz attualmente non ha nessuna domanda</div></div></div>";
             } else {
-                echo "<div class = 'tutte_domande'>";
                 $pallino_risposta = '<i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i>';
                 $i = 0;
                 shuffle($domande_quiz);

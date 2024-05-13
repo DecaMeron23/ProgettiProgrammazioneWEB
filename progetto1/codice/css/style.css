@@ -33,7 +33,7 @@
 
 
 html {
-    Scrollbar-width:none;
+    /* Scrollbar-width: none; */
     min-width: 1265px;
 
 }
@@ -69,7 +69,7 @@ body {
 /* Body */
 .menuOpen {
     height: 100%;
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
 
@@ -158,6 +158,10 @@ a {
 
 .ricercaShow {
     transform: translateX(100%);
+}
+
+#form_ricerca{
+    padding: 0;
 }
 
 .iconaRicerca {

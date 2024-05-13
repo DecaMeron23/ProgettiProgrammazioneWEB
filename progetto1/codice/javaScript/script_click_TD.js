@@ -81,9 +81,9 @@ function clickTitoloQuizPARTECIPAZIONI(el) {
  * 
  * @param {Element} el
  */
-function clickNomeUtenteUTENTE(el){
-    var nome_utente= el.innerHTML;
-    $("#creatore").attr("value" , nome_utente);
+function clickNomeUtenteUTENTE(el) {
+    var nome_utente = el.innerHTML;
+    $("#creatore").attr("value", nome_utente);
     attivaMaschera(1)
 
     $(".popup_quiz").toggleClass("popup_quiz_show");
@@ -141,12 +141,12 @@ function reindirizzaUTENTE(dati) {
 
 function reinderizzaINFO_QUIZ(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/info_quiz.php";
-    $.redirectGET(pagina, dati);
+    $.redirectPOST(pagina, dati);
 }
 
 function reinderizzaGIOCA(dati) {
     var pagina = "https://quizmakeandplay.altervista.org/gioca.php";
-    $.redirectGET(pagina, dati);
+    $.redirectPOST(pagina, dati);
 }
 
 // estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
@@ -158,5 +158,17 @@ $.extend(
                 form += `<input type="hidden" name="${key}" value="${value}">`;
             });
             $(`<form action="${location}"method="get">${form}</form>`).appendTo($(document.body)).submit();
+        }
+    });
+
+// estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
+$.extend(
+    {
+        redirectPOST: function (location, args) {
+            var form = '';
+            $.each(args, function (key, value) {
+                form += `<input type="hidden" name="${key}" value="${value}">`;
+            });
+            $(`<form action="${location}"method="post">${form}</form>`).appendTo($(document.body)).submit();
         }
     });
