@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Mag 07, 2024 alle 13:43
+-- Creato il: Mag 13, 2024 alle 18:00
 -- Versione del server: 8.0.32
 -- Versione PHP: 8.0.22
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `my_quizmakeandplay`
 --
+CREATE DATABASE IF NOT EXISTS `my_quizmakeandplay` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci;
+USE `my_quizmakeandplay`;
 
 -- --------------------------------------------------------
 
@@ -367,7 +369,7 @@ INSERT INTO `PARTECIPAZIONE` (`CODICE`, `UTENTE`, `QUIZ`, `DATA`) VALUES
 (4, 'alessandro_misterioso', 8, '2024-04-25'),
 (3, 'alessandro_fantasma', 8, '2024-04-26'),
 (2, 'alessandro_90', 8, '2024-04-27'),
-(1, 'alessandro_86', 8, '2024-04-28'),
+(502, 'utenteMain', 100, '2024-05-10'),
 (13, 'andrea_enigma', 11, '2024-04-28'),
 (14, 'andrea_fantasma', 11, '2024-04-27'),
 (15, 'andrea_miraggio', 11, '2024-04-26'),
@@ -460,6 +462,10 @@ INSERT INTO `PARTECIPAZIONE` (`CODICE`, `UTENTE`, `QUIZ`, `DATA`) VALUES
 (102, 'marina87', 33, '2024-04-27'),
 (103, 'mario_giallo', 33, '2024-04-26'),
 (104, 'marta_88', 33, '2024-04-25'),
+(501, 'utenteMain', 19, '2024-05-10'),
+(500, 'utenteMain', 19, '2024-05-10'),
+(499, 'utenteMain', 19, '2024-05-10'),
+(498, 'utenteMain', 4, '2024-05-10'),
 (109, 'massimo86', 35, '2024-04-28'),
 (110, 'michele_mistico', 35, '2024-04-27'),
 (111, 'michele88', 35, '2024-04-26'),
@@ -755,7 +761,11 @@ INSERT INTO `PARTECIPAZIONE` (`CODICE`, `UTENTE`, `QUIZ`, `DATA`) VALUES
 (485, 'camilla_favolosa', 8, '2024-04-28'),
 (489, 'carlo_85', 8, '2024-04-27'),
 (493, 'chiara_miraggio', 8, '2024-04-26'),
-(497, 'chiara89', 8, '2024-04-25');
+(497, 'chiara89', 8, '2024-04-25'),
+(503, 'utenteMain', 16, '2024-05-10'),
+(504, 'utenteMain', 99, '2024-05-10'),
+(505, 'utenteMain', 12, '2024-05-10'),
+(506, 'utenteMain', 76, '2024-05-10');
 
 -- --------------------------------------------------------
 
@@ -874,7 +884,8 @@ INSERT INTO `QUIZ` (`CODICE`, `CREATORE`, `TITOLO`, `DATA_INIZIO`, `DATA_FINE`) 
 (97, 'giovanni_arcano', 'Il mondo del teatro', '2024-07-30', '2024-08-09'),
 (98, 'marta_mistica', 'Grandi imperi del passato', '2024-07-31', '2024-08-10'),
 (99, 'simona_incanto', 'Quiz sulle opere cinematografiche di culto', '2024-08-01', '2024-08-11'),
-(100, 'luigi_fantasia', 'La storia della fotografia', '2024-08-02', '2024-08-12');
+(100, 'luigi_fantasia', 'La storia della fotografia', '2024-08-02', '2024-08-12'),
+(101, 'elena_aurora', 'Questo costa?', '2024-05-09', '2024-05-31');
 
 -- --------------------------------------------------------
 
@@ -2110,9 +2121,6 @@ CREATE TABLE `RISPOSTA_UTENTE_QUIZ` (
 --
 
 INSERT INTO `RISPOSTA_UTENTE_QUIZ` (`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES
-(1, 8, 1, 2),
-(1, 8, 2, 3),
-(1, 8, 3, 4),
 (2, 8, 1, 3),
 (2, 8, 2, 4),
 (2, 8, 3, 1),
@@ -3307,9 +3315,30 @@ INSERT INTO `RISPOSTA_UTENTE_QUIZ` (`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOS
 (493, 8, 1, 3),
 (493, 8, 2, 4),
 (493, 8, 3, 1),
-(497, 8, 1, 4),
-(497, 8, 2, 1),
-(497, 8, 3, 2);
+(498, 4, 2, 4),
+(498, 4, 3, 2),
+(499, 19, 1, 2),
+(499, 19, 2, 3),
+(499, 19, 3, 2),
+(500, 19, 1, 3),
+(500, 19, 2, 2),
+(500, 19, 3, 2),
+(501, 19, 1, 2),
+(501, 19, 2, 1),
+(501, 19, 3, 1),
+(502, 100, 1, 3),
+(502, 100, 2, 2),
+(503, 16, 1, 3),
+(503, 16, 2, 1),
+(503, 16, 3, 4),
+(504, 99, 1, 3),
+(504, 99, 2, 3),
+(505, 12, 1, 4),
+(505, 12, 2, 2),
+(505, 12, 3, 1),
+(506, 76, 1, 1),
+(506, 76, 2, 3),
+(506, 76, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -3472,7 +3501,8 @@ INSERT INTO `UTENTE` (`NOME_UTENTE`, `NOME`, `COGNOME`, `EMAIL`) VALUES
 ('sara_stellare', 'Sara', 'Mancini', 'sara.mancini@yahoo.com'),
 ('luca_nuvoloso', 'Luca', 'Barbieri', 'luca.barbieri@hotmail.com'),
 ('elena_incantatrice', 'Elena', 'Testa', 'elena.testa@gmail.com'),
-('alessia_incantata', 'Alessia', 'Palumbo', 'alessia.palumbo@libero.it');
+('alessia_incantata', 'Alessia', 'Palumbo', 'alessia.palumbo@libero.it'),
+('utenteMain', 'Benedetta', 'Emilio', 'ciaoatutti@studenti.unibg.it');
 
 --
 -- Indici per le tabelle scaricate
@@ -3522,13 +3552,13 @@ ALTER TABLE `UTENTE`
 -- AUTO_INCREMENT per la tabella `PARTECIPAZIONE`
 --
 ALTER TABLE `PARTECIPAZIONE`
-  MODIFY `CODICE` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=498;
+  MODIFY `CODICE` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=507;
 
 --
 -- AUTO_INCREMENT per la tabella `QUIZ`
 --
 ALTER TABLE `QUIZ`
-  MODIFY `CODICE` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `CODICE` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT per la tabella `RISPOSTA`
