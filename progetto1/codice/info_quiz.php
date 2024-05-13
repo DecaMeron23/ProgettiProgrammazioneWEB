@@ -87,7 +87,7 @@
                     echo "</div>";
                 }
             }
-            echo "</div>"
+            echo "</div></div></div>"
             ?>
         </div>
     </div>
