@@ -2,7 +2,7 @@
     --main-colour: #8A786F;
     --base: #D0C5BE;
 
-    /* Sfumatura più chiara */
+    /* Sfumatura piÃ¹ chiara */
     --t-1: #E8DFDA;
     --t-2: #D0C5BE;
     --t-3: #B8A9A1;
@@ -10,9 +10,9 @@
     --t-5: #8A786F;
     --t-6: #725E55;
     --t-7: #5A443C;
-    /* Sfumatura più scura */
+    /* Sfumatura piÃ¹ scura */
 
-    /* Sfumature più chiare */
+    /* Sfumature piÃ¹ chiare */
     --ct-1: #bfb4a7;
     --ct-2: #b2a495;
     --ct-3: #a59583;
@@ -29,13 +29,54 @@
     --contrasti-1: #3E4754;
 
     --transizione: .3s;
+
 }
 
 
 html {
     /* Scrollbar-width: none; */
-    min-width: 1265px;
+    min-width: 700px;
+}
 
+@media screen and (min-width: 720px) and (max-width: 1040px) {
+    .tabellaRisultati {
+        font-size: calc(1.4vw)
+    }
+
+    .risultati>h1{
+        font-size: 1.9vw !important
+    }
+
+    .footer{
+        font-size: calc(1.5vw) !important
+    }
+    .logoUniBg{
+        max-height: 10.5vh !important
+    }
+
+    .copyright{
+        font-size: 1.1vw !important
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .tabellaRisultati {
+        font-size: 10px
+
+    }
+    .risultati>h1{
+        font-size: 13.7px !important
+    }
+    .footer{
+            font-size: 10.8px !important
+    }
+
+    .logoUniBg{
+        max-height: 76px !important
+    }
+    .copyright{
+        font-size: 7.9px !important
+    }
 }
 
 /* impostazioni generali */
@@ -78,14 +119,14 @@ a {
     color: black;
 }
 
-.pulsanti_gioca{
+.pulsanti_gioca {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     margin: 50px 0px 20px 0px;
 }
 
-.pulsante{
+.pulsante {
     color: #cdbeb5;
     cursor: pointer;
     transition: 0.3s;
@@ -94,7 +135,7 @@ a {
     background-color: var(--contrasti-1);
 }
 
-.pulsante_hover:hover{
+.pulsante_hover:hover {
     transform: scale(110%);
 }
 
@@ -160,7 +201,7 @@ a {
     transform: translateX(100%);
 }
 
-#form_ricerca{
+#form_ricerca {
     padding: 0;
 }
 
@@ -318,9 +359,10 @@ form .form-row .textarea {
 /* Risultati */
 
 .risultati {
-    width: 100%;
+    /* width: 100%; */
     align-items: center;
     display: flex;
+    margin: 0px 25px 0 25px;
     flex-direction: column;
 }
 
@@ -337,6 +379,7 @@ form .form-row .textarea {
 }
 
 .tabellaRisultati {
+    transition: 0.5s;
     margin: 20px 0 20px 0;
     /* background-color: ; */
 }
@@ -460,7 +503,7 @@ form .form-row .textarea {
 /* Footer */
 
 .footer {
-    height: 150px;   
+    height: 150px;
     background-color: var(--main-colour);
     display: flex;
     width: 100%;
@@ -469,13 +512,13 @@ form .form-row .textarea {
     flex-direction: column;
 }
 
-.footer-sopra{
+.footer-sopra {
     margin-top: 10px;
     display: flex;
     justify-content: center;
 }
 
-.copyright{
+.copyright {
     font-weight: 300;
     font-size: 12px;
 }
