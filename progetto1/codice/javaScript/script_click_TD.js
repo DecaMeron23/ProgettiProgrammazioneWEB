@@ -42,7 +42,7 @@ function clickCreatoreQUIZ(el) {
 function clickPartecipantiQUIZ(el) {
     var numero = el.innerHTML;
     if (numero == 0) {
-        alert("Nessuno ha anocra partecipato a questo quiz");
+        alert("Nessuno ha ancora partecipato a questo quiz");
     } else {
         var codice = el.getAttribute("id-quiz");
         var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php";

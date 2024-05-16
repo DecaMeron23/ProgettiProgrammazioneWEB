@@ -40,13 +40,16 @@
             <a href="https://quizmakeandplay.altervista.org/index.php">Home</a>
         </div>
         <div class="evidenzia big stacca-sopra">
-            <a href="https://quizmakeandplay.altervista.org/utente.php">Utente</a>
-        </div>
-        <div class="evidenzia big stacca-sopra">
             <a href="https://quizmakeandplay.altervista.org/quiz.php">Quiz</a>
         </div>
         <div class="evidenzia big stacca-sopra">
+            <a href="https://quizmakeandplay.altervista.org/utente.php">Utente</a>
+        </div>
+        <div class="evidenzia big stacca-sopra">
             <a href="https://quizmakeandplay.altervista.org/partecipazione.php">Partecipazione</a>
+        </div>
+        <div class="evidenzia big stacca-sopra">
+            <a tabindex="-1" href="#" onclick="gioca_quiz()"> Gioca</a>
         </div>
 
         <div class="intro small-intro stacca-sopra">Filtro Ricerca</div>
@@ -57,11 +60,11 @@
             </ol>
         </div>
         <div class="stacca-sopra norm-text">
-            Le ricerce vengono eseguite in modalità <span class="evidenzia">like</span> (cerca tutti i testi che includono la porzione di testo), mentre per le ricerche sulle <span class="evidenzia">date</span>, oppure sui valori <span class="evidenzia">numerici</span>, si hanno 3 opzioni:
+            Le ricerce vengono eseguite in modalità <span class="evidenzia">like</span> (cerca tutti i testi che includono la porzione di testo), mentre per le ricerche sulle <span class="evidenzia">date</span> o sui valori <span class="evidenzia">numerici</span>, si hanno 3 opzioni:
         </div>
-        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-backward"></i></span>Ricerca tutte le corrispondenze precedenti al valore specificato</div>
+        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-backward"></i></span>Ricerca tutte le corrispondenze precedenti del valore specificato</div>
         <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-arrows-to-circle"></i></span>Ricerca tutte le corrispondenze che sono uguali al valore specificato</div>
-        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-forward"></i></span>Ricerca tutte le corrispondenze successive al valore specificato</div>
+        <div class="stacca-sopra"><span class="padding-lati icone-ricerca-data margin-contorno"><i class="fa-solid fa-forward"></i></span>Ricerca tutte le corrispondenze successive del valore specificato</div>
         <div class="stacca-sopra norm-text">se non viene specificata nessuna opzione la ricerca viene <span class="evidenzia">ignorata</span>.</div>
 
         <div class="intro small-intro">Utente</div>
