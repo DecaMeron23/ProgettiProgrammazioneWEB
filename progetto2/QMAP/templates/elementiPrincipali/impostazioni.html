@@ -1,5 +1,19 @@
+{% load static %}
+
+
+
+
 <!-- Reset del CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+{% comment %} Bootstrap {% endcomment %}
+<script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<link rel="stylesheet" href={% static "bootstrap\css\bootstrap.min.css" %}>
+
+<!-- Script -->
+<script src={% static "js/script.js" %}></script>
+<script src={% static "js/script_click_TD.js" %}></script>
+
 
 <!-- importazione del font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +33,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 <!-- Link CSS -->
-<link rel="stylesheet" href="{% static "css/style.css" %}">
-<link rel="stylesheet" href="{% static "css/radio_button.css" %}">
+<link rel="stylesheet" href={% static "css/style.css" %}>
+<link rel="stylesheet" href={% static "css/radio_button.css" %}>
 
-<!-- Script -->
-<script src="{% static "js/script.js" %}"></script>
-<script src="{% static "js/script_click_TD.js" %}"></script>

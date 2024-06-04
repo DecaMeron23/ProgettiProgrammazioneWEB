@@ -1,0 +1,116 @@
+/* Schermata modifica Menu */
+.popup_quiz {
+    box-shadow: -15px -15px 20px 7px rgba(0, 0, 0, 0.15);
+    min-width: 60%;
+    /* min-height: 70%; */
+    border: 1px solid var(--ct-1);
+    background-color: #D3D3D7;
+    /*Da cambiare*/
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+}
+
+#popup_elimina_quiz {
+    min-width: 41%;
+    padding: 17px;
+    padding-bottom: 3px;
+}
+
+.popup_quiz_show{
+    display: inline;
+    z-index: 100;
+
+}
+
+.popup_quiz .input-data .underline:before {
+    position: absolute;
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: var(--contrasti);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+}
+
+.popup_quiz .input-data input:focus~label,
+.popup_quiz .input-data input:not(:placeholder-shown)~label
+    {
+    margin-left: 0px;
+    transform: translateY(-40px);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--contrasti-1);
+}
+.popup_quiz .input-data input,
+.popup_quiz .textarea textarea {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 17px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.12);
+}
+
+.popup_quiz .submit-btn .input-data {
+    overflow: hidden;
+    height: 45px !important;
+    /* width: 25% !important; */
+}
+
+.popup_quiz .submit-btn .input-data .inner {
+    height: 100%;
+    width: 300%;
+    position: absolute;
+    left: -100%;
+    transition: all 0.4s;
+    background: rgb(118,132,151);
+    background: linear-gradient(90deg, rgba(118,132,151,1) 9%, rgba(62,71,84,1) 100%);
+}
+
+.popup_quiz .submit-btn .input-data:hover .inner {
+    left: 0;
+}
+
+.popup_quiz .submit-btn .input-data input {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+}
+
+.popup_quiz form .form-row {
+    display: flex;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+#popup_elimina_quiz p{
+    margin-bottom: 16px;
+    font-weight: 650;
+    color: var(--contrasti-1);
+}
+
+#popup_elimina_quiz form{
+    padding: 0 0 0 0;
+}
+
+#popup_elimina_quiz{
+    text-align:center;
+}
+
+#popup_elimina_quiz p:not(.popup_titolo){
+    font-size:20px;
+    font-weight:800;
+    margin-bottom: 5px;
+}
