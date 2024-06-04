@@ -37,8 +37,7 @@
 body {
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
-    overflow-x: none;
-    overflow-y: hidden;
+    overflow-x: hidden;
     scrollbar-width: none;
 }
 
