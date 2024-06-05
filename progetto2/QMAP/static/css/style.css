@@ -45,7 +45,7 @@
 
 /* impostazioni generali */
 body {
-    /* padding: 2px !important; */
+    padding: 0px !important;
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
     scrollbar-width: none;
@@ -151,11 +151,6 @@ a {
 .iconaRicerca>i:hover {
     transform: rotateZ(90deg);
 }
-
-.iconaRicercaShow {
-    transform: translateX(250px);
-}
-
 
 /* FORM */
 
@@ -294,7 +289,7 @@ form .form-row .textarea {
     flex-direction: column;
 }
 
-.risultati>h1 {
+.infoRigheTabella {
     border-radius: 25px;
     padding: 12px;
     font-size: 20px;

@@ -1,0 +1,150 @@
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFiltro" aria-labelledby="offcanvasFiltroLabel">
+    <div class="offcanvas-header">
+        <h5 id="offcanvasFiltroLabel">Filtro Ricerca {{nomePagina}}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        <form id="form_ricerca" action="#" method="get">
+            {% comment %} ! TITOLO {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false"
+                        value={{filtro.titolo}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">Titolo</label>
+                </div>
+            </div>
+            {% comment %} ! CREATORE {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false"
+                        value={{filtro.creatore}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">Autore</label>
+                </div>
+            </div>
+            {% comment %} ! DATA INIZIO {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="dataInizio" name="dataInizio" placeholder=" " spellcheck="false"
+                        value={{filtro.dataInizio}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">Data Inizio</label>
+                </div>
+            </div>
+            {% comment %} <div class="radio-button">
+                <input type="radio" name="quale_dataInizio" value="1" class="radio-form" id="quale_dataInizio_prima"
+                    <? echo $_GET["quale_dataInizio"]==1 ? "checked" : "" ?>>
+                <input type="radio" name="quale_dataInizio" value="2" class="radio-form" id="quale_dataInizio_uguale"
+                    <? echo $_GET["quale_dataInizio"]==2 ? "checked" : "" ?>>
+                <input type="radio" name="quale_dataInizio" value="3" class="radio-form" id="quale_data_dopo_dopo" <?
+                    echo $_GET["quale_dataInizio"]==3 ? "checked" : "" ?>>
+                <div onclick="clickRadio(this)" value="1" name="quale_dataInizio" id="quale_dataInizio_prima_icona" <?
+                    echo $_GET["quale_dataInizio"]==1 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-backward"></i></div>
+                <div onclick="clickRadio(this)" value="2" name="quale_dataInizio" id="quale_dataInizio_uguale_icona"
+                    <? echo $_GET["quale_dataInizio"]==2 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-arrows-to-circle"></i></div>
+                <div onclick="clickRadio(this)" value="3" name="quale_dataInizio" id="quale_dataInizio_dopo_icona" <?
+                    echo $_GET["quale_dataInizio"]==3 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-forward"></i></div>
+            </div> {% endcomment %}
+            {% comment %} ! DATA FINE {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="text" id="dataFine" name="dataFine" placeholder=" "
+                        value={{filtro.dataFine}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">Data Fine</label>
+                </div>
+            </div>
+            {% comment %} <div class="radio-button">
+                <input type="radio" name="quale_dataFine" value="1" class="radio-form" id="quale_dataFine_prima" <?
+                    echo $_GET["quale_dataFine"]==1 ? "checked" : "" ?>>
+                <input type="radio" name="quale_dataFine" value="2" class="radio-form" id="quale_dataFine_uguale" <?
+                    echo $_GET["quale_dataFine"]==2 ? "checked" : "" ?>>
+                <input type="radio" name="quale_dataFine" value="3" class="radio-form" id="quale_dataFine_dopo" <?
+                    echo $_GET["quale_dataFine"]==3 ? "checked" : "" ?>>
+                <div onclick="clickRadio(this)" value="1" name="quale_dataFine" id="quale_dataFine_prima_icona" <?
+                    echo $_GET["quale_dataFine"]==1 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-backward"></i></div>
+                <div onclick="clickRadio(this)" value="2" name="quale_dataFine" id="quale_dataFine_uguale_icona" <?
+                    echo $_GET["quale_dataFine"]==2 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-arrows-to-circle"></i></div>
+                <div onclick="clickRadio(this)" value="3" name="quale_dataFine" id="quale_dataFine_dopo_icona" <? echo
+                    $_GET["quale_dataFine"]==3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i>
+                </div>
+            </div> {% endcomment %}
+            {% comment %} ! QUIZ domande {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="number" id="nDomande" name="nDomande" placeholder=" "
+                    {% if filtro.isSet_nDomande %}
+                        value={{filtro.nDomande}}
+                    {% endif %}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">N° di Domande</label>
+                </div>
+            </div>
+            {% comment %} <div class="radio-button">
+                <input type="radio" name="quali_domande" value="<" class="radio-form" id="quali_domande_prima" <? echo
+                    $_GET["quali_domande"]==1 ? "checked" : "" ?>>
+                <input type="radio" name="quali_domande" value="=" class="radio-form" id="quali_domande_uguale" <? echo
+                    $_GET["quali_domande"]==2 ? "checked" : "" ?>>
+                <input type="radio" name="quali_domande" value=">" class="radio-form" id="quali_domande_dopo" <? echo
+                    $_GET["quali_domande"]==3 ? "checked" : "" ?>>
+                <div onclick="clickRadio(this)" value="<" name="quali_domande" id="quali_domande_prima_icona" <? echo
+                    $_GET["quali_domande"]==1 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i>
+                </div>
+                <div onclick="clickRadio(this)" value="=" name="quali_domande" id="quali_domande_uguale_icona" <? echo
+                    $_GET["quali_domande"]==2 ? "class='selected-radio'" : "" ?>><i
+                        class="fa-solid fa-arrows-to-circle"></i></div>
+                <div onclick="clickRadio(this)" value=">" name="quali_domande" id="quali_domande_dopo_icona" <? echo
+                    $_GET["quale_data"]==3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
+            </div> {% endcomment %}
+            {% comment %} ! QUIZ partecipazioni {% endcomment %}
+            <div class="form-row">
+                <div class="input-data">
+                    <input type="number" id="nPartecipazioni" name="nPartecipazioni" placeholder=" "
+                    {% if filtro.isSet_nPartecipazioni %}
+                    value={{filtro.nPartecipazioni}}
+                    {% endif %}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <div class="underline"></div>
+                    <label for="">N° di partecipanti</label>
+                </div>
+            </div>
+            {% comment %} <div class="radio-button">
+                <input type="radio" name="quali_partecipazioni" value="<" class="radio-form"
+                    id="quali_partecipazioni_prima" <? echo $_GET["quali_partecipazioni"]==1 ? "checked" : "" ?>>
+                <input type="radio" name="quali_partecipazioni" value="=" class="radio-form"
+                    id="quali_partecipazioni_uguale" <? echo $_GET["quali_partecipazioni"]==2 ? "checked" : "" ?>>
+                <input type="radio" name="quali_partecipazioni" value=">" class="radio-form"
+                    id="quali_partecipazioni_dopo" <? echo $_GET["quali_partecipazioni"]==3 ? "checked" : "" ?>>
+                <div onclick="clickRadio(this)" value="<" name="quali_partecipazioni"
+                    id="quali_partecipazioni_prima_icona" <? echo $_GET["quali_partecipazioni"]==1
+                    ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-backward"></i></div>
+                <div onclick="clickRadio(this)" value="=" name="quali_partecipazioni"
+                    id="quali_partecipazioni_uguale_icona" <? echo $_GET["quali_partecipazioni"]==2
+                    ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
+                <div onclick="clickRadio(this)" value=">" name="quali_partecipazioni"
+                    id="quali_partecipazioni_dopo_icona" <? echo $_GET["quale_data"]==3 ? "class='selected-radio'" : ""
+                    ?>><i class="fa-solid fa-forward"></i></div>
+            </div> {% endcomment %}
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="submit" value="submit">
+                </div>
+            </div>
+            <div class="form-row submit-btn">
+                <div class="input-data">
+                    <div class="inner"></div>
+                    <input type="button" value="Reset" onclick="resetRicerca()">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="btn iconaRicerca d-none d-md-block" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro" aria-controls="offcanvasFiltro">
+    <i class="fa-solid fa-magnifying-glass"></i>
+</div>
