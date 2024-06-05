@@ -16,32 +16,40 @@
     <div class="container-fluid">
         {% include "elementiPrincipali/header.html" %}
 
-        {% comment %} <div class="maschera"></div> {% endcomment %}
-
         {% comment %} ! Filtro Ricerca {% endcomment %}
+
+        {% include "elementiPrincipali/navigazione.html" %}
         
-        {% comment %} <div class="filtroRicerca">
-            <form id="form_ricerca" action="#" method="get">
-                <!-- TITOLO -->
+        
+
+
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasFiltro" aria-labelledby="offcanvasFiltroLabel">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasFiltroLabel">Filtro Ricerca {{contesto.nomePagina}}</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form id="form_ricerca" action="#" method="get">
+                {% comment %} ! TITOLO  {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="<? echo $_GET["titolo"]?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false" value="Da Aggiungere"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Titolo</label>
                     </div>
                 </div>
-                <!-- CREATORE -->
+                {% comment %} ! CREATORE {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false" value="<? echo $_GET['creatore'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false" value=Da "Aggiungere"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Autore</label>
                     </div>
                 </div>
-                <!-- DATA INIZIO -->
+                {% comment %} ! DATA INIZIO {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" value="<? echo $_GET['data_inizio'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_inizio" name="data_inizio" placeholder=" " spellcheck="false" value="Da Aggiungere"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Inizio</label>
                     </div>
@@ -54,10 +62,10 @@
                     <div onclick="clickRadio(this)" value="2" name="quale_data_inizio" id="quale_data_inizio_uguale_icona" <? echo $_GET["quale_data_inizio"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
                     <div onclick="clickRadio(this)" value="3" name="quale_data_inizio" id="quale_data_inizio_dopo_icona" <? echo $_GET["quale_data_inizio"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
-                <!-- DATA FINE -->
+                 {% comment %} ! DATA FINE  {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
-                        <input type="text" id="data_fine" name="data_fine" placeholder=" " value="<? echo $_GET['data_fine'] ?>"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        <input type="text" id="data_fine" name="data_fine" placeholder=" " value="Da Aggiungere"><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                         <div class="underline"></div>
                         <label for="">Data Fine</label>
                     </div>
@@ -70,7 +78,7 @@
                     <div onclick="clickRadio(this)" value="2" name="quale_data_fine" id="quale_data_fine_uguale_icona"  <? echo $_GET["quale_data_fine"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
                     <div onclick="clickRadio(this)" value="3" name="quale_data_fine" id="quale_data_fine_dopo_icona"  <? echo $_GET["quale_data_fine"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
-                <!-- QUIZ domande -->
+                {% comment %} ! QUIZ domande  {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
                         <input type="number" id="domande" name="domande" placeholder=" " <? echo ((isset($_GET["domande"]) && ($_GET["domande"] != "")) ? "value = $_GET[domande]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -86,7 +94,7 @@
                     <div onclick="clickRadio(this)" value="=" name="quali_domande" id="quali_domande_uguale_icona" <? echo $_GET["quali_domande"] == 2 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-arrows-to-circle"></i></div>
                     <div onclick="clickRadio(this)" value=">" name="quali_domande" id="quali_domande_dopo_icona" <? echo $_GET["quale_data"] == 3 ? "class='selected-radio'" : "" ?>><i class="fa-solid fa-forward"></i></div>
                 </div>
-                <!-- QUIZ partecipazioni -->
+                 {% comment %} ! QUIZ partecipazioni  {% endcomment %}
                 <div class="form-row">
                     <div class="input-data">
                         <input type="number" id="partecipazioni" name="partecipazioni" placeholder=" " <? echo ((isset($_GET["partecipazioni"]) && ($_GET["partecipazioni"] != "")) ? "value = $_GET[partecipazioni]" : "") ?>><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
@@ -111,25 +119,67 @@
                 <div class="form-row submit-btn">
                     <div class="input-data">
                         <div class="inner"></div>
-                        <input type="button" value="Reset" onclick="resetRicerca()"> <!-- Da implementare -->
+                        <input type="button" value="Reset" onclick="resetRicerca()">
                     </div>
                 </div>
             </form>
-        </div>
-        <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div> {% endcomment %}
-
+            </div>
+          </div>
         {% comment %} ! Dove siamo {% endcomment %}
         <div class="row">
-            <div class="col-2 m-1">
+            <div class="col-2">
                 <div class="dove_siamo">Quiz</div>
             </div>
+
+            <div class="col">
+                <p>
+                {% if contesto.risultati.numeroRighe == 1 %}
+                    È stato trovato un solo quiz
+                {% elif contesto.risultati.numeroRighe > 1 %}
+                    Sono stati trovati {{contesto.risultati.numeroRighe}} quiz
+                {% else %}
+                    Nessun quiz trovato
+                {% endif %}
+                </p>
+            </div>
         </div>
+        <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro" aria-controls="offcanvasFiltro">
+            <div class="iconaRicerca">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </div>
+        </button>
         
 
         {% comment %} ! Risultati {% endcomment %}
 
+        {% comment %} todo {% if contesto.risultati.numeroRighe > 0 %} {% endcomment %}
         <div class="row  min-vh-100">
             <div class="col-md-10 col-xs-12 mx-auto">
+
+                <table class="table table-striped table-hover tabellaRisultati">
+                    <thead class= "text-center"><tr>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Data Inizio</th>
+                        <th>Data Fine</th>
+                        <th>N° di <br>
+                            Domande</th>
+                        <th>N° di<br>
+                            Partecipanti</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {%for titolo , autore , dataInizio , dataFine , nDomande , nPartecipazioni in risposta.valori%}
+                    <tr>
+                        <td>{{titolo}}</td>
+                        <td>{{autore}}</td>
+                        <td>{{dataInizio}}</td>
+                        <td>{{dataFine}}</td>
+                        <td>{{nDomande}}</td>
+                        <td>{{nPartecipazioni}}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
                 {% comment %} <?php
                 $codice = "";
                 // Prelievo i dati dai campi
@@ -160,18 +210,9 @@
                     echo $n_righe == 1 ? ("<h1>Ho trovato solo $n_righe quiz</h1>") : ("<h1>Sono stati trovati $n_righe quiz</h1>");
 
                 ?> {% endcomment %}
-                <table class="table table-striped table-hover tabellaRisultati">
-                    <thead class= "text-center"><tr>
-                        <th>Titolo</th>
-                        <th>Autore</th>
-                        <th>Data Inizio</th>
-                        <th>Data Fine</th>
-                        <th>N° di <br>
-                            Domande</th>
-                        <th>N° di<br>
-                            Partecipanti</th>
-                    </tr>
-                </thead>
+
+
+                
                 <tbody>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
@@ -285,7 +326,7 @@
                         <td class="text-center">1562</td>
                         <td class="text-center">1958</td>
                     </tr>
-                    
+
                     
                 </tbody>
 
@@ -313,7 +354,7 @@
                 </table>
             </div>
         </div>
-
+        {% comment %}todo {% endif %} {% endcomment %}
         {% comment %} <?php include 'elementiPrincipali/navigazione.html' ?> {% endcomment %}
 
         {% include "elementiPrincipali/footer.html" %}

@@ -45,6 +45,7 @@
 
 /* impostazioni generali */
 body {
+    /* padding: 0px !important; */
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
     scrollbar-width: none;
