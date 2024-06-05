@@ -33,11 +33,20 @@
 }
 
 
+@media screen and (min-width: 768px) {
+
+    .tabellaRisultati tr:has(td):hover {
+        transform: scale(105%);
+        background-color: var(--colore-selezione);
+        border-bottom: 1px solid var(--ct-1);
+    }
+    
+}
+
 /* impostazioni generali */
 body {
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
-    overflow-x: hidden;
     scrollbar-width: none;
 }
 
@@ -103,11 +112,11 @@ a {
     margin-bottom: 0px;
 }
 
-.titolo_header div {
-    margin-top: 0px;
-    font-size: 30px;
-}
 
+.titolo_header > *:nth-child(2) {    
+    margin-top: 0px;
+    font-size: 25px;
+}
 
 .header {
     background-color: var(--main-colour);
@@ -324,9 +333,8 @@ form .form-row .textarea {
 }
 
 .tabellaRisultati {
+    font-size: 12px;
     transition: 0.5s;
-    margin: 20px 0 20px 0;
-    /* background-color: ; */
 }
 
 .tabellaRisultati th {
@@ -334,19 +342,12 @@ form .form-row .textarea {
     /* border-left: 2px solid var(--base); */
     background-color: var(--contrasti-1);
     font-weight: bold;
-    padding: 5px 20px 5px 20px;
     color: white;
 }
 
 .tabellaRisultati tr {
     transition: 0.2s;
     height: 50px;
-    border-bottom: 1px solid var(--ct-1);
-}
-
-.tabellaRisultati tr:has(td):hover {
-    transform: scale(105%);
-    background-color: var(--colore-selezione);
     border-bottom: 1px solid var(--ct-1);
 }
 
@@ -362,8 +363,6 @@ form .form-row .textarea {
 .tabellaRisultati td {
     vertical-align: middle;
     color: var(--contrasti-1);
-    padding: 5px;
-    margin: 5px;
 }
 
 .tabellaRisultati tr td:first-child {

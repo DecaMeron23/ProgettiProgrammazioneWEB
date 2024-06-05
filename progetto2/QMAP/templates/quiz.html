@@ -119,42 +119,47 @@
         <div class="iconaRicerca"><i class="fa-solid fa-magnifying-glass"></i></div> {% endcomment %}
 
         {% comment %} ! Dove siamo {% endcomment %}
-
-        <div class="dove_siamo">Quiz</div>
+        <div class="row">
+            <div class="col-2 m-1">
+                <div class="dove_siamo">Quiz</div>
+            </div>
+        </div>
+        
 
         {% comment %} ! Risultati {% endcomment %}
 
-        <div class="risultati">
-            {% comment %} <?php
-            $codice = "";
-            // Prelievo i dati dai campi
-            if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                $creatore = $_GET["creatore"];
-                $titolo = $_GET["titolo"];
-                $data_inizio = $_GET["data_inizio"];
-                $data_fine = $_GET["data_fine"];
-                $like =  $_GET["like"] == "false" ? FALSE : TRUE;
-                if (isset($_GET["codice"])) {
-                    $codice  = $_GET["codice"];
+        <div class="row  min-vh-100">
+            <div class="col-md-10 col-xs-12 mx-auto">
+                {% comment %} <?php
+                $codice = "";
+                // Prelievo i dati dai campi
+                if ($_SERVER["REQUEST_METHOD"] == "GET") {
+                    $creatore = $_GET["creatore"];
+                    $titolo = $_GET["titolo"];
+                    $data_inizio = $_GET["data_inizio"];
+                    $data_fine = $_GET["data_fine"];
+                    $like =  $_GET["like"] == "false" ? FALSE : TRUE;
+                    if (isset($_GET["codice"])) {
+                        $codice  = $_GET["codice"];
+                    }
+                    $quale_data_inizio = $_GET["quale_data_inizio"];
+                    $quale_data_fine = $_GET["quale_data_fine"];
+                    $domande = $_GET["domande"];
+                    $quali_domande = $_GET["quali_domande"];
+                    $partecipazioni = $_GET["partecipazioni"];
+                    $quali_partecipazioni = $_GET["quali_partecipazioni"];
                 }
-                $quale_data_inizio = $_GET["quale_data_inizio"];
-                $quale_data_fine = $_GET["quale_data_fine"];
-                $domande = $_GET["domande"];
-                $quali_domande = $_GET["quali_domande"];
-                $partecipazioni = $_GET["partecipazioni"];
-                $quali_partecipazioni = $_GET["quali_partecipazioni"];
-            }
-            // echo $quale_data_inizio . "   " . $quale_data_fine . " ";
+                // echo $quale_data_inizio . "   " . $quale_data_fine . " ";
 
-            $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine , $domande , $quali_domande , $partecipazioni , $quali_partecipazioni);
-            $risultato = (array) json_decode($risultato_query);
-            $n_righe = count($risultato);
-            if ($n_righe == 0) {
-                echo "<h1>Non è stato trovato nessun quiz</h1>";
-            } else {
-                echo $n_righe == 1 ? ("<h1>Ho trovato solo $n_righe quiz</h1>") : ("<h1>Sono stati trovati $n_righe quiz</h1>");
+                $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine , $domande , $quali_domande , $partecipazioni , $quali_partecipazioni);
+                $risultato = (array) json_decode($risultato_query);
+                $n_righe = count($risultato);
+                if ($n_righe == 0) {
+                    echo "<h1>Non è stato trovato nessun quiz</h1>";
+                } else {
+                    echo $n_righe == 1 ? ("<h1>Ho trovato solo $n_righe quiz</h1>") : ("<h1>Sono stati trovati $n_righe quiz</h1>");
 
-            ?> {% endcomment %}
+                ?> {% endcomment %}
                 <table class="table table-striped table-hover tabellaRisultati">
                     <thead class= "text-center"><tr>
                         <th>Titolo</th>
@@ -170,68 +175,118 @@
                 <tbody>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
                     <tr>
                         <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
-                        <td>CIAOSONO99IO</td>
-                        <td>2050/15/95</td>
-                        <td>2050/15/95</td>
-                        <td>1562</td>
-                        <td>1958</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
                     </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    <tr>
+                        <td>TITOLOENE DI UN FILM QUANCHE COSA</td>
+                        <td class="text-center">CIAOSONO99IO</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">2050/15/95</td>
+                        <td class="text-center">1562</td>
+                        <td class="text-center">1958</td>
+                    </tr>
+                    
+                    
                 </tbody>
 
 
@@ -256,6 +311,7 @@
             }
                 ?> {% endcomment %}
                 </table>
+            </div>
         </div>
 
         {% comment %} <?php include 'elementiPrincipali/navigazione.html' ?> {% endcomment %}
