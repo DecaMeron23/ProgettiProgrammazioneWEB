@@ -14,3 +14,15 @@ def index(request):
     res.write(page)
 
     return res
+
+def quiz(request):
+    res = HttpResponse(content_type="text/html")
+
+    context = {};
+
+    template = loader.get_template("quiz.html")
+    page = template.render(context= context , request= request)
+
+    res.write(page)
+
+    return res

@@ -21,4 +21,6 @@ from . import controller
 
 urlpatterns = [
     path("", controller.index , name= "index"),
+    path("quiz", controller.quiz , name= "quiz"),
+
 ]

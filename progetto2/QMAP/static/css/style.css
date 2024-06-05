@@ -37,8 +37,8 @@
 body {
     background-color: var(--base);
     font-family: "Roboto Mono", monospace;
-    overflow-x: auto;
-    scrollbar-width: thin;
+    overflow-x: hidden;
+    scrollbar-width: none;
 }
 
 
@@ -98,11 +98,13 @@ a {
 /* ! Header */
 
 .titolo_header p {
-    font-size: 45px;
+    font-size: 40px;
     text-align: center;
+    margin-bottom: 0px;
 }
 
-.titolo_header p:not(.titolo_header p:first-child) {
+.titolo_header div {
+    margin-top: 0px;
     font-size: 30px;
 }
 
@@ -329,7 +331,7 @@ form .form-row .textarea {
 
 .tabellaRisultati th {
     vertical-align: middle;
-    border-left: 2px solid var(--base);
+    /* border-left: 2px solid var(--base); */
     background-color: var(--contrasti-1);
     font-weight: bold;
     padding: 5px 20px 5px 20px;
