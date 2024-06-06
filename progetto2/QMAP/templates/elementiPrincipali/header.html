@@ -1,28 +1,31 @@
+{% load static %}
+
 <div class="header row p-2">
 
-    <div class="col-md-1 d-flex justify-content-center align-items-center ml-1">
-      <div id="logo">
-        <a href="https://quizmakeandplay.altervista.org/index.php"><img class="logoApp" src="https://quizmakeandplay.altervista.org/logo/download-nobackground.png" alt="non caricaa!!!"></a>
-      </div>
+  <div class="col-md-1 d-flex justify-content-center align-items-center ml-1">
+    <div id="logo">
+      <a href="/"><img class="logoApp"
+          src={% static "immagini/logoQMAP.png" %} alt="non caricaa!!!"></a>
     </div>
-  
-    <div class="col-md-10 mx-auto">
-      <div class="titolo_header">
-        <p>QUIZ</p>
-        <p>Make and Play</p>
-      </div>
-    </div>
-  
-    {% comment %} <div class = ".d-block .d-sm-none">
-        <div class="col-md-1 d-flex justify-content-center align-items-center">
-            <div><i class="fa-solid fa-magnifying-glass"></i></div>
-        </div>
-    </div> {% endcomment %}
-    <div class="col-md-1 d-flex justify-content-center align-items-center">
-        <div class="navbar btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu">
-          <img src="https://quizmakeandplay.altervista.org/immagini/iconaMenu.png" class="iconaMenu">
-        </div>
-    </div>
-  
   </div>
+
+  <div class="col-md-10 mx-auto">
+    <div class="titolo_header">
+      <p>QUIZ</p>
+      <p>Make and Play</p>
+    </div>
+  </div>
+
   
+  <div class="btn d-md-none col-6 iconaRicercaHeader" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro"
+    aria-controls="offcanvasFiltro">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </div>
+  <div class="col-6 col-md-1 d-flex justify-content-center align-items-center">
+    <div class="navbar btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
+      aria-controls="offcanvasMenu">
+      <img src={% static "immagini/iconaMenu.png" %} class="iconaMenu">
+    </div>
+  </div>
+
+</div>

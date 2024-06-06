@@ -43,6 +43,43 @@
     
 }
 
+@media screen and (max-width: 600px) {
+    .tabellaRisultati{
+        font-size: 12px !important;
+    }
+}
+
+
+@media screen and (max-width: 485px) {
+    .tabellaRisultati{
+        font-size: 10px !important;
+    }
+
+    .tabellaAutori{
+        font-size: 10px ;
+    }
+
+    .infoRigheTabella{
+        font-size: 15px !important;
+    }
+    
+}
+
+@media screen and (max-width: 420px) {
+    .tabellaRisultati{
+        font-size: 8px !important;
+    }
+
+    .tabellaAutori{
+        font-size: 10px ;
+    }
+    
+}
+
+html{
+    min-width: 360px;
+}
+
 /* impostazioni generali */
 body {
     padding: 0px !important;
@@ -133,22 +170,25 @@ a {
     padding: 0;
 }
 
-.iconaRicerca {
+.iconaRicerca, .iconaRicercaHeader {
+    color: black !important;
     cursor: pointer;
     z-index: 100;
     transition: var(--transizione);
+}
+
+.iconaRicerca{
     position: fixed;
     top: 50%;
     left: 10px;
 }
 
-
-.iconaRicerca>i {
+.iconaRicerca>i , .iconaRicercaHeader>i {
     transition: var(--transizione);
     font-size: 36px;
 }
 
-.iconaRicerca>i:hover {
+.iconaRicerca>i:hover , .iconaRicercaHeader>i:hover {
     transform: rotateZ(90deg);
 }
 
@@ -302,7 +342,7 @@ form .form-row .textarea {
 }
 
 .tabellaRisultati {
-    font-size: 12px;
+    font-size: 15px;
     transition: 0.5s;
 }
 
@@ -360,10 +400,11 @@ form .form-row .textarea {
 }
 
 .iconaMenu {
+    transition: var(--transizione);
     max-width: 30px;
 }
 
-.navbar_rotate {
+.iconaMenu:hover{
     transform: rotate(0.5turn);
 }
 

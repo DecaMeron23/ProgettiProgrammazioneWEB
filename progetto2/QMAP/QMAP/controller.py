@@ -48,7 +48,7 @@ def quiz(request):
         # print(o)
 
 
-
+    context["nomePagina"] = "Quiz"
     context["risultati"] = {"numeroRighe": len(list) , "valori": list}
     context["filtro"] = parametri
 
