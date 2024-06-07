@@ -2,14 +2,14 @@
 
 <div class="header row p-2">
 
-  <div class="col-md-1 d-flex justify-content-center align-items-center ml-1">
+  <div class="col-md-1 d-flex justify-content-center align-items-center ml-1 d-none d-md-block">
     <div id="logo">
-      <a href="/"><img class="logoApp"
+      <a href="/" data-toggle="tooltip" title="Home"><img class="logoApp"
           src={% static "immagini/logoQMAP.png" %} alt="non caricaa!!!"></a>
     </div>
   </div>
 
-  <div class="col-md-10 mx-auto">
+  <div class="col-md-10 col-6 mx-auto">
     <div class="titolo_header">
       <p>QUIZ</p>
       <p>Make and Play</p>
@@ -17,13 +17,13 @@
   </div>
 
   
-  <div class="btn d-md-none col-6 iconaRicercaHeader" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro"
-    aria-controls="offcanvasFiltro">
+  <div class="btn d-md-none col-3 iconaRicercaHeader d-flex order-first align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro"
+    aria-controls="offcanvasFiltro" data-toggle="tooltip" title="Filtro">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
-  <div class="col-6 col-md-1 d-flex justify-content-center align-items-center">
+  <div class="col-3 col-md-1 d-flex justify-content-center align-items-center">
     <div class="navbar btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
-      aria-controls="offcanvasMenu">
+      aria-controls="offcanvasMenu" data-toggle="tooltip" title="Menu">
       <img src={% static "immagini/iconaMenu.png" %} class="iconaMenu">
     </div>
   </div>
