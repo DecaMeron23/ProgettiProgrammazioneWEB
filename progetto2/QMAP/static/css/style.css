@@ -59,14 +59,14 @@
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 580px) {
     .tabellaRisultati{
         font-size: 12px !important;
     }
 }
 
 
-@media screen and (max-width: 485px) {
+@media screen and (max-width: 490px) {
     .tabellaRisultati{
         font-size: 10px !important;
     }
@@ -81,7 +81,7 @@
     
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 430px) {
     .tabellaRisultati{
         font-size: 8px !important;
     }
