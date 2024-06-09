@@ -1,0 +1,137 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    {% include "elementiPrincipali/impostazioni.html" %}
+
+
+
+    
+    <link rel="stylesheet" href={% static "css/stile_info_quiz.css" %}>
+    <link rel="stylesheet" href={% static "css/popup.css" %}>
+    {% comment %} <script src="javaScript/js_gioco.js"></script> {% endcomment %}
+
+    <title>Gioca QUIZ</title>
+</head>
+
+<body>
+
+    {% include "elementiPrincipali/header.html" %}
+    {% include "elementiPrincipali/navigazione.html" %}
+    
+    <div class="container-fluid">
+        {% comment %} ! INFO QUIZ {% endcomment %}
+        <div class="row align-items-center mt-2">
+            <div class="col-4 d-flex justify-content-center">
+                <div class="row">
+                    <div class="col-12"><i class="fa-regular fa-user"></i> {{autore}}</div>
+                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{dataInizio}}</div>
+                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{dataFine}}</div>
+                </div>
+            </div>
+            <div class="col-4 text-center info_quiz_titolo_quiz">
+                {{titolo}}
+            </div>
+            <div class="col-4 ml-2 d-flex justify-content-end">
+                <div class="pulsante d-inline-block" onclick="gioca_quiz()">
+                    Cambia QUIZ
+                </div>
+            </div>
+        </div>
+
+        {% comment %} !QUIZ {% endcomment %}
+        
+
+
+
+    </div>
+
+
+
+    <div class="info_QUIZ" id_quiz ="<?echo $_POST["codice"]?>" >
+        <div class="testata_info_QUIZ">
+            <div id="autore_date">
+                <div class="descrizione_quiz">
+                    <div><i class="fa-regular fa-user"></i></div>
+                    {% comment %} <div><? echo ($_POST["creatore"] != "") ? "$_POST[creatore]" : "NO UTENTE" ?></div> {% endcomment %}
+                </div>
+                <div class="descrizione_quiz">
+                    <div><i class="fa-regular fa-calendar-check"></i></div>
+                    {% comment %} <div class="descrizione_quiz_data"><? echo ($_POST["data_inizio"] != "") ? "$_POST[data_inizio]" : "NO DATA INIZIO" ?></div> {% endcomment %}
+                </div>
+                <div class="descrizione_quiz">
+                    <div><i class="fa-regular fa-calendar-xmark"></i></div>
+                    {% comment %} <div class="descrizione_quiz_data"><? echo ($_POST["data_fine"] != "") ? "$_POST[data_fine]" : "NO DATA" ?></div> {% endcomment %}
+                </div>
+            </div>
+            <div id="info_quiz_titolo_quiz">
+                {% comment %} <div><? echo ($_POST["titolo"] != "") ? "" . $_POST["titolo"] : "NO TITOLO" ?></div> {% endcomment %}
+            </div>
+            <div>
+                <div class="pulsante" onclick="gioca_quiz()">Cambia QUIZ</div>
+            </div>
+        </div>
+        <div class="contenuto_info_QUIZ">
+            {% comment %} <?
+            $id_quiz = $_POST["codice"];
+            $domande_quiz_string = query_domande_quiz($id_quiz);
+            $domande_quiz = (array)(json_decode($domande_quiz_string));
+            $n_righe = count($domande_quiz);
+            echo "<div class ='tutte_domande'>";
+            if ($n_righe == 0) {
+                echo "<div class='domanda_risposte'><div class='domanda_punteggio'><div class='domanda'>Questo quiz attualmente non ha nessuna domanda</div></div></div>";
+            } else {
+                $pallino_risposta = '<i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i>';
+                $i = 0;
+                shuffle($domande_quiz);
+                foreach ($domande_quiz as $riga) {
+                    $i++;
+                    $riga = (array)$riga;
+                    echo "<div class='domanda_risposte' domanda_numero='$riga[numero]'><div class='domanda_punteggio'><div class='domanda'>$i. $riga[testo]</div>";
+                    $risposte_quiz_string = query_risposte_quiz($id_quiz, $riga["numero"]);
+                    $risposte_quiz = (array)(json_decode($risposte_quiz_string));
+                    // Ricerco il punteggio della domanda, per come è definito il data base devo cercare dentro le risposte =(
+                    $tutte_risposte = "";
+                    $punteggio = 0;
+
+                    //rimescolo l'ordine dell'array
+                    shuffle($risposte_quiz);
+                    foreach ($risposte_quiz as $risposta) {
+                        $risposta = (array)$risposta;
+                        if ($risposta["tipo"] == 1) {
+                            $punteggio = $risposta["punteggio"];
+                        }
+                        $tutte_risposte .= "<div class='risposta_quiz' risposta_numero=$risposta[numero]><span class='opzione'>$pallino_risposta</span> $risposta[testo]</div>\n";
+                    }
+
+                    echo "<div class='punteggio'>[$punteggio pt.]</div></div>\n";
+                    echo $tutte_risposte;
+                    echo "</div>";
+                }
+            }
+            ?> {% endcomment %}
+
+            <div class="pulsanti_gioca">
+                <div class="pulsante pulsante_hover" onclick="restart_quiz()">Riprova</div>
+                <div class="pulsante pulsante_hover" onclick="reset_risposte()">Cancella</div>
+                <div class="pulsante pulsante_hover" id="pulsane_invia" onclick="verifica_quiz()">Invia</div>
+
+            </div>
+            {% comment %} <?
+            echo "</div>"
+            ?> {% endcomment %}
+        </div>
+
+
+    </div>
+
+    {% include "elementiPrincipali/footer.html" %}
+
+</body>

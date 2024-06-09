@@ -24,5 +24,6 @@ urlpatterns = [
     path("quiz", controller.quiz , name= "quiz"),
     path("utente", controller.utente , name= "utente"),
     path("partecipazione", controller.partecipazione , name= "partecipazione"),
+    path("gioca", controller.gioca , name= "gioca"),
 
 ]

@@ -16,11 +16,22 @@
     </div>
   </div>
 
-  
+
+  {% if infoPagina.nomePagina == "index" or infoPagina.nomePagina == "gioca"%}
+  <div class="btn d-md-none col-3  d-flex order-first align-items-center justify-content-center">
+    <div id="logo">
+      <a href="/" data-toggle="tooltip" title="Home"><img class="logoApp"
+          src={% static "immagini/logoQMAP.png" %} alt="non caricaa!!!"></a>
+    </div>
+  </div>
+  {% else %}
   <div class="btn d-md-none col-3 iconaRicercaHeader d-flex order-first align-items-center justify-content-center" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasFiltro"
     aria-controls="offcanvasFiltro" data-toggle="tooltip" title="Filtro">
     <i class="fa-solid fa-magnifying-glass"></i>
   </div>
+  
+  {% endif %}
+
   <div class="col-3 col-md-1 d-flex justify-content-center align-items-center">
     <div class="navbar btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
       aria-controls="offcanvasMenu" data-toggle="tooltip" title="Menu">
