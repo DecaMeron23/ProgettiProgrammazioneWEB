@@ -12,9 +12,7 @@
 !                corretta (boolean)
 ?{% endcomment %}
 
-
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,18 +21,19 @@
 
     {% include "elementiPrincipali/impostazioni.html" %}
 
-    {% comment %} <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">     {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}"> {% endcomment %}
-    {% comment %} <link rel="stylesheet" href="{% static 'css/popup.css' %}"> {% endcomment %}
-    {% comment %} <script src="javaScript/js_gioco.js"></script> {% endcomment %}
+    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}">
+    <script src="javaScript/js_gioco.js"></script>
 
     <title>Gioca QUIZ</title>
-</head>
 
+</head>
 <body>
 
     {% include "elementiPrincipali/header.html" %}
     {% include "elementiPrincipali/navigazione.html" %}
+    
     
     <div class="container-fluid">
         {% comment %} ! INFO QUIZ {% endcomment %}
@@ -81,6 +80,5 @@
     </div>
 
     {% include "elementiPrincipali/footer.html" %}
-
 </body>
 </html>
