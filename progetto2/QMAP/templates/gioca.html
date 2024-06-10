@@ -15,22 +15,17 @@
 
 {% load static %}
 
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     {% include "elementiPrincipali/impostazioni.html" %}
 
-
-
-    <link rel="stylesheet" href={% static "css/stile-introduzione.css"%}>    
-    <link rel="stylesheet" href={% static "css/stile_info_quiz.css" %}>
-    <link rel="stylesheet" href={% static "css/popup.css" %}>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">     {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}"> {% endcomment %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/popup.css' %}"> {% endcomment %}
     {% comment %} <script src="javaScript/js_gioco.js"></script> {% endcomment %}
 
     <title>Gioca QUIZ</title>
@@ -46,13 +41,13 @@
         <div class="row align-items-center mt-2">
             <div class="col-4 d-flex justify-content-center">
                 <div class="row">
-                    <div class="col-12"><i class="fa-regular fa-user"></i> {{autore}}</div>
-                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{dataInizio}}</div>
-                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{dataFine}}</div>
+                    <div class="col-12"><i class="fa-regular fa-user"></i> {{ autore }}</div>
+                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{ dataInizio }}</div>
+                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{ dataFine }}</div>
                 </div>
             </div>
             <div class="col-4 text-center info_quiz_titolo_quiz">
-                {{titolo}}
+                {{ titolo }}
             </div>
             <div class="col-4 ml-2 d-flex justify-content-end">
                 <div class="pulsante d-inline-block" onclick="gioca_quiz()">
@@ -62,20 +57,20 @@
         </div>
 
         {% comment %} ! QUIZ {% endcomment %}
-        <div class="row d-felx justify-content-center ">
+        <div class="row d-flex justify-content-center">
             <div class="col-11 col-md-10 m-2 caratteristiche">
                 {% for domanda in domande %}
                 <div class='row mb-5 {% if forloop.first %} mt-2 {% endif %}'>
                     <div class="col-10 domanda">
-                        {{forloop.counter}}) {{domanda.testo}}
+                        {{ forloop.counter }}) {{ domanda.testo }}
                     </div>
                     <div class="col-2 punteggio">
-                        [{{domanda.punteggio}} pt.]
+                        [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}
                     <div class="row">
-                        <div class="col risposta_quiz" risposta_numero= numeroRisposta >
-                            <span class='opzione'><i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i></span> {{risposta.testo}}                            
+                        <div class="col risposta_quiz" risposta_numero="numeroRisposta">
+                            <span class='opzione'><i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i></span> {{ risposta.testo }}                            
                         </div>
                     </div>  
                     {% endfor %}
@@ -88,3 +83,4 @@
     {% include "elementiPrincipali/footer.html" %}
 
 </body>
+</html>
