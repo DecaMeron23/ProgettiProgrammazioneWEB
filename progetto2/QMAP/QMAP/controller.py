@@ -267,11 +267,11 @@ def gioca(request):
     risposte = []
 
 
-    risposta = {"risposta": testoRisposta , "corretta": True}
+    risposta = {"testo": testoRisposta , "corretta": True}
     for i in range(0,4):
         risposte.append(risposta)
 
-    domanda = {"domanda": testoDomanda ,
+    domanda = {"testo": testoDomanda ,
                 "risposte" : risposte,
                 "punteggio" : punteggio}
 
@@ -283,6 +283,7 @@ def gioca(request):
                 "dataInizio" : dataInizio,
                 "dataFine" : dataFine,
                 "titolo" : titolo,
+                "domande" : domande
                 }
 
     context = infoQuiz
