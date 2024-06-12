@@ -1,41 +1,43 @@
 {% comment %} ?
-?    Schema del contesto, stringhe se non specificato:
-!        autore
-!        dataInizio
-!        dataFine
-!        titolo
-!        domande (array)
-!            testo
-!            punteggio (int)
-!            risposte (array)
-!                testo
-!                corretta (boolean)
+? Schema del contesto, stringhe se non specificato:
+! -autore
+! -dataInizio
+! -dataFine
+! -titolo
+! -domande (array)
+! --testo
+! --punteggio (int)
+! --risposte (array)
+! ---testo
+! ---corretta (boolean)
 ?{% endcomment %}
 
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% include "elementiPrincipali/impostazioni.html" %}
 
-    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">    
+    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">
     <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}">
-    <script src="{% static "js/js_gioco.js" %}"></script>
+    <script src="{% static " js/js_gioco.js" %}"></script>
 
     <title>Gioca QUIZ</title>
 
 </head>
-<body>
 
-    {% include "elementiPrincipali/header.html" %}
-    {% include "elementiPrincipali/navigazione.html" %}
-    
-    
+<body>
     <div class="container-fluid">
+
+        {% include "elementiPrincipali/header.html" %}
+        {% include "elementiPrincipali/navigazione.html" %}
+
+
         {% comment %} ! INFO QUIZ {% endcomment %}
         <div class="row align-items-center mt-2">
             <div class="col-4 d-flex justify-content-center">
@@ -67,19 +69,39 @@
                         [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}
-                    <div class="row m-2 mt-3 mb-3" id ="risposta_quiz">
+                    <div class="row m-2 mt-3 mb-3" id="risposta_quiz">
                         <div class="col" risposta_numero="numeroRisposta">
-                            <span class="ml-5"id='opzione'><i class="fa-regular fa-circle" onclick="seleziona_risposta(this)"></i></span>{{ risposta.testo }}                            
+                            <span id='opzione'><i class="fa-regular fa-circle"
+                                    onclick="seleziona_risposta(this)"></i></span><span class="p-2">{{ risposta.testo }}</span>
                         </div>
-                    </div>  
+                    </div>
                     {% endfor %}
                 </div>
                 {% endfor %}
+                <div class="row mb-2 mt-5">
+                    <div class="col-4 ml-2 d-flex justify-content-center">
+                        <div class="pulsante d-inline-block" onclick="">
+                            Riprova
+                        </div>
+                    </div>
+                    <div class="col-4 ml-2 d-flex justify-content-center">
+                        <div class="pulsante d-inline-block" onclick="">
+                            Cancella
+                        </div>
+                    </div>
+                    <div class="col-4 ml-2 d-flex justify-content-center">
+                        <div class="pulsante d-inline-block" onclick="">
+                            Invia
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        
+        {% include "elementiPrincipali/footer.html" %}
     </div>
 
-    {% include "elementiPrincipali/footer.html" %}
 
 </body>
+
 </html>

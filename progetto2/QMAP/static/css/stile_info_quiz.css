@@ -106,10 +106,6 @@
     /* Ombra interna */
 }
 
-.risposta_quiz {
-    margin: 20px 0px 0px 40px;
-}
-
 .domanda_punteggio {
     display: flex;
     justify-content: space-between;
