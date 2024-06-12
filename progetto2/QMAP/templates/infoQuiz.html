@@ -1,0 +1,175 @@
+{% comment %} ?
+? Schema del contesto, stringhe se non specificato:
+! -autore
+! -dataInizio
+! -dataFine
+! -titolo
+! -domande (array)
+! --testo
+! --punteggio (int)
+! --risposte (array)
+! ---testo
+! ---corretta (boolean)
+?{% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include "elementiPrincipali/impostazioni.html" %}
+
+    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}">
+
+
+    <title>Info QUIZ</title>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        {% include "elementiPrincipali/header.html" %}
+        {% include "elementiPrincipali/navigazione.html" %}
+
+
+        {% comment %} ! INFO QUIZ {% endcomment %}
+        <div class="row align-items-center mt-2">
+            <div class="col-12 col-sm-4 ">
+                <div class="row">
+                    <div class="col-12 col-sm-12 order-3 order-sm-1"><i class="fa-regular fa-user"></i> {{ autore }}
+                    </div>
+                    <div class="col-6 col-sm-12 order-1 order-sm-2"><i class="fa-regular fa-calendar-xmark"></i>
+                        {{dataInizio}}</div>
+                    <div class="col-6 col-sm-12 order-2 order-sm-3"><i class="fa-regular fa-calendar-xmark"></i>
+                        {{dataFine}}</div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 text-center titolo_quiz">
+                {{ titolo }}
+            </div>
+            <div class="col-12 col-sm-4 ml-2 d-flex justify-content-center ">
+                <div class="row p-3">
+                    <div class="col-6 bottoni_quiz">
+                        <i class="fa-regular fa-pen-to-square" id="bottone_modifica_quiz" data-toggle="tooltip" title="Modifica Quiz"></i>
+                    </div>
+                    <div class="col-6">
+                        <i class="fa-regular fa-trash-can" id="bottone_elimina_quiz" data-bs-toggle="modal"
+                            data-bs-target="#eliminaQuiz" data-toggle="tooltip" title="Elimina Quiz"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% comment %} ! QUIZ {% endcomment %}
+        <div class="row d-flex justify-content-center">
+            <div class="col-11 col-md-10 m-2 mt-5 caratteristiche">
+                {% for domanda in domande %}
+                <div class='row mb-3 mt-3' id="domanda_risposte">
+                    <div class="col-10">
+                        {{ forloop.counter }}) {{ domanda.testo }}
+                    </div>
+                    <div class="col-2 punteggio">
+                        [{{ domanda.punteggio }} pt.]
+                    </div>
+                    {% for risposta in domanda.risposte %}
+                    <div class="row m-2 mt-3 mb-3" id="risposta_quiz">
+                        <div class="col" risposta_numero="numeroRisposta">
+                            <span id='opzione'><i
+                                    class="{% if risposta.corretta %}fa-solid fa-circle-check {% else %}fa-regular fa-circle{% endif %}"></i></span><span
+                                class="p-2">{{ risposta.testo }}</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        {% comment %} ! modal {% endcomment %}
+        <div class="modal fade" id="modificaQuiz" tabindex="-1" aria-labelledby="modificaQuizLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Aggiungi 'modal-dialog-centered' per centrare il modal -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modificaQuizLabel">Modifica QUIZ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group row mb-2">
+                                <label for="autore" class="col-sm-4 col-form-label">Autore</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="autore" placeholder="Autore" value="{{autore}}">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-2">
+                                <label for="titolo" class="col-sm-4 col-form-label">Titolo</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="titolo" placeholder="Titolo" value="{{titolo}}">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-2">
+                                <label for="dataInizio" class="col-sm-4 col-form-label">Data Inizio</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="dataInizio" placeholder="Data Inizio" value="{{dataInizio}}">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-2">
+                                <label for="dataFine" class="col-sm-4 col-form-label">Data Fine</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="dataFine" placeholder="Data Fine" value="{{dataFine}}">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-success">Salva modifiche</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="modal fade" id="eliminaQuiz" tabindex="-1" aria-labelledby="eliminaQuizLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <!-- Aggiungi 'modal-dialog-centered' per centrare il modal -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eliminaQuizLabel">Elimina QUIZ</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Sei sicuro di eliminare il quiz: "{{titolo}}"
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                        <button type="button" class="btn btn-danger">Elimina</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        {% include "elementiPrincipali/footer.html" %}
+        <script src="{% static "js/jsModalInfoQuiz.js" %}"></script>
+
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>

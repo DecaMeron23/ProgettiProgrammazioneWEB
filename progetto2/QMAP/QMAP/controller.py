@@ -6,6 +6,7 @@ from django.template import loader
 templateIndex = "index.html"
 templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
+templateInfoQuiz = "infoQuiz.html"
 
 
 def estrazioneParametriGet(request):
@@ -248,6 +249,7 @@ def partecipazione(request):
 
     return res
 
+# ! Gioca
 
 def gioca(request):
     res = HttpResponse(content_type="text/html")
@@ -267,11 +269,11 @@ def gioca(request):
     risposte = []
 
 
-    risposta = {"risposta": testoRisposta , "corretta": True}
+    risposta = {"testo": testoRisposta , "corretta": True}
     for i in range(0,4):
         risposte.append(risposta)
 
-    domanda = {"domanda": testoDomanda ,
+    domanda = {"testo": testoDomanda ,
                 "risposte" : risposte,
                 "punteggio" : punteggio}
 
@@ -283,6 +285,7 @@ def gioca(request):
                 "dataInizio" : dataInizio,
                 "dataFine" : dataFine,
                 "titolo" : titolo,
+                "domande" : domande
                 }
 
     context = infoQuiz
@@ -296,3 +299,53 @@ def gioca(request):
 
     return res
 
+# ! Info Quiz
+def info(request):
+    res = HttpResponse(content_type="text/html")
+ 
+    context = {}
+    
+    #todo richiesta delle informazioni
+    testoDomanda = "Chi sono io"
+    testoRisposta = "emilio"
+    punteggio = 3
+    nomeAutore = "Benny"
+    dataInizio = "02/07/2022"
+    dataFine = "Non c'è"
+    titolo = "Quanto mi Conosci?"
+
+    domande = []
+    risposte = []
+
+
+    rispostaTrue = {"testo": testoRisposta , "corretta": True}
+    rispostaFalse = {"testo": testoRisposta , "corretta": False}
+    for i in range(0,2):
+        risposte.append(rispostaTrue)
+        risposte.append(rispostaFalse)
+
+    domanda = {"testo": testoDomanda ,
+                "risposte" : risposte,
+                "punteggio" : punteggio}
+
+    for i in range(0,4):
+        domande.append(domanda)
+
+
+    infoQuiz = {"autore" : nomeAutore,
+                "dataInizio" : dataInizio,
+                "dataFine" : dataFine,
+                "titolo" : titolo,
+                "domande" : domande
+                }
+
+    context = infoQuiz
+    context["infoPagina"] = {"nomePagina" : "quiz"}
+
+    #? preparazione del template
+    template = loader.get_template(templateInfoQuiz)
+    page = template.render(context= context , request= request)
+
+    res.write(page)
+
+    return res

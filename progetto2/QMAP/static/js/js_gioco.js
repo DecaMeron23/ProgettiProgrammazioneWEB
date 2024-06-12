@@ -37,16 +37,18 @@ function seleziona_risposta(elemento) {
         seleziona(elemento);
     }
 }
+
 /**
  * funzione che rimuove tutte le selezioni per la domanda a cui si è cliccato il pallino
  * 
  * @param {Element} elemento la \<i\> che indica il pallino
  */
 function rimuovi_selezioni(elemento) {
-    var div = $(elemento).parents(".domanda_risposte");
+    var div = $(elemento).parents("#domanda_risposte");
     var ripsoste = estrai_risposte(div);
     for (var i = 0; i < ripsoste.length; i++) {
-        pallino = $(ripsoste[i]).children(".opzione").children();
+        // Selezioniamo tutti i pallini di risposta
+        pallino = $(ripsoste[i]).children(".col").children("#opzione").children();
         if (is_selezionato(pallino)) {
             de_seleziona(pallino);
         }
@@ -59,7 +61,7 @@ function rimuovi_selezioni(elemento) {
  * @returns {Array} un array di elementi parenti di domanda che anno come classe "risposta_quiz" 
  */
 function estrai_risposte(domanda) {
-    return $(domanda).children(".risposta_quiz");
+    return $(domanda).children("#risposta_quiz");
 }
 
 /**
