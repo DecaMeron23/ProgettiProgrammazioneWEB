@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">
     <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
     <link rel="stylesheet" href="{% static 'css/popup.css' %}">
-    <script src="{% static " js/js_gioco.js" %}"></script>
+    <script src="{% static "js/js_gioco.js" %}"></script>
 
     <title>Gioca QUIZ</title>
 
@@ -40,17 +40,20 @@
 
         {% comment %} ! INFO QUIZ {% endcomment %}
         <div class="row align-items-center mt-2">
-            <div class="col-4 d-flex justify-content-center">
+            <div class="col-12 col-sm-4 ">
                 <div class="row">
-                    <div class="col-12"><i class="fa-regular fa-user"></i> {{ autore }}</div>
-                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{ dataInizio }}</div>
-                    <div class="col-12"><i class="fa-regular fa-calendar-xmark"></i> {{ dataFine }}</div>
+                    <div class="col-12 col-sm-12 order-3 order-sm-1"><i class="fa-regular fa-user"></i> {{ autore }}
+                    </div>
+                    <div class="col-6 col-sm-12 order-1 order-sm-2"><i class="fa-regular fa-calendar-xmark"></i>
+                        {{dataInizio}}</div>
+                    <div class="col-6 col-sm-12 order-2 order-sm-3"><i class="fa-regular fa-calendar-xmark"></i>
+                        {{dataFine}}</div>
                 </div>
             </div>
-            <div class="col-4 text-center titolo_quiz">
+            <div class="col-12 col-sm-4 text-center titolo_quiz">
                 {{ titolo }}
             </div>
-            <div class="col-4 ml-2 d-flex justify-content-center">
+            <div class="col-12 col-sm-4 ml-2 d-flex justify-content-center">
                 <div class="pulsante d-inline-block" onclick="gioca_quiz()">
                     Cambia QUIZ
                 </div>
@@ -62,10 +65,10 @@
             <div class="col-11 col-md-10 m-2 mt-5 caratteristiche">
                 {% for domanda in domande %}
                 <div class='row mb-3 mt-3' id="domanda_risposte">
-                    <div class="col-10">
+                    <div class="col-8">
                         {{ forloop.counter }}) {{ domanda.testo }}
                     </div>
-                    <div class="col-2 punteggio">
+                    <div class="col d-flex justify-content-end punteggio">
                         [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}

@@ -71,10 +71,10 @@
             <div class="col-11 col-md-10 m-2 mt-5 caratteristiche">
                 {% for domanda in domande %}
                 <div class='row mb-3 mt-3' id="domanda_risposte">
-                    <div class="col-10">
+                    <div class="col-8">
                         {{ forloop.counter }}) {{ domanda.testo }}
                     </div>
-                    <div class="col-2 punteggio">
+                    <div class="col d-flex justify-content-end punteggio">
                         [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}

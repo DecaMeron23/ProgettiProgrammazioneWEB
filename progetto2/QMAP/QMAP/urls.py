@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from . import controller
+from . import server
 
 urlpatterns = [
     path("", controller.index , name= "index"),
@@ -26,5 +27,6 @@ urlpatterns = [
     path("partecipazione", controller.partecipazione , name= "partecipazione"),
     path("gioca", controller.gioca , name= "gioca"),
     path("info", controller.info , name= "info"),
+    path("get_quiz", server.getQuiz , name= "get_quiz"), # !Temporaneo
 
 ]

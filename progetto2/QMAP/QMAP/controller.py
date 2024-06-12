@@ -9,6 +9,8 @@ templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
 
 
+from . import server
+
 def estrazioneParametriGet(request):
     parametri = request.GET
 
@@ -109,20 +111,14 @@ def quiz(request):
 def utente(request):
     res = HttpResponse(content_type="text/html")
 
-    parametri = estrazioneParametriGet(request);
-    if "nQcreati" in parametri:
-        parametri["isSet_nQcreati"] = parametri["nQcreati"] != "";
-
-    if "nQgiocati" in parametri:
-        parametri["isSet_nQgiocati"] = parametri["nQgiocati"] != "";
+    parametri = estrazioneParametriGet(request); 
     
-
-    parametri["directory"] = "filtri/filtroUtente.html"
 
     #? Oggetti contesto da passare al template
     context = {};
 
     # todo: Estrazione dati dal server e aggiunta al contesto
+    risultati = server.getQuiz(parametri)
     valoriEstratti = []
 
     for i in range(0,15):
@@ -144,6 +140,18 @@ def utente(request):
 
         valoriEstratti.append(o)
         # print(o)
+
+
+    if "nQcreati" in parametri:
+        parametri["isSet_nQcreati"] = parametri["nQcreati"] != "";
+
+    if "nQgiocati" in parametri:
+        parametri["isSet_nQgiocati"] = parametri["nQgiocati"] != "";
+    
+
+    parametri["directory"] = "filtri/filtroUtente.html"
+
+
 
     #? preparazione contesto: risultati
     numeroRighe = len(valoriEstratti)
@@ -289,7 +297,8 @@ def gioca(request):
                 }
 
     context = infoQuiz
-    context["infoPagina"] = {"nomePagina" : "quiz"}
+    context["infoPagina"] = {"nomePagina" : "gioca"}
+
 
     #? preparazione del template
     template = loader.get_template(templateGioca)
@@ -340,7 +349,7 @@ def info(request):
                 }
 
     context = infoQuiz
-    context["infoPagina"] = {"nomePagina" : "quiz"}
+    context["infoPagina"] = {"nomePagina" : "info"}
 
     #? preparazione del template
     template = loader.get_template(templateInfoQuiz)
