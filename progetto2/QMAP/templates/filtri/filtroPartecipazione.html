@@ -8,8 +8,8 @@
             {% comment %} ! Nickname {% endcomment %}
             <div class="form-row">
                 <div class="input-data">
-                    <input type="text" id="Nickname" name="Nickname" placeholder=" " spellcheck="false"
-                        value={{filtro.Nickname}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                    <input type="text" id="nomeUtente" name="nomeUtente" placeholder=" " spellcheck="false"
+                        value={{filtro.nomeUtente}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Nickname</label>
                 </div>
@@ -33,13 +33,13 @@
                 </div>
             </div>
             <div class="radio-button">
-                <div onclick="clickRadio(this)" value="1" name="quale_data" id="quale_data_prima_icona" class='{% if filtro.quale_radio_data == "1" %}selected-radio{% endif %}' data-toggle="tooltip" title="Inferiore">
+                <div onclick="clickRadio(this)" value="1" name="quale_data" id="quale_data_prima_icona" class='{% if filtro.radio_quale_data == "1" %}selected-radio{% endif %}' data-toggle="tooltip" title="Inferiore">
                     <i class="fa-solid fa-backward"></i>
                 </div>
-                <div onclick="clickRadio(this)" value="2" name="quale_data" id="quale_data_uguale_icona" class='{% if filtro.quale_radio_data == "2" %}selected-radio{% endif %}' data-toggle="tooltip" title="Uguale">
+                <div onclick="clickRadio(this)" value="2" name="quale_data" id="quale_data_uguale_icona" class='{% if filtro.radio_quale_data == "2" %}selected-radio{% endif %}' data-toggle="tooltip" title="Uguale">
                     <i class="fa-solid fa-arrows-to-circle"></i>
                 </div>
-                <div onclick="clickRadio(this)" value="3" name="quale_data" id="quale_data_dopo_icona" class='{% if filtro.quale_radio_data == "3" %}selected-radio{% endif %}' data-toggle="tooltip" title="Superiore">
+                <div onclick="clickRadio(this)" value="3" name="quale_data" id="quale_data_dopo_icona" class='{% if filtro.radio_quale_data == "3" %}selected-radio{% endif %}' data-toggle="tooltip" title="Superiore">
                     <i class="fa-solid fa-forward"></i>
                 </div>
             </div>

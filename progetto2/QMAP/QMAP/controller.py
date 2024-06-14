@@ -123,22 +123,23 @@ def utente(request):
 
     parametri = estrazioneParametriGet(request); 
     
-
+    # print(parametri)
     #? Oggetti contesto da passare al template
     context = {};
 
-    # todo: Estrazione dati dal server e aggiunta al contesto
-    risultati = server.getQuiz(parametri)
+    # Estrazione dati dal server e aggiunta al contesto
+    risultati = server.getUtente(parametri.copy())
+
     valoriEstratti = []
 
-    for i in range(0,15):
+    for riga in risultati:
 
-        nick = "benny"
-        nome = "Benedetta"
-        cognome = "Vitale"
-        email = "b.vitale@studenti.unibg.it"
-        nQcreati = 200        
-        nQgiocati = 1e4
+        nick = riga["nomeUtente"]
+        nome = riga["nome"]
+        cognome = riga["cognome"]
+        email = riga["email"]
+        nQcreati = riga["nQcreati"]
+        nQgiocati = riga["nQgiocati"]
 
         o = []
         o.append({"valore" : nick , "impostazioni": {"data-toggle" : "tooltip", "title":email}}) #TODO
@@ -206,23 +207,23 @@ def partecipazione(request):
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
-    if "nRisposte" in parametri:
-        parametri["isSet_nRisposte"] = parametri["nRisposte"] != "";
-
-    parametri["directory"] = "filtri/filtroPartecipazione.html"
-
+    
     #? Oggetti contesto da passare al template
     context = {};
 
+    print(parametri)
     # todo: Estrazione dati dal server e aggiunta al contesto
+    
+    risultati = server.getPartecipazione(parametri.copy())
+
     valoriEstratti = []
 
-    for i in range(0,15):
+    for riga in risultati:
 
-        nick = "benny"
-        titolo = "QUANDO C'è IL BEL TEMPO?"
-        data = "02/07/2020"        
-        nRisposte = 1e4
+        nick = riga["nomeUtente"]
+        titolo = riga["quiz"]
+        data = funzionalita.DataToString(riga["data"])
+        nRisposte = riga["nRisposte"]
 
         o = []
         o.append({"valore" : nick , "impostazioni": {}}) #TODO
@@ -242,6 +243,10 @@ def partecipazione(request):
     else:
         infoRicerca = "sono state trovate {} partecipazioni".format(numeroRighe)
 
+    if "nRisposte" in parametri:
+        parametri["isSet_nRisposte"] = parametri["nRisposte"] != "";
+
+    parametri["directory"] = "filtri/filtroPartecipazione.html"
 
     # noInferioreMd = {"class": "d-none d-md-table-cell"}
 
@@ -251,6 +256,7 @@ def partecipazione(request):
                          {"valore":"N° Risposte Date" , "impostazioni":{}}]
 
     context["risultati"] = {"numeroRighe": numeroRighe , "valori": valoriEstratti , "frasiRicerca": {"info": infoRicerca} , "listaIntestazioni": listaIntestazioni}
+
 
 
     #? preparazione contesto: infoPagina

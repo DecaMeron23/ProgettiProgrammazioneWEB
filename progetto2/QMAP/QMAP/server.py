@@ -93,6 +93,19 @@ def aggiungiCondizione(condizione, nome , valore , tipologia):
     
     return condizione
 
+def eseguiQuery(query):
+    conn = connectDB()
+
+    cursore = conn.cursor()
+    # print(query)
+    cursore.execute(query)
+
+    risultati = cursore.fetchall()
+
+    conn.close()
+    return risultati
+
+
 def CondizioniWhereHaving(parametri , DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING):
     condizioni_where = ""
     condizioni_having = ""
@@ -155,22 +168,82 @@ def getQuiz(parametri):
         
     [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
 
-    print(condizioni_where)
-    print(condizioni_having)
+    # print(condizioni_where)
+    # print(condizioni_having)
 
     query = QUERY_QUIZ  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
     
-    conn = connectDB()
-
-    cursore = conn.cursor()
-    # print(query)
-    cursore.execute(query)
-
-    risultati = cursore.fetchall()
-
-    conn.close()
+    risultati = eseguiQuery(query)
 
     return risultati
 
-parametri = {}
-getQuiz(parametri)
+# {'nomeUtente': 'dd', 'nome': 'nn', 'cognome': 'cc', 'email': '@', 'nQcreati': '2', 'nQgiocati': '3', 'radio_quale_nQcreati': '1', 'radio_nQgiocati': '2'}
+
+def getUtente(parametri):
+    
+    QUERY = "SELECT UTENTE.NOME_UTENTE AS nomeUtente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email , COUNT(DISTINCT QUIZ.CODICE) as nQcreati , COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as nQgiocati FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE LEFT JOIN PARTECIPAZIONE ON UTENTE.NOME_UTENTE = PARTECIPAZIONE.UTENTE"
+
+    # Definizione delle condizioni per il where 
+    DIZIONARIO_WHERE = {"nomeUtente" : "UTENTE.NOME_UTENTE" , "nome" : "UTENTE.NOME" , "cognome" : "UTENTE.COGNOME" , "email" :"UTENTE.EMAIL"}
+    
+    #Definizione delle condizioni per il having 
+    DIZIONARIO_HAVING = {"nQcreati": "nQcreati" , "nQgiocati": "nQgiocati"}
+
+    DIZIONARIO_VINCOLI = {"nQcreati" : "radio_quale_nQcreati" , "nQgiocati" : "radio_nQgiocati"}
+
+    GROUP_BY = " GROUP BY UTENTE.NOME_UTENTE "
+
+    ORDER_BY = " ORDER BY UTENTE.NOME_UTENTE ASC"
+
+    [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
+
+    # print(condizioni_where)
+    # print(condizioni_having)
+
+    query = QUERY  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
+    
+    # print(query)
+    risultati = eseguiQuery(query)
+
+    # print(risultati)
+
+    return risultati
+
+def getPartecipazione(parametri):
+    
+    QUERY = " SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nomeUtente , QUIZ.TITOLO AS quiz, QUIZ.CODICE AS codiceQuiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS nRisposte FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE "
+
+    # Definizione delle condizioni per il where 
+    DIZIONARIO_WHERE = {"codice" : "PARTECIPAZIONE.CODICE" , "nomeUtente" : "PARTECIPAZIONE.UTENTE" , "quiz" : "QUIZ.TITOLO" , "codiceQuiz" :"QUIZ.CODICE" , "data" : "PARTECIPAZIONE.DATA"}
+    
+    #Definizione delle condizioni per il having 
+    DIZIONARIO_HAVING = {"nRisposte": "nRisposte"}
+
+    DIZIONARIO_VINCOLI = {"data" : "radio_quale_data" , "nRisposte" : "radio_nRisposte"}
+
+    GROUP_BY = " GROUP BY PARTECIPAZIONE.CODICE "
+
+    ORDER_BY = " ORDER BY PARTECIPAZIONE.UTENTE ASC"
+
+    if "data" in parametri:
+        parametri["data"] = funzionalita.DataFormatoDataBase(parametri["data"])
+
+    [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
+
+
+    print(condizioni_where)
+    print(condizioni_having)
+
+    query = QUERY  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
+    
+    # print(query)
+    risultati = eseguiQuery(query)
+
+    # print(risultati)
+
+    return risultati
+
+
+
+# parametri = {'nomeUtente': 'dd', 'nome': 'nn', 'cognome': 'cc', 'email': '@', 'nQcreati': '2', 'nQgiocati': '3', 'radio_quale_nQcreati': '1', 'radio_nQgiocati': '2'}
+# getUtente(parametri)
