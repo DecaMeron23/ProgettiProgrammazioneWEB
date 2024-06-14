@@ -9,6 +9,7 @@ templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
 
 
+from . import funzionalita
 from . import server
 
 def estrazioneParametriGet(request):
@@ -48,6 +49,33 @@ def quiz(request):
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
+    #? Oggetti contesto da passare al template
+    context = {};
+
+    # todo: Estrazione dati dal server e aggiunta al contesto
+    
+    rispostaServer = server.getQuiz(parametri.copy())
+    valoriEstratti = []
+
+    for riga in rispostaServer:
+        o = []
+        titolo = riga["titolo"]
+        autore = riga["creatore"]
+        dataInizio = funzionalita.DataToString(riga["dataInizio"])
+        dataFine = funzionalita.DataToString(riga["dataFine"])
+        nDomande = riga["nDomande"]
+        nPartecipazioni = riga["nPartecipazioni"]
+
+        o.append({"valore" : titolo , "impostazioni": {}})
+        o.append({"valore" : autore , "impostazioni": {"class": "text-center ciao" , "implementa" : "niente"}})
+        o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center"}})
+        o.append({"valore" : dataFine , "impostazioni": {"class": "text-center"}})
+        o.append({"valore" : nDomande , "impostazioni": {"class": "text-center"}})
+        o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center"}})
+
+        valoriEstratti.append(o)
+        # print(o)
+
     if "nDomande" in parametri:
         parametri["isSet_nDomande"] = parametri["nDomande"] != "";
 
@@ -57,23 +85,6 @@ def quiz(request):
 
     parametri["directory"] = "filtri/filtroQUiz.html"
 
-    #? Oggetti contesto da passare al template
-    context = {};
-
-    # todo: Estrazione dati dal server e aggiunta al contesto
-    valoriEstratti = []
-
-    for i in range(0,15):
-        o = []
-        o.append({"valore" : "Titolo" , "impostazioni": {}})
-        o.append({"valore" : "Autorevole" , "impostazioni": {"class": "text-center ciao" , "implementa" : "niente"}})
-        o.append({"valore" : "02/07/2022" , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : "inf" , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : 10 , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : -2 , "impostazioni": {"class": "text-center"}})
-
-        valoriEstratti.append(o)
-        # print(o)
 
     #? preparazione contesto: risultati
     numeroRighe = len(valoriEstratti)
@@ -104,7 +115,6 @@ def quiz(request):
     page = template.render(context= context , request= request)
 
     res.write(page)
-
     return res
 
 # ! UTENTE

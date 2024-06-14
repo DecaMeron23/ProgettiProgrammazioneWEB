@@ -3,9 +3,16 @@ src = "https://cdn.jsdelivr.net/npm/flatpickr";
 
 //! Data Picker
 var inizzializzazione = function () {
-    flatpickr("#dataInizio", {dateFormat: "d/m/Y" , weekNumbers: true});
-    flatpickr("#dataFine", {dateFormat: "d/m/Y" , weekNumbers: true});
-    flatpickr("#data", {dateFormat: "d/m/Y" , weekNumbers: true});
+
+    formato = {
+        locale: "it",  // Imposta la lingua su italiano
+        dateFormat: "d/m/Y" ,
+        weekNumbers: true
+    }
+
+    flatpickr("#dataInizio", formato);
+    flatpickr("#dataFine", formato);
+    flatpickr("#data", formato);
 }
 
 
