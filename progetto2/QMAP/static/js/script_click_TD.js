@@ -81,28 +81,9 @@ function clickTitoloQuizPARTECIPAZIONI(el) {
  * 
  * @param {Element} el
  */
-function clickNomeUtenteUTENTE(el) {
-    var nome_utente = el.innerHTML;
-    $("#creatore").attr("value", nome_utente);
-    attivaMaschera(1)
-
-    $(".popup_quiz").toggleClass("popup_quiz_show");
-}
-
-/**
- * Funzione che reinderizza la pagina sui quiz che ha fatto l'utente
- * 
- * @param {Element} el 
- */
-function clickNumeroQuizUTENTE(el) {
-    var numero = el.innerHTML;
-    var nome_utente = el.getAttribute("nome_utente");
-    if (numero == 0) {
-        alert(`${nome_utente} ancora non ha creato dei quiz`);
-    } else {
-        dati = { creatore: nome_utente, like: "false" };
-        reindirizzaQUIZ(dati)
-    }
+function openCreaQuiz(el) {
+    var nome_utente = el.innerText;
+    
 }
 
 /**
@@ -111,31 +92,40 @@ function clickNumeroQuizUTENTE(el) {
  * @param {Element} el
  */
 function clickNumeroPartecipazioniUTENTE(el) {
-    var numero = el.innerHTML;
-    var nome_utente = el.getAttribute("nome_utente");
-    if (numero == 0) {
-        alert(`${nome_utente} ancora non ha partecipato a quiz`);
-    } else {
-        dati = { nome_utente: nome_utente };
-        reindirizzaPARTECIPAZIONI(dati);
-    }
+    
 }
 
 
 // Altre Funzioni d'uso comune
 
-function reindirizzaPARTECIPAZIONI(dati) {
-    var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php"
-    $.redirectGET(pagina, dati);
+function reindirizzaPARTECIPAZIONI(el) {
+    var numero = el.innerText;
+    var nome_utente = el.getAttribute("nome_utente");
+    if (numero == 0) {
+        alert(`${nome_utente} ancora non ha partecipato a quiz`);
+    } else {
+        dati = { nome_utente: nome_utente };
+        var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php"
+        $.redirectGET(pagina, dati);
+    }
 }
 
-function reindirizzaQUIZ(dati) {
-    var pagina = "https://quizmakeandplay.altervista.org/quiz.php"
-    $.redirectGET(pagina, dati);
+function reindirizzaQUIZ(el) {
+    var numero = el.innerText;
+    var nome_utente = el.getAttribute("nome_utente");
+    if (numero == 0) {
+        alert(`${nome_utente} ancora non ha creato dei quiz`);
+    } else {
+        dati = { creatore: nome_utente};
+        var pagina = "/quiz"
+        $.redirectGET(pagina, dati);
+    }
 }
 
-function reindirizzaUTENTE(dati) {
-    var pagina = "https://quizmakeandplay.altervista.org/utente.php";
+function reindirizzaUTENTE(el) {
+    var utente = el.innerText;
+    dati = { nomeUtente: utente }
+    var pagina = "/utente";
     $.redirectGET(pagina, dati);
 }
 

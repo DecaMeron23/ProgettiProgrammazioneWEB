@@ -12,6 +12,13 @@ templateInfoQuiz = "infoQuiz.html"
 from . import funzionalita
 from . import server
 
+
+OPEN_QUIZ = "reindirizzaQUIZ(this)";
+OPEN_UTENTE = "reindirizzaUTENTE(this)";
+OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
+OPEN_INFO_QUIZ = "";
+OPEN_CREA_QUIZ = "openCreaQuiz(this)";
+
 def estrazioneParametriGet(request):
     parametri = request.GET
 
@@ -59,6 +66,7 @@ def quiz(request):
 
     for riga in rispostaServer:
         o = []
+        idQuiz = riga["codice"]
         titolo = riga["titolo"]
         autore = riga["creatore"]
         dataInizio = funzionalita.DataToString(riga["dataInizio"])
@@ -66,12 +74,12 @@ def quiz(request):
         nDomande = riga["nDomande"]
         nPartecipazioni = riga["nPartecipazioni"]
 
-        o.append({"valore" : titolo , "impostazioni": {}})
-        o.append({"valore" : autore , "impostazioni": {"class": "text-center ciao" , "implementa" : "niente"}})
-        o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : dataFine , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : nDomande , "impostazioni": {"class": "text-center"}})
-        o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center"}})
+        o.append({"valore" : titolo , "impostazioni": {"id-quiz" : idQuiz , "implementa": "onClick" , "onClick" : OPEN_INFO_QUIZ}}) #todo
+        o.append({"valore" : autore , "impostazioni": {"class": "text-center ciao" , "implementa" : "onClick" , "onClick" : OPEN_UTENTE}})
+        o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
+        o.append({"valore" : dataFine , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
+        o.append({"valore" : nDomande , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
+        o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center", "implementa": "onClick" , "onClick" : OPEN_PARTECIPAZIONE}})
 
         valoriEstratti.append(o)
         # print(o)
@@ -142,12 +150,12 @@ def utente(request):
         nQgiocati = riga["nQgiocati"]
 
         o = []
-        o.append({"valore" : nick , "impostazioni": {"data-toggle" : "tooltip", "title":email}}) #TODO
+        o.append({"valore" : nick , "impostazioni": {"data-toggle" : "tooltip", "title":email ,"implementa" : "onClick" , "onClick": OPEN_CREA_QUIZ}})
         o.append({"valore" : nome , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
         o.append({"valore" : cognome , "impostazioni": {"class": "text-center" , "implementa": "niente"}})
         o.append({"valore" : email , "impostazioni": {"class": "d-none d-md-table-cell" , "implementa": "niente"}})
-        o.append({"valore" : nQcreati , "impostazioni": {"class": "text-center" , "implementa": ""}}) #TODO
-        o.append({"valore" : nQgiocati , "impostazioni": {"class": "text-center" , "implementa": ""}}) #TODO
+        o.append({"valore" : nQcreati , "impostazioni": {"class": "text-center" , "implementa": "onClick" ,"onClick": OPEN_QUIZ , "nome_utente" : nick}})
+        o.append({"valore" : nQgiocati , "impostazioni": {"class": "text-center" , "implementa": "onClick" ,"onClick": OPEN_PARTECIPAZIONE, "nome_utente" : nick}})
 
         valoriEstratti.append(o)
         # print(o)

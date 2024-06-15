@@ -38,10 +38,10 @@ def connectDB():
         user=MYSQL_USERNAME,
         write_timeout=timeout,
         )
-        print("connesso")
         return connection
     except:
         print("Errore durante la connessione al database")
+        exit()
 
 # Tipologie di ricerche:
 # -minore
@@ -144,7 +144,7 @@ def CondizioniWhereHaving(parametri , DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DI
 def getQuiz(parametri):
     
     # Definizione delle condizioni per il where 
-    DIZIONARIO_WHERE = {"titolo" : "QUIZ.TITOLO" , "creatore" : "QUIZ.CREATORE" , "dataInizio" : "QUIZ.DATA_INIZIO" , "dataFine" : "QUIZ.DATA_FINE"}
+    DIZIONARIO_WHERE = {"codice" : "QUIZ.CODICE", "titolo" : "QUIZ.TITOLO" , "creatore" : "QUIZ.CREATORE" , "dataInizio" : "QUIZ.DATA_INIZIO" , "dataFine" : "QUIZ.DATA_FINE"}
     
     #Definizione delle condizioni per il having 
     DIZIONARIO_HAVING = {"nDomande": "nDomande" , "nPartecipazioni": "nPartecipazioni"}
