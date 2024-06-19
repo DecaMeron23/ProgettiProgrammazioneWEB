@@ -106,10 +106,10 @@ function reindirizzaPARTECIPAZIONI(el){
 
     if (pagina == "utente"){
         var nome_utente = el.getAttribute("nome_utente");
-        dati = { "nomeUtente": nome_utente , "likeNomeUtente" : NoLike};
+        dati = { "nomeUtente": nome_utente , "vincoliNomeUtente" : "NoLike"};
     }else if (pagina == "quiz"){
         var idQuiz = el.getAttribute("id-quiz");
-        dati = { "codice": idQuiz , "likeCodice" : false};
+        dati = { "codiceQuiz": idQuiz , "vincoliCodice" : "NoLike"};
     }
     if (numero == 0) {
         alert(`${nome_utente} ancora non ha partecipato a quiz`);
@@ -125,7 +125,7 @@ function reindirizzaQUIZ(el) {
     if (numero == 0) {
         alert(`${nome_utente} ancora non ha creato dei quiz`);
     } else {
-        dati = { creatore: nome_utente};
+        dati = { creatore: nome_utente , "vincoloCreatore" : "noLike"};
         var pagina = "/quiz"
         $.redirectGET(pagina, dati);
     }
@@ -133,7 +133,7 @@ function reindirizzaQUIZ(el) {
 
 function reindirizzaUTENTE(el) {
     var utente = el.innerText;
-    dati = { nomeUtente: utente }
+    dati = { nomeUtente: utente  , "vincoliNomeUtente" : "noLike"}
     var pagina = "/utente";
     $.redirectGET(pagina, dati);
 }

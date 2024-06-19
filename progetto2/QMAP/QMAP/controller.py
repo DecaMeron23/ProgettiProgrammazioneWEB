@@ -290,6 +290,11 @@ def gioca(request):
  
     context = {}
     
+    # Seleziona un quiz a caso
+    elemento_casuale = random.choice(data)
+    codice = elemento_casuale["codice"]
+
+
     #todo richiesta delle informazioni
     testoDomanda = "Chi sono io"
     testoRisposta = "emilio"

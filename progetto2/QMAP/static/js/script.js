@@ -177,7 +177,7 @@ function clickRadio(elemento) {
 }
 
 /**
- * Funzione che strae un quiz a caso e ci fa giocare
+ * Funzione che estrae un quiz a caso e ci fa giocare
  */
 function gioca_quiz() {
     // * Richiesta di tutti i quiz

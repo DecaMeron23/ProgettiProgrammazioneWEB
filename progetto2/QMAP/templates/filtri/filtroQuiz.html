@@ -48,7 +48,7 @@
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="dataFine" name="dataFine" placeholder=" "
-                        value={{filtro.dataFine}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        value='{{filtro.dataFine}}'><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Data Fine</label>
                 </div>
@@ -70,7 +70,7 @@
                 <div class="input-data">
                     <input type="number" id="nDomande" name="nDomande" placeholder=" "
                     {% if filtro.isSet_nDomande %}
-                        value={{filtro.nDomande}}
+                        value='{{filtro.nDomande}}'
                     {% endif %}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">N° di Domande</label>
@@ -92,7 +92,7 @@
                 <div class="input-data">
                     <input type="number" id="nPartecipazioni" name="nPartecipazioni" placeholder=" "
                     {% if filtro.isSet_nPartecipazioni %}
-                    value={{filtro.nPartecipazioni}}
+                    value='{{filtro.nPartecipazioni}}'
                     {% endif %}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">N° di partecipanti</label>
