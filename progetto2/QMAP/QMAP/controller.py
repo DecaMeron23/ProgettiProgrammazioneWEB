@@ -73,13 +73,15 @@ def quiz(request):
         dataFine = funzionalita.DataToString(riga["dataFine"])
         nDomande = riga["nDomande"]
         nPartecipazioni = riga["nPartecipazioni"]
+        
+        date = dataInizio + " " + dataFine
 
         o.append({"valore" : titolo , "impostazioni": {"id-quiz" : idQuiz , "implementa": "onClick" , "onClick" : OPEN_INFO_QUIZ}}) #todo
         o.append({"valore" : autore , "impostazioni": {"class": "text-center ciao" , "implementa" : "onClick" , "onClick" : OPEN_UTENTE}})
-        o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
-        o.append({"valore" : dataFine , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
+        o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center"  , "implementa" : "niente"}})
+        o.append({"valore" : dataFine , "impostazioni": {"class": "text-center " , "implementa" : "niente"}})
         o.append({"valore" : nDomande , "impostazioni": {"class": "text-center" , "implementa" : "niente"}})
-        o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center", "implementa": "onClick" , "onClick" : OPEN_PARTECIPAZIONE}})
+        o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center", "id-quiz" : idQuiz ,  "implementa": "onClick" , "onClick" : OPEN_PARTECIPAZIONE}})
 
         valoriEstratti.append(o)
         # print(o)
@@ -103,9 +105,8 @@ def quiz(request):
     else:
         infoRicerca = "sono stati trovati {} quiz".format(numeroRighe)
 
-    
 
-    listaIntestazioni = [{"valore":"Titolo" , "impostazioni":{}}, {"valore":"Autore" , "impostazioni":{}}, {"valore":"Data Inizio" , "impostazioni":{}} , {"valore":"Data Fine" , "impostazioni":{}} , {"valore":"N° di Domande" , "impostazioni":{}} , {"valore": "N° di Partecipanti" , "impostazioni":{}}]
+    listaIntestazioni = [{"valore":"Titolo" , "impostazioni":{}}, {"valore":"Autore" , "impostazioni":{}}, {"valore":"Data Inizio" , "impostazioni": {}} , {"valore":"Data Fine" , "impostazioni":{}} , {"valore":"N° di Domande" , "impostazioni":{}} , {"valore": "N° di Partecipanti" , "impostazioni":{}}]
 
 
     context["risultati"] = {"numeroRighe": numeroRighe , "valori": valoriEstratti , "frasiRicerca": {"info": infoRicerca} , "listaIntestazioni": listaIntestazioni}
@@ -228,6 +229,7 @@ def partecipazione(request):
 
     for riga in risultati:
 
+        codice = riga["codice"];
         nick = riga["nomeUtente"]
         titolo = riga["quiz"]
         data = funzionalita.DataToString(riga["data"])
@@ -235,7 +237,7 @@ def partecipazione(request):
 
         o = []
         o.append({"valore" : nick , "impostazioni": {}}) #TODO
-        o.append({"valore" : titolo , "impostazioni": {"class": "" , "implementa" : ""}}) #TODO
+        o.append({"valore" : titolo , "impostazioni": {"class": "" , "implementa" : "" , "id-quiz": codice}}) #TODO
         o.append({"valore" : data , "impostazioni": {"class": "text-center"}}) #TODO
         o.append({"valore" : nRisposte , "impostazioni": {"class": "text-center" , "implementa": ""}}) #TODO
 

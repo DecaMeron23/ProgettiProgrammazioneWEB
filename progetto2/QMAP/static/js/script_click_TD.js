@@ -98,14 +98,23 @@ function clickNumeroPartecipazioniUTENTE(el) {
 
 // Altre Funzioni d'uso comune
 
-function reindirizzaPARTECIPAZIONI(el) {
+function reindirizzaPARTECIPAZIONI(el){
+    
     var numero = el.innerText;
-    var nome_utente = el.getAttribute("nome_utente");
+
+    pagina = getUrlName();
+
+    if (pagina == "utente"){
+        var nome_utente = el.getAttribute("nome_utente");
+        dati = { "nomeUtente": nome_utente , "likeNomeUtente" : false};
+    }else if (pagina == "quiz"){
+        var idQuiz = el.getAttribute("id-quiz");
+        dati = { "codice": idQuiz , "likeCodice" : false};
+    }
     if (numero == 0) {
         alert(`${nome_utente} ancora non ha partecipato a quiz`);
     } else {
-        dati = { nome_utente: nome_utente };
-        var pagina = "https://quizmakeandplay.altervista.org/partecipazione.php"
+        var pagina = "/partecipazione"
         $.redirectGET(pagina, dati);
     }
 }
@@ -162,3 +171,16 @@ $.extend(
             $(`<form action="${location}"method="post">${form}</form>`).appendTo($(document.body)).submit();
         }
     });
+
+
+
+function getUrlName(){
+    // Ottieni il percorso completo della pagina
+    var path = window.location.pathname;
+
+    // Ottieni il nome del file dalla fine del percorso
+    var pageName = path.split("/").pop();
+
+    // alert("Nome della pagina: " + pageName);
+    return pageName; 
+}
