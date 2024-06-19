@@ -106,7 +106,7 @@ function reindirizzaPARTECIPAZIONI(el){
 
     if (pagina == "utente"){
         var nome_utente = el.getAttribute("nome_utente");
-        dati = { "nomeUtente": nome_utente , "likeNomeUtente" : false};
+        dati = { "nomeUtente": nome_utente , "likeNomeUtente" : NoLike};
     }else if (pagina == "quiz"){
         var idQuiz = el.getAttribute("id-quiz");
         dati = { "codice": idQuiz , "likeCodice" : false};

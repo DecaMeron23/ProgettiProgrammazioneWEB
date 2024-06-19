@@ -9,7 +9,7 @@
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="titolo" name="titolo" placeholder=" " spellcheck="false"
-                        value={{filtro.titolo}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        value='{{filtro.titolo}}'><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Titolo</label>
                 </div>
@@ -18,7 +18,7 @@
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="creatore" name="creatore" placeholder=" " spellcheck="false"
-                        value={{filtro.creatore}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        value='{{filtro.creatore}}'><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Autore</label>
                 </div>
@@ -27,7 +27,7 @@
             <div class="form-row">
                 <div class="input-data">
                     <input type="text" id="dataInizio" name="dataInizio" placeholder=" " spellcheck="false"
-                        value={{filtro.dataInizio}}><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
+                        value='{{filtro.dataInizio}}'><!--IMPORTANTE NON TOGLIERE IL PLACEHOLDER CON LO SPAZIO -->
                     <div class="underline"></div>
                     <label for="">Data Inizio</label>
                 </div>
@@ -43,23 +43,7 @@
                     <i class="fa-solid fa-forward"></i>
                 </div>
             </div>
-            {% comment %} <div class="radio-button">
-                <input type="radio" name="quale_dataInizio" value="1" class="radio-form" id="quale_dataInizio_prima"
-                    <? echo $_GET["quale_dataInizio"]==1 ? "checked" : "" ?>>
-                <input type="radio" name="quale_dataInizio" value="2" class="radio-form" id="quale_dataInizio_uguale"
-                    <? echo $_GET["quale_dataInizio"]==2 ? " " : "" ?>>
-                <input type="radio" name="quale_dataInizio" value="3" class="radio-form" id="quale_data_dopo_dopo" <?
-                    echo $_GET["quale_dataInizio"]==3 ? "checked" : "" ?>>
-                <div onclick="clickRadio(this)" value="1" name="quale_dataInizio" id="quale_dataInizio_prima_icona" <?
-                    echo $_GET["quale_dataInizio"]==1 ? "class='selected-radio'" : "" ?>><i
-                        class="fa-solid fa-backward"></i></div>
-                <div onclick="clickRadio(this)" value="2" name="quale_dataInizio" id="quale_dataInizio_uguale_icona"
-                    <? echo $_GET["quale_dataInizio"]==2 ? "class='selected-radio'" : "" ?>><i
-                        class="fa-solid fa-arrows-to-circle"></i></div>
-                <div onclick="clickRadio(this)" value="3" name="quale_dataInizio" id="quale_dataInizio_dopo_icona" <?
-                    echo $_GET["quale_dataInizio"]==3 ? "class='selected-radio'" : "" ?>><i
-                        class="fa-solid fa-forward"></i></div>
-            </div> {% endcomment %}
+            
             {% comment %} ! DATA FINE {% endcomment %}
             <div class="form-row">
                 <div class="input-data">

@@ -11,10 +11,16 @@ AND = " AND "
 WHERE = " WHERE "
 HAVING = " HAVING "
 
-TIPOLOGIE = {"minore": "1",
+
+TIPOLOGIA_ELEMENTO = {"data": "DATA",
+                      "testo" : "TESTO",
+                      "numero": "NUMERO"}
+
+TIPOLOGIA_RICERCA = {"minore": "1",
              "uguale": "2",
              "maggiore": "3",
-             "testo": "like"}
+             "like": "like",
+             "noLike": "2"}
 
 # Definisci le variabili per le credenziali di accesso
 MYSQL_HOST = 'quizmakeandplay-emiliomeroni99-5f9c.g.aivencloud.com'
@@ -69,19 +75,20 @@ def aggiungiCondizione(condizione, nome , valore , tipologia):
     # if not isinstance(valore , int):
     #     valore = f"'{valore}'"
 
-    if tipologia == TIPOLOGIE["minore"]:
+    if tipologia == TIPOLOGIA_RICERCA["minore"]:
         if not isinstance(valore , int):
             valore = f"'{valore}'"
         vincolo = nome + " < " + valore
-    elif tipologia == TIPOLOGIE["maggiore"]:
+    elif tipologia == TIPOLOGIA_RICERCA["maggiore"]:
         if not isinstance(valore , int):
             valore = f"'{valore}'"
         vincolo = nome + " > " + valore
-    elif tipologia == TIPOLOGIE["uguale"]:
+   
+    elif tipologia == TIPOLOGIA_RICERCA["uguale"]:  # Valida anche per noLike
         if not isinstance(valore , int):
             valore = f"'{valore}'"
         vincolo = nome + " = " + valore
-    elif tipologia == TIPOLOGIE["testo"]:
+    elif tipologia == TIPOLOGIA_RICERCA["like"]:
         if not isinstance(valore , int):
             valore = f"'%{valore}%'"
         vincolo = nome + LIKE + valore
@@ -106,58 +113,27 @@ def eseguiQuery(query):
     return risultati
 
 
-def CondizioniWhereHaving(parametri , DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING):
-    condizioni_where = ""
-    condizioni_having = ""
-    for key , value in parametri.items():
-        # Se è una condizione where
-        if key in DIZIONARIO_WHERE:
-            tipologia = TIPOLOGIE["testo"]
-            # verifichiamo se non è un testo
-            if key in DIZIONARIO_VINCOLI:
-                # estraiamo la chiave per estrare il valore
-                nomeVincolo = DIZIONARIO_VINCOLI[key]
-                # preleviamo il valore se è settato
-                if nomeVincolo in parametri:
-                        tipologia = parametri[nomeVincolo]
-                        condizioni_where = aggiungiCondizioneWhere(condizioni_where , DIZIONARIO_WHERE[key] , value , tipologia)
-            else:
-                # Aggiungiamo la condizione
-                condizioni_where = aggiungiCondizioneWhere(condizioni_where , DIZIONARIO_WHERE[key] , value , tipologia)
-        elif key  in DIZIONARIO_HAVING:
-            # verifichiamo se non è un testo (non dovrebbe esserlo)
-            if key in DIZIONARIO_VINCOLI:
-                # estraiamo la chiave per estrare il valore
-                nomeVincolo = DIZIONARIO_VINCOLI[key]
-                
-                # preleviamo il valore se è settato
-                if nomeVincolo in parametri:
-                    tipologia = parametri[nomeVincolo]
-                    condizioni_having = aggiungiCondizioneHaving(condizioni_having , DIZIONARIO_HAVING[key] , value , tipologia)
-            else:
-                print("Errore Durante la creazione della query:" + key + " " + value)
-                # Aggiungiamo la condizione
-
-    return [condizioni_where , condizioni_having]
-
+# Lista dei parametri per le ricerce di QUIZ:
+# - codice
+# - titolo
+# -- vincoloTitolo
+# - creatore
+# - dataInizio
+# -- radio_quale_data_inizio
+# - dataFine
+# -- radio_quale_data_fine
+# - nDomande
+# -- radio_quale_nDomande
+# - nPartecipazioni
+# -- radio_quale_nPartecipazioni
 
 def getQuiz(parametri):
     
-    # Definizione delle condizioni per il where 
-    DIZIONARIO_WHERE = {"codice" : "QUIZ.CODICE", "titolo" : "QUIZ.TITOLO" , "creatore" : "QUIZ.CREATORE" , "dataInizio" : "QUIZ.DATA_INIZIO" , "dataFine" : "QUIZ.DATA_FINE"}
-    
-    #Definizione delle condizioni per il having 
-    DIZIONARIO_HAVING = {"nDomande": "nDomande" , "nPartecipazioni": "nPartecipazioni"}
-
-
-    DIZIONARIO_VINCOLI = {"dataInizio" : "radio_quale_dataInizio" , "dataFine" : "radio_quale_dataFine" , "nDomande": "radio_quale_nDomande" , "nPartecipazioni" : "radio_quale_nPartecipazioni"}
-
     QUERY_QUIZ = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS dataInizio, QUIZ.DATA_FINE AS dataFine, COUNT(DISTINCT DOMANDA.NUMERO) AS nDomande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS nPartecipazioni FROM QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ "
 
     GROUP_BY = " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE "
 
     ORDER_BY = " ORDER BY QUIZ.TITOLO ASC"
-
 
     # Modifichiamo il formato delle date in Y/M/D
     if "dataInizio" in parametri:
@@ -166,41 +142,121 @@ def getQuiz(parametri):
     if "dataFine" in parametri:
         parametri["dataFine"] = funzionalita.DataFormatoDataBase(parametri["dataFine"])    
         
-    [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
+    condizioniWhere = "";
+    condizioniHaving = "";
 
-    # print(condizioni_where)
-    # print(condizioni_having)
+    # ? CODICE
+    if "codice" in parametri:
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.CODICE", valore=parametri["codice"] , tipologia=TIPOLOGIA_RICERCA["noLike"])
+    
+    # ? TITOLO
+    if "titolo" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        # Se c'è il vincolo sui parametri
+        if "vincoloTitolo" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
 
-    query = QUERY_QUIZ  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.TITOLO", valore=parametri["titolo"] , tipologia=tipologia)
+    
+    # ? CREATORE
+    if "creatore" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        if "vincoloCreatore" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
+
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.CREATORE", valore=parametri["creatore"] , tipologia=tipologia)
+    
+    # ? DATA INIZIO
+    if "dataInizio" in parametri:
+        if "radio_quale_dataInizio" in parametri:
+            tipologia = parametri["radio_quale_dataInizio"]
+            condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.DATA_INIZIO", valore=parametri["dataInizio"] , tipologia=tipologia)
+    
+    # ? DATA FINE
+    if "dataFine" in parametri:
+        if "radio_quale_dataFine" in parametri:
+            tipologia = parametri["radio_quale_dataFine"]
+            condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.DATA_FINE", valore=parametri["dataFine"] , tipologia=tipologia)
+
+    # ? NUMERO DOMANDE
+    if "nDomande" in parametri:
+        if "radio_quale_nDomande" in parametri:
+            tipologia = parametri["radio_quale_nDomande"]
+
+            condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nDomande", valore=parametri["nDomande"] , tipologia=tipologia)
+
+    # ? NUMERO PARTECIPAZIONI
+    if "nPartecipazioni" in parametri:
+        if "radio_quale_nPartecipazioni" in parametri:
+            tipologia = parametri["radio_quale_nPartecipazioni"]
+
+            condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nPartecipazioni", valore=parametri["nPartecipazioni"] , tipologia=tipologia)
+
+    query = QUERY_QUIZ  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
     
     risultati = eseguiQuery(query)
 
     return risultati
 
-# {'nomeUtente': 'dd', 'nome': 'nn', 'cognome': 'cc', 'email': '@', 'nQcreati': '2', 'nQgiocati': '3', 'radio_quale_nQcreati': '1', 'radio_nQgiocati': '2'}
 
 def getUtente(parametri):
     
     QUERY = "SELECT UTENTE.NOME_UTENTE AS nomeUtente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email , COUNT(DISTINCT QUIZ.CODICE) as nQcreati , COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as nQgiocati FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE LEFT JOIN PARTECIPAZIONE ON UTENTE.NOME_UTENTE = PARTECIPAZIONE.UTENTE"
 
-    # Definizione delle condizioni per il where 
-    DIZIONARIO_WHERE = {"nomeUtente" : "UTENTE.NOME_UTENTE" , "nome" : "UTENTE.NOME" , "cognome" : "UTENTE.COGNOME" , "email" :"UTENTE.EMAIL"}
-    
-    #Definizione delle condizioni per il having 
-    DIZIONARIO_HAVING = {"nQcreati": "nQcreati" , "nQgiocati": "nQgiocati"}
-
-    DIZIONARIO_VINCOLI = {"nQcreati" : "radio_quale_nQcreati" , "nQgiocati" : "radio_nQgiocati"}
-
     GROUP_BY = " GROUP BY UTENTE.NOME_UTENTE "
 
     ORDER_BY = " ORDER BY UTENTE.NOME_UTENTE ASC"
 
-    [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
+    condizioniWhere = ""
+    condizioniHaving = ""
 
-    # print(condizioni_where)
-    # print(condizioni_having)
+    # ? NOME UTENTE
+    if "nomeUtente" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        if "vincoloNomeUtente" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
 
-    query = QUERY  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "UTENTE.NOME_UTENTE", valore=parametri["nomeUtente"] , tipologia=tipologia)
+    
+    # ? NOME
+    if "nome" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        if "vincoloNome" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
+
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "UTENTE.NOME", valore=parametri["nome"] , tipologia=tipologia)
+    
+    # ? COGNOME
+    if "cognome" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        if "vincoloCognome" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
+
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "UTENTE.COGNOME", valore=parametri["cognome"] , tipologia=tipologia)
+
+    # ? EMAIL
+    if "email" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        if "vincoloEmail" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
+
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "UTENTE.EMAIL", valore=parametri["email"] , tipologia=tipologia)
+        
+    # ? NUMERO QUIZ CREATI
+    if "nQcreati" in parametri:
+        if "radio_quale_nQcreati" in parametri:
+            tipologia = parametri["radio_quale_nQcreati"]
+
+            condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nQcreati", valore=parametri["nQcreati"] , tipologia=tipologia)
+
+    # ? NUMERO QUIZ GIOCATI
+    if "nQgiocati" in parametri:
+        if "radio_nQgiocati" in parametri:
+            tipologia = parametri["radio_nQgiocati"]
+
+            condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nQgiocati", valore=parametri["nQgiocati"] , tipologia=tipologia)
+
+    query = QUERY  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
     
     # print(query)
     risultati = eseguiQuery(query)
@@ -213,14 +269,6 @@ def getPartecipazione(parametri):
     
     QUERY = " SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nomeUtente , QUIZ.TITOLO AS quiz, QUIZ.CODICE AS codiceQuiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS nRisposte FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE "
 
-    # Definizione delle condizioni per il where 
-    DIZIONARIO_WHERE = {"codice" : "PARTECIPAZIONE.CODICE" , "nomeUtente" : "PARTECIPAZIONE.UTENTE" , "quiz" : "QUIZ.TITOLO" , "codiceQuiz" :"QUIZ.CODICE" , "data" : "PARTECIPAZIONE.DATA"}
-    
-    #Definizione delle condizioni per il having 
-    DIZIONARIO_HAVING = {"nRisposte": "nRisposte"}
-
-    DIZIONARIO_VINCOLI = {"data" : "radio_quale_data" , "nRisposte" : "radio_nRisposte"}
-
     GROUP_BY = " GROUP BY PARTECIPAZIONE.CODICE "
 
     ORDER_BY = " ORDER BY PARTECIPAZIONE.UTENTE ASC"
@@ -228,18 +276,52 @@ def getPartecipazione(parametri):
     if "data" in parametri:
         parametri["data"] = funzionalita.DataFormatoDataBase(parametri["data"])
 
-    [condizioni_where , condizioni_having] = CondizioniWhereHaving(parametri, DIZIONARIO_WHERE , DIZIONARIO_VINCOLI , DIZIONARIO_HAVING)
+    condizioniWhere = ""
+    condizioniHaving = ""
 
+    # ? CODICE QUIZ
+    if "codiceQuiz" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["noLike"]
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.CODICE", valore=parametri["codiceQuiz"] , tipologia=tipologia)
 
-    print(condizioni_where)
-    print(condizioni_having)
-
-    query = QUERY  + condizioni_where + GROUP_BY + condizioni_having + ORDER_BY
+    # ? CODICE
+    if "codice" in parametri:
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "PARTECIPAZIONE.CODICE", valore=parametri["codice"] , tipologia=TIPOLOGIA_RICERCA["noLike"])
     
-    # print(query)
-    risultati = eseguiQuery(query)
+    # ? TITOLO
+    if "quiz" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        # Se c'è il vincolo sui parametri
+        if "vincoloQuiz" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
 
-    # print(risultati)
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "QUIZ.TITOLO", valore=parametri["quiz"] , tipologia=tipologia)
+
+    # ? NOME UTENTE
+    if "nomeUtente" in parametri:
+        tipologia = TIPOLOGIA_RICERCA["like"]
+        # Se c'è il vincolo sui parametri
+        if "vincoloNomeUtente" in parametri:
+            tipologia = TIPOLOGIA_RICERCA["noLike"]
+
+        condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "PARTECIPAZIONE.UTENTE", valore=parametri["nomeUtente"] , tipologia=tipologia)
+
+    # ? DATA
+    if "data" in parametri:
+        if "radio_quale_data" in parametri:
+            tipologia = parametri["radio_quale_data"]
+            condizioniWhere = aggiungiCondizioneWhere(condizione = condizioniWhere , nome= "PARTECIPAZIONE.DATA", valore=parametri["data"] , tipologia=tipologia)
+
+    # ? NUMERO RISPOSTE
+    if "nRisposte" in parametri:
+        if "radio_nRisposte" in parametri:
+            tipologia = parametri["radio_nRisposte"]
+
+            condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nRisposte", valore=parametri["nRisposte"] , tipologia=tipologia)
+
+    query = QUERY  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
+    
+    risultati = eseguiQuery(query)
 
     return risultati
 
