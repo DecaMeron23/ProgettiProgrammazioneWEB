@@ -128,7 +128,37 @@ def eseguiQuery(query):
 # -- radio_quale_nPartecipazioni
 
 def getQuiz(parametri):
+    """
+    Preleva i quiz secondo i parametri passati.
     
+
+    Args:
+        parametri (dizionario): Un dizionario con argomenti:
+
+                - codice
+                - titolo
+                    - vincoloTitolo
+                - creatore
+                - dataInizio
+                    - radio_quale_data_inizio
+                - dataFine
+                    - radio_quale_data_fine
+                - nDomande
+                    - radio_quale_nDomande
+                - nPartecipazioni
+                    - radio_quale_nPartecipazioni
+
+    Returns:
+        Un array di dizionario, con elementi:
+            - codice
+            - creatore
+            - titolo
+            - dataInizio
+            - dataFine
+            - nDomande
+            - nPartecipazioni
+
+    """    
     QUERY_QUIZ = "SELECT QUIZ.CODICE AS codice, QUIZ.CREATORE AS creatore, QUIZ.TITOLO AS titolo, QUIZ.DATA_INIZIO AS dataInizio, QUIZ.DATA_FINE AS dataFine, COUNT(DISTINCT DOMANDA.NUMERO) AS nDomande, COUNT(DISTINCT PARTECIPAZIONE.CODICE) AS nPartecipazioni FROM QUIZ LEFT JOIN DOMANDA ON QUIZ.CODICE = DOMANDA.QUIZ LEFT JOIN PARTECIPAZIONE ON QUIZ.CODICE = PARTECIPAZIONE.QUIZ "
 
     GROUP_BY = " GROUP BY QUIZ.CODICE, QUIZ.CREATORE, QUIZ.TITOLO, QUIZ.DATA_INIZIO, QUIZ.DATA_FINE "
@@ -326,6 +356,47 @@ def getPartecipazione(parametri):
     return risultati
 
 
+def getDomandeQuiz(codice):
 
-# parametri = {'nomeUtente': 'dd', 'nome': 'nn', 'cognome': 'cc', 'email': '@', 'nQcreati': '2', 'nQgiocati': '3', 'radio_quale_nQcreati': '1', 'radio_nQgiocati': '2'}
-# getUtente(parametri)
+    '''
+    Funzione che esegue una query per prelevare tutte le domande dato un codice
+
+    Args:
+        - codice (string): codice del quiz
+
+    Returns:
+        array di dizionari con chiavi:
+        - numero
+        - testo
+    '''
+
+    query = "SELECT NUMERO as numero, TESTO as testo FROM DOMANDA WHERE QUIZ = {} ORDER BY NUMERO ASC".format(codice)
+
+    print(query)
+
+    risultati = eseguiQuery(query)
+
+    return risultati
+
+def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
+    '''
+    Funzione che preleva tutte le risposte per una specifica domanda di un quiz
+
+    args:
+    -codiceQuiz(string, int)
+    -numeroDomanda(string, int)
+
+    Returns:
+        array di dizionari contententi le risposte:
+        - numero
+        - testo
+        - tipo
+        - punteggio 
+    '''
+    query = "SELECT NUMERO AS numero ,TESTO AS testo, TIPO AS tipo , PUNTEGGIO AS punteggio FROM RISPOSTA WHERE QUIZ = {} AND DOMANDA = {} ORDER BY NUMERO ASC".format(codiceQuiz , numeroDomanda);
+
+    risultati = eseguiQuery(query)
+
+    print(query)
+
+    return risultati
