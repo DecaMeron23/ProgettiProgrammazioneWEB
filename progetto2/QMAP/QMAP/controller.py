@@ -12,6 +12,8 @@ templateInfoQuiz = "infoQuiz.html"
 from . import funzionalita
 from . import server
 
+import random
+
 
 OPEN_QUIZ = "reindirizzaQUIZ(this)";
 OPEN_UTENTE = "reindirizzaUTENTE(this)";
@@ -290,10 +292,13 @@ def gioca(request):
  
     context = {}
     
-    # Seleziona un quiz a caso
-    elemento_casuale = random.choice(data)
-    codice = elemento_casuale["codice"]
+    # Prendiamo tutti i QUIZ
+    data = server.getQuiz({})
 
+    # Seleziona un QUIZ a caso
+    quiz = random.choice(data)
+
+    # Prendiamo tutte le domande per quel quiz
 
     #todo richiesta delle informazioni
     testoDomanda = "Chi sono io"
@@ -320,13 +325,12 @@ def gioca(request):
         domande.append(domanda)
 
 
-    infoQuiz = {"autore" : nomeAutore,
-                "dataInizio" : dataInizio,
-                "dataFine" : dataFine,
-                "titolo" : titolo,
+    infoQuiz = {"autore" : quiz["creatore"],
+                "dataInizio" : funzionalita.DataToString(quiz["dataInizio"]),
+                "dataFine" : funzionalita.DataToString(quiz["dataFine"]),
+                "titolo" : quiz["titolo"],
                 "domande" : domande
-                }
-
+                }    
     context = infoQuiz
     context["infoPagina"] = {"nomePagina" : "gioca"}
 

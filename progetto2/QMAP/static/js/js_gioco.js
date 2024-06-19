@@ -9,22 +9,6 @@ var codice_partecipazione = 0;
 get_codice_partecipazione();
 
 /**
- * Funzione che preleva il codice del quiz
- * 
- * @returns il codice del quiz
- */
-function get_id_quiz() {
-    
-}
-
-$(document).ready(function() {
-    var id =$(".info_QUIZ").attr("id_quiz");
-    // alert(id); 
-    id_quiz = id;
-});
-
-
-/**
  * Funzione chiamata al click di un qualsiasi pallino per la selezione della risposta
  * 
  * @param {Element} elemento la \<i\> che indica il pallino
