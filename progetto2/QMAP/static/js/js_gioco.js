@@ -93,14 +93,16 @@ function risposta_sbagliata(elemento) {
  * funzione che verifica le risposte date al gioco
  */
 function verifica_quiz() {
-    // prendiamo tutte le domande
+
     pulsante_invia_attiva(false);
+    // prendiamo tutte le domande
     var domande = $(".domanda_risposte");
 
-    dati = { functionname: "get_risposte_corrette", codice: id_quiz };
+
+    dati = { tipoRichiesta: "getRisposteCorrette", codice: id_quiz };
 
     // * Esecuzione chiamata ajax
-    $.getJSON("./php/funzionalitaPHP_JS.php", dati,
+    $.getJSON("funzionalitaJS", dati,
         function (data, textStatus, jqXHR) {
             var corretta = data;
 

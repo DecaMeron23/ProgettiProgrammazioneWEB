@@ -27,6 +27,7 @@ urlpatterns = [
     path("partecipazione", controller.partecipazione , name= "partecipazione"),
     path("gioca", controller.gioca , name= "gioca"),
     path("info", controller.info , name= "info"),
-    path("get_quiz", server.getQuiz , name= "get_quiz"), # !Temporaneo
+    path("get_quiz", server.getQuiz , name= "get_quiz"),
+    path("funzionalita_js", server.funzionalitaJS , name= "funzionalita_js"),
 
 ]

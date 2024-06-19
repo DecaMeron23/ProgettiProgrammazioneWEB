@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from django.template import loader
 
 import pymysql
+import json
+
 
 from . import funzionalita
 
@@ -400,3 +402,37 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
     print(query)
 
     return risultati
+
+
+def funzionalitaJS(request):
+    '''
+    Funzione che permette di fare chiamate ajax
+
+    tipo di funzioni:
+    - getRisposteCorrette(codiceQuiz) 
+    '''
+
+    res = HttpResponse(content_type="application/json")
+
+    parametri = request.GET
+
+    if not "funzione" in parametri:
+        res.write({"ERRORE": "parametro funzione non inserito"})
+        return res  
+
+    #  Estraiamo tutte le risposte corrette per domanda
+    if parametri["funzione"] == "getRisposteCorrette":
+        domandeDB = getDomandeQuiz(codiceQuiz=parametri["codiceQuiz"])
+        risposteCorrette = []
+        for domanda in domandeDB:
+            o = {}
+            o["numeroDomanda"] = domanda["numero"]
+            risposteDB = getRisposteDomandaQuiz(codiceQuiz=parametri["codiceQuiz"] , numeroDomanda=domanda["numero"])
+            for risposta in risposteDB:
+                if risposta["tipo"] == 1:
+                    o["numero"] = risposta["numero"]
+
+            risposteCorrette.append(o)
+        rispostaJSON = json.dumps(risposteCorrette, indent=4, ensure_ascii=False)
+        res.write(rispostaJSON)
+        return res
