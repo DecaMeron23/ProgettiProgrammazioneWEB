@@ -31,7 +31,7 @@
 
 </head>
 
-<body>
+<body idQuiz='{{idQuiz}}'>
     <div class="container-fluid">
 
         {% include "elementiPrincipali/header.html" %}
@@ -67,7 +67,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-11 col-md-10 m-2 mt-5 caratteristiche">
                 {% for domanda in domande %}
-                <div class='row mb-3 mt-3' id="domanda_risposte">
+                <div class='row mb-3 mt-3 domanda_risposte' domanda_numero = "{{domanda.numero}}">
                     <div class="col-8">
                         {{ forloop.counter }}) {{ domanda.testo }}
                     </div>
@@ -75,8 +75,8 @@
                         [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}
-                    <div class="row m-2 mt-3 mb-3" id="risposta_quiz">
-                        <div class="col" risposta_numero="numeroRisposta">
+                    <div class="row m-2 mt-3 mb-3" id="risposta_quiz" risposta_numero="{{risposta.numero}}">
+                        <div class="col">
                             <span id='opzione'><i class="fa-regular fa-circle"
                                     onclick="seleziona_risposta(this)"></i></span><span class="p-2">{{ risposta.testo }}</span>
                         </div>
@@ -86,12 +86,14 @@
                 {% endfor %}
                 <div class="row mb-2 mt-5 d-flex justify-content-center">
                     <div class="col-4 ml-2 d-flex justify-content-center">
-                        <div class="pulsante d-inline-block" onclick="">
-                            Cancella
-                        </div>
+                        <a href="gioca">
+                            <div class="pulsante d-inline-block">
+                                Cambia QUIZ
+                            </div>
+                        </a>
                     </div>
                     <div class="col-4 ml-2 d-flex justify-content-center">
-                        <div class="pulsante d-inline-block" onclick="">
+                        <div class="pulsante d-inline-block" id="pulsane_invia" onclick="verifica_quiz()">
                             Invia
                         </div>
                     </div>

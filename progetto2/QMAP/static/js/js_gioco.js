@@ -3,10 +3,18 @@ const pallino_check = "fa-solid fa-circle-check";
 const pallino_vuoto = "fa-regular fa-circle";
 const pallino_errato = "fa-solid fa-circle-xmark";
 
-var id_quiz;
+// preleviamo l'host
+const host = `${window.location.host}`;
+
 var utente = "utenteMain";
 var codice_partecipazione = 0;
 get_codice_partecipazione();
+
+
+function getIdQuiz() {
+    id_quiz = $("body").attr("idQuiz");
+    return id_quiz;
+}
 
 /**
  * Funzione chiamata al click di un qualsiasi pallino per la selezione della risposta
@@ -28,7 +36,7 @@ function seleziona_risposta(elemento) {
  * @param {Element} elemento la \<i\> che indica il pallino
  */
 function rimuovi_selezioni(elemento) {
-    var div = $(elemento).parents("#domanda_risposte");
+    var div = $(elemento).parents(".domanda_risposte");
     var ripsoste = estrai_risposte(div);
     for (var i = 0; i < ripsoste.length; i++) {
         // Selezioniamo tutti i pallini di risposta
@@ -94,19 +102,25 @@ function risposta_sbagliata(elemento) {
  */
 function verifica_quiz() {
 
-    pulsante_invia_attiva(false);
+    // pulsante_invia_attiva(false);
     // prendiamo tutte le domande
     var domande = $(".domanda_risposte");
 
+    var dati = {
+        funzione: "getRisposteCorrette",
+        codiceQuiz: getIdQuiz(),
+    };
 
-    dati = { tipoRichiesta: "getRisposteCorrette", codice: id_quiz };
+    // Costruisci l'URL con i parametri della query string
+    var queryString = $.param(dati);
+    var url = `/funzionalita_js?${queryString}`;
 
     // * Esecuzione chiamata ajax
-    $.getJSON("funzionalitaJS", dati,
+    $.getJSON(url,
         function (data, textStatus, jqXHR) {
-            var corretta = data;
+            var corretta = data["risposteCorrette"];
 
-            inserisci_partecipazione(codice_partecipazione, id_quiz, utente);
+            inserisci_partecipazione();
 
             // scorriamo tutte le domande
             for (let i = 0; i < domande.length; i++) {
@@ -119,7 +133,10 @@ function verifica_quiz() {
                 verifica_risposte(element, parseInt(corretta[domanda - 1]["numero"]), parseInt(domanda));
             }
         }
-    );
+    ).fail(function (jqXHR, textStatus, errorThrown) {
+        // Qui puoi mostrare un messaggio di errore all'utente o fare altro
+        console.log(jqXHR.responseText);
+    });;
 
 
 }
@@ -134,7 +151,8 @@ function verifica_quiz() {
 function verifica_risposte(domande, corretta, numero_domanda) {
     var risposte = estrai_risposte(domande);
     for (var i = 0; i < risposte.length; i++) {
-        var opzione = $(risposte[i]).children(".opzione");
+        var col = $(risposte[i]).children(".col");
+        var opzione = col.children("#opzione");
         var pallino = opzione.children();
 
         var numero_risposta = $(risposte[i]).attr("risposta_numero");
@@ -196,13 +214,6 @@ function reset_risposte() {
 
 }
 
-/**
- * Funzione che resetta il quiz
- */
-function restart_quiz() {
-    location.reload();
-}
-
 
 /**
  * Funzione che inserisce la pertecipazione dell'utente
@@ -212,16 +223,19 @@ function restart_quiz() {
  * @param {strign} utente  
  * 
  */
-function inserisci_partecipazione(partecipazione, id_quiz, utente) {
+function inserisci_partecipazione() {
 
     //* prendiamo la data di oggi
     let data = new Date();
     data = data.toISOString().split('T')[0];
 
-    dati = { functionname: "aggiungi_partecipazione", partecipazione: partecipazione, utente: utente, id_quiz: id_quiz, data: data };
+    dati = { funzione: "aggiungiPartecipazione",
+        nomeUtente: utente,
+        codiceQuiz: id_quiz,
+        data: data};
 
-    $.get("./php/funzionalitaPHP_JS.php", dati,
-        function (data, textStatus, jqXHR) { });
+    $.get("funzionalita_js", dati,
+        function (data, textStatus, jqXHR) {});
 }
 
 /**

@@ -307,27 +307,38 @@ def gioca(request):
     domande = []
     for domanda in domandeDB:
         risposteDB = server.getRisposteDomandaQuiz(codiceQuiz=quiz["codice"] , numeroDomanda = domanda["numero"])
+        random.shuffle(risposteDB)
         risposte = []
+        domandaPunteggio = 2
 
         for risposta in risposteDB:
             o_r = {}
             o_r["testo"] = risposta["testo"]
             o_r["corretta"] = risposta["tipo"] == 1 
+            o_r["numero"] = risposta["numero"]
+
+            if not risposta["punteggio"] == None:
+                domandaPunteggio = risposta["punteggio"]
 
             risposte.append(o_r)
 
+
+
         o_d = {}
 
-        domandaPunteggio = risposteDB[0]
-        domandaPunteggio = domandaPunteggio["punteggio"]
+
+        print(domandaPunteggio)
+
 
         o_d["testo"] = domanda["testo"]
+        o_d["numero"] = domanda["numero"]
         o_d["punteggio"] = domandaPunteggio
         o_d["risposte"] = risposte
 
         domande.append(o_d)
 
-    infoQuiz = {"autore" : quiz["creatore"],
+    infoQuiz = {"idQuiz" : quiz["codice"],
+                "autore" : quiz["creatore"],
                 "dataInizio" : funzionalita.DataToString(quiz["dataInizio"]),
                 "dataFine" : funzionalita.DataToString(quiz["dataFine"]),
                 "titolo" : quiz["titolo"],

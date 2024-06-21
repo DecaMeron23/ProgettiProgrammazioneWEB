@@ -1,3 +1,6 @@
+# Il DB è online hostato da https://aiven.io/ 
+
+
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
@@ -359,12 +362,10 @@ def getPartecipazione(parametri):
 
 
 def getDomandeQuiz(codice):
-
     '''
-    Funzione che esegue una query per prelevare tutte le domande dato un codice
-
+    Funzione che esegue una query per prelevare tutte le domande dato il codice del quiz, i risulati saranno in ordine crescente per numero di domanda 
     Args:
-        - codice (string): codice del quiz
+        - codice (string,int): codice del quiz
 
     Returns:
         array di dizionari con chiavi:
@@ -404,6 +405,16 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
     return risultati
 
 
+def getUtenti():
+    '''
+    Funzione che preleva tutti gli utenti dal DB
+
+    Returns:
+    - Array di dizionari
+    '''
+
+
+
 def funzionalitaJS(request):
     '''
     Funzione che permette di fare chiamate ajax
@@ -412,17 +423,26 @@ def funzionalitaJS(request):
     - getRisposteCorrette(codiceQuiz) 
     '''
 
+    def prarmetroMancante(parametro):
+        errore = {"Errore" : "Manca il parametro '{}'.".format(parametro)}
+        return json.dump(errore)
+
+
     res = HttpResponse(content_type="application/json")
 
     parametri = request.GET
 
     if not "funzione" in parametri:
-        res.write({"ERRORE": "parametro funzione non inserito"})
+        errore = {"ERRORE": "parametro funzione non inserito"};
+        res.write(json.dump(errore))
         return res  
 
     #  Estraiamo tutte le risposte corrette per domanda
     if parametri["funzione"] == "getRisposteCorrette":
-        domandeDB = getDomandeQuiz(codiceQuiz=parametri["codiceQuiz"])
+        if not "codiceQuiz" in parametri:
+            res.write(prarmetroMancante("codiceQuiz"))
+            return res  
+        domandeDB = getDomandeQuiz(codice=parametri["codiceQuiz"])
         risposteCorrette = []
         for domanda in domandeDB:
             o = {}
@@ -433,6 +453,42 @@ def funzionalitaJS(request):
                     o["numero"] = risposta["numero"]
 
             risposteCorrette.append(o)
-        rispostaJSON = json.dumps(risposteCorrette, indent=4, ensure_ascii=False)
+
+        rispostaGET = {"risposteCorrette": risposteCorrette} 
+        rispostaJSON = json.dumps(rispostaGET)
         res.write(rispostaJSON)
         return res
+    
+    # ! Aggiungi partecipazione
+    elif parametri["funzione"] == "aggiungiPartecipazione":
+        # ? Verifica errori
+        if not "nomeUtente" in parametri:
+            res.write(prarmetroMancante("nomeUtente"))
+            return res
+        if not "codiceQuiz" in parametri:
+            res.write(prarmetroMancante("codiceQuiz"))
+            return res
+        if not "dataPartecipazione" in parametri:
+            res.write(prarmetroMancante("dataPartecipazione"))
+            return res
+        
+        if not esisteUtente(parametri["nomeUtente"]):
+            ciao
+
+
+
+def esisteUtente(nomeUtente):
+    '''
+    Funzione che verifica se un utente esiste nel DB
+
+    Args:
+    - nomeUtente (string) il nome dell'utente
+
+    Returns:
+    - True se l'utente è presente nel DB, altrimenti False  
+    '''
+
+
+
+
+    return 
