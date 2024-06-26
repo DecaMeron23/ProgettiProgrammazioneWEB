@@ -110,11 +110,15 @@ def eseguiQuery(query):
 
     cursore = conn.cursor()
     # print(query)
-    cursore.execute(query)
+    valore = cursore.execute(query)
 
-    risultati = cursore.fetchall()
-
-    conn.close()
+    try:
+        risultati = cursore.fetchall()
+    except:
+        return valore
+    finally:
+        conn.close()
+    
     return risultati
 
 
@@ -404,6 +408,45 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
 
     return risultati
 
+def aggiungiPartecipazione(nomeUtente, codiceQuiz, dataPartecipazione):
+    '''
+    Funzione che aggiunge la partecipazione dell'utente 
+    
+    returns:
+    - int: 0 se è andata a buon fine, 1 se l'untente non esiste, 2 altro  
+    '''
+
+    if not esisteUtente(nomeUtente):
+        return 1
+
+    query = "INSERT INTO `PARTECIPAZIONE`(`UTENTE`, `QUIZ`, `DATA`) VALUES ('{}','{}','{}')".format(nomeUtente , codiceQuiz , dataPartecipazione)
+
+    eseguiQuery(query)
+
+    return 0
+
+def aggiungiRispostaPartecipazione(partecipazione , id_quiz , domanda , risposta):
+    '''
+    Funzione che aggiunge la risposta ad una partecipazione
+
+    Returns (int):
+
+    - 0: tutto ok
+    - 1: partecipazione non è nel DB
+    - 2: id_quiz non è nel DB
+
+    '''
+
+    if not esistePartecipazione(partecipazione):
+        return 1
+    if not esisteQuiz(id_quiz):
+        return 2
+
+    query = "INSERT INTO `RISPOSTA_UTENTE_QUIZ`(`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES ('{}','{}','{}','{}}')".format(partecipazione , id_quiz , domanda , risposta)
+
+    risultato = eseguiQuery(query)
+    print("aggiunta partecipazione codice {}".format(risultato))
+    return 0
 
 def getUtenti():
     '''
@@ -413,6 +456,12 @@ def getUtenti():
     - Array di dizionari
     '''
 
+    query = "SELECT * FROM UTENTE"
+    
+    risultato = eseguiQuery(query)
+    
+    return risultato
+
 
 
 def funzionalitaJS(request):
@@ -421,11 +470,29 @@ def funzionalitaJS(request):
 
     tipo di funzioni:
     - getRisposteCorrette(codiceQuiz) 
-    '''
+    - aggiungiPartecipazione(nomeUtente , codiceQuiz , dataPartecipazione)
+    - inserisci_risposta_utente( partecipazione , id_quiz , domanda , risposta)
 
+    
+    Returns(Se non ci sono stati errori):
+    - Dizionario contentente i valori richiesti, se non si è richiesto nulla ritorna un dizionario con chiave "esito" e valore "ok"
+
+    Se avviene un errore ritorna un dizionario con chiavi "errore" (descrizione dell'errore) e "codiceErrore", codici errore:
+    - Manca nome funzione: 0
+    - Manca paramentro funzione: 1
+    - Errori DB : 2
+
+
+    '''
+    # ! Creiamo le funzioni che ci servono
     def prarmetroMancante(parametro):
-        errore = {"Errore" : "Manca il parametro '{}'.".format(parametro)}
+        errore = {"errore" : "Manca il parametro '{}'.".format(parametro) , "codiceErrore" : 1}
         return json.dump(errore)
+
+    def inviaOK(res):
+        risposta = {"esito": "ok"}
+        res.write(json.dump(risposta))
+        return res
 
 
     res = HttpResponse(content_type="application/json")
@@ -433,7 +500,7 @@ def funzionalitaJS(request):
     parametri = request.GET
 
     if not "funzione" in parametri:
-        errore = {"ERRORE": "parametro funzione non inserito"};
+        errore = {"errore": "Nome della funzione non inserito" , "codiceErrore" : 0};
         res.write(json.dump(errore))
         return res  
 
@@ -470,11 +537,54 @@ def funzionalitaJS(request):
             return res
         if not "dataPartecipazione" in parametri:
             res.write(prarmetroMancante("dataPartecipazione"))
+            return res 
+        
+        nomeUtente = parametri["nomeUtente"]
+        codiceQuiz = parametri["codiceQuiz"]
+        dataPartecipazione = parametri["dataPartecipazione"];
+        esito = aggiungiPartecipazione(nomeUtente, codiceQuiz, dataPartecipazione)
+        if esito == 1:
+            errore = {"errore" : "L'utente non esiste nel DB", "codiceErrore" : 2 }
+            res.write(json.dump(errore))
             return res
         
-        if not esisteUtente(parametri["nomeUtente"]):
-            ciao
+        return inviaOK(res)
+        
 
+    elif parametri["funzione"]== "inserisci_risposta_utente":
+        #? verifica errori 
+
+        if not "partecipazione" in parametri:
+            res.write(prarmetroMancante("partecipazione"))
+            return res
+        if not "id_quiz" in parametri:
+            res.write(prarmetroMancante("id_quiz"))
+            return res
+        if not "domanda" in parametri:
+            res.write(prarmetroMancante("domanda"))
+            return res
+        if not "risposta" in parametri:
+            res.write(prarmetroMancante("risposta"))
+            return res
+
+        partecipazione = parametri["partecipazione"]
+        id_quiz = parametri["id_quiz"]
+        domanda = parametri["domanda"]
+        risposta = parametri["risposta"]
+
+        esito = aggiungiRispostaPartecipazione(partecipazione , id_quiz , domanda , risposta)
+
+        #? Non esiste la partecipazione
+        if esito == 1:
+            errore = {"errore" : "La partecipazione '{}' non esiste nel DB".format(partecipazione), "codiceErrore" : 2 }
+            res.write(json.dump(errore))
+            return res
+        if esito == 2:
+            errore = {"errore" : "Il quiz '{}' non esiste nel DB".format(partecipazione), "codiceErrore" : 2 }
+            res.write(json.dump(errore))
+            return res
+
+        return inviaOK(res)
 
 
 def esisteUtente(nomeUtente):
@@ -487,8 +597,43 @@ def esisteUtente(nomeUtente):
     Returns:
     - True se l'utente è presente nel DB, altrimenti False  
     '''
+    query = "SELECT * FROM UTENTE WHERE  NOME_UTENTE = {}".format(nomeUtente)
+
+    ris = eseguiQuery(query)
+    
+    return ris.count() > 0
+
+def esistePartecipazione(partecipazione):
+    '''
+    Funzione che verifica se la partecipazione è presente nel DB
+
+    Args:
+    - partecipazione (int)
+
+    Returns:
+    - True se si sennò false 
+    '''
+
+    query = "SELECT * FROM PARTECIPAZIONE WHERE CODICE = {}".format(partecipazione)
+
+    ris = eseguiQuery(query)
+
+    return ris.count() > 0
 
 
+def esisteQuiz(id_quiz):
+    '''
+    Funzione che verifica se il quiz è presente nel DB
 
+    Args:
+    - id_quiz (int)
 
-    return 
+    Returns:
+    - True se si sennò false 
+    '''
+
+    query = "SELECT * FROM QUIZ WHERE CODICE = {}".format(id_quiz)
+
+    ris = eseguiQuery(query)
+
+    return ris.count() > 0

@@ -8,7 +8,6 @@ const host = `${window.location.host}`;
 
 var utente = "utenteMain";
 var codice_partecipazione = 0;
-get_codice_partecipazione();
 
 
 function getIdQuiz() {
@@ -261,7 +260,11 @@ function get_codice_partecipazione() {
 function inserisci_risposta_utente(partecipazione, id_quiz, domanda, risposta) {
     data = { functionname: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
     $.getJSON("./php/funzionalitaPHP_JS.php", data,
-        function (data, textStatus, jqXHR) { });
+        function (data, textStatus, jqXHR) {
+            if (!("esito" in data)){
+                console.error(data[["errore"] + " Codice: " + data["codiceErrore"]])
+            }
+        });
 }
 
 /**
