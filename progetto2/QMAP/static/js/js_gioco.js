@@ -8,7 +8,7 @@ const host = `${window.location.host}`;
 
 var utente = "utenteMain";
 var codice_partecipazione = 0;
-
+get_codice_partecipazione();
 
 function getIdQuiz() {
     id_quiz = $("body").attr("idQuiz");
@@ -101,7 +101,7 @@ function risposta_sbagliata(elemento) {
  */
 function verifica_quiz() {
 
-    // pulsante_invia_attiva(false);
+    pulsante_invia_attiva(false)
     // prendiamo tutte le domande
     var domande = $(".domanda_risposte");
 
@@ -119,7 +119,8 @@ function verifica_quiz() {
         function (data, textStatus, jqXHR) {
             var corretta = data["risposteCorrette"];
 
-            inserisci_partecipazione();
+
+            // inserisci_partecipazione(getIdQuiz());
 
             // scorriamo tutte le domande
             for (let i = 0; i < domande.length; i++) {
@@ -159,7 +160,7 @@ function verifica_risposte(domande, corretta, numero_domanda) {
         remove_on_click(pallino);
 
         if (is_selezionato(pallino)) {
-            inserisci_risposta_utente(codice_partecipazione, id_quiz, numero_domanda, numero_risposta);
+            // inserisci_risposta_utente(codice_partecipazione, id_quiz, numero_domanda, numero_risposta);
         }
         if (numero_risposta == corretta) {
             colora_risposta(risposte[i], pallino, true);
@@ -196,33 +197,12 @@ function remove_on_click(element) {
 }
 
 /**
- * Funzione che resetta tutte le risposte date
- */
-function reset_risposte() {
-    // prendiamo tutte le domande
-    var domande = $(".domanda_risposte");
-
-    pulsante_invia_attiva(true);
-
-    // scorriamo tutte le domande
-    for (let i = 0; i < domande.length; i++) {
-        const element = domande[i];
-        var risposte = estrai_risposte(element);
-        rimuovi_selezioni(risposte.eq(0).children(".opzione").children());
-    }
-
-}
-
-
-/**
  * Funzione che inserisce la pertecipazione dell'utente
  * 
- * @param {int} partecipazione 
  * @param {string} id_quiz
- * @param {strign} utente  
  * 
  */
-function inserisci_partecipazione() {
+function inserisci_partecipazione(id_quiz) {
 
     //* prendiamo la data di oggi
     let data = new Date();
@@ -230,22 +210,27 @@ function inserisci_partecipazione() {
 
     dati = { funzione: "aggiungiPartecipazione",
         nomeUtente: utente,
+        partecipazione: codice_partecipazione,
         codiceQuiz: id_quiz,
-        data: data};
+        dataPartecipazione: data};
 
-    $.get("funzionalita_js", dati,
-        function (data, textStatus, jqXHR) {});
+    $.getJSON("funzionalita_js", dati,
+        function (data, textStatus, jqXHR) {
+            if (!("esito" in data)){
+                console.error(data["errore"] + " codice: " + data["codiceErrore"])
+            }
+        });
 }
 
 /**
  * Funzione che setta il codice partecipazione della partecipazione
  */
 function get_codice_partecipazione() {
-    data = { functionname: "get_max_partecipazione" };
-    $.getJSON("./php/funzionalitaPHP_JS.php", data,
+    data = { funzione: "get_max_partecipazione" };
+    $.getJSON("funzionalita_js", data,
         function (data, textStatus, jqXHR) {
             // * Aggiorniamo il codice partecipazione
-            codice_partecipazione = parseInt(data[0]["codice"]) + 1;
+            codice_partecipazione = parseInt(data["codice_partecipazione"]) + 1;
         });
 }
 
@@ -258,12 +243,13 @@ function get_codice_partecipazione() {
  * @param {string} risposta    
  */
 function inserisci_risposta_utente(partecipazione, id_quiz, domanda, risposta) {
-    data = { functionname: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
-    $.getJSON("./php/funzionalitaPHP_JS.php", data,
+    data = { funzione: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
+    $.getJSON("funzionalita_js", data,
         function (data, textStatus, jqXHR) {
             if (!("esito" in data)){
-                console.error(data[["errore"] + " Codice: " + data["codiceErrore"]])
+                console.error(data["errore"] + " Codice: " + data["codiceErrore"])
             }
+            console.error(data)
         });
 }
 

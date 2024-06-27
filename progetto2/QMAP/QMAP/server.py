@@ -110,12 +110,12 @@ def eseguiQuery(query):
 
     cursore = conn.cursor()
     # print(query)
-    valore = cursore.execute(query)
+    cursore.execute(query)
 
     try:
         risultati = cursore.fetchall()
     except:
-        return valore
+        return ["ok"]
     finally:
         conn.close()
     
@@ -408,7 +408,7 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
 
     return risultati
 
-def aggiungiPartecipazione(nomeUtente, codiceQuiz, dataPartecipazione):
+def aggiungiPartecipazione(nomeUtente , partecipazione , codiceQuiz, dataPartecipazione):
     '''
     Funzione che aggiunge la partecipazione dell'utente 
     
@@ -419,7 +419,7 @@ def aggiungiPartecipazione(nomeUtente, codiceQuiz, dataPartecipazione):
     if not esisteUtente(nomeUtente):
         return 1
 
-    query = "INSERT INTO `PARTECIPAZIONE`(`UTENTE`, `QUIZ`, `DATA`) VALUES ('{}','{}','{}')".format(nomeUtente , codiceQuiz , dataPartecipazione)
+    query = "INSERT INTO `PARTECIPAZIONE`(`CODICE` , `UTENTE`, `QUIZ`, `DATA`) VALUES ('{}' , '{}','{}','{}')".format(partecipazione , nomeUtente , codiceQuiz , dataPartecipazione)
 
     eseguiQuery(query)
 
@@ -487,11 +487,11 @@ def funzionalitaJS(request):
     # ! Creiamo le funzioni che ci servono
     def prarmetroMancante(parametro):
         errore = {"errore" : "Manca il parametro '{}'.".format(parametro) , "codiceErrore" : 1}
-        return json.dump(errore)
+        return json.dumps(errore)
 
     def inviaOK(res):
         risposta = {"esito": "ok"}
-        res.write(json.dump(risposta))
+        res.write(json.dumps(risposta))
         return res
 
 
@@ -501,7 +501,7 @@ def funzionalitaJS(request):
 
     if not "funzione" in parametri:
         errore = {"errore": "Nome della funzione non inserito" , "codiceErrore" : 0};
-        res.write(json.dump(errore))
+        res.write(json.dumps(errore))
         return res  
 
     #  Estraiamo tutte le risposte corrette per domanda
@@ -538,14 +538,18 @@ def funzionalitaJS(request):
         if not "dataPartecipazione" in parametri:
             res.write(prarmetroMancante("dataPartecipazione"))
             return res 
-        
+        if not "partecipazione" in parametri:
+            res.write(prarmetroMancante("partecipazione"))
+            return res
+
         nomeUtente = parametri["nomeUtente"]
         codiceQuiz = parametri["codiceQuiz"]
+        partecipazione = parametri["partecipazione"]
         dataPartecipazione = parametri["dataPartecipazione"];
-        esito = aggiungiPartecipazione(nomeUtente, codiceQuiz, dataPartecipazione)
+        esito = aggiungiPartecipazione(nomeUtente , partecipazione , codiceQuiz, dataPartecipazione)
         if esito == 1:
             errore = {"errore" : "L'utente non esiste nel DB", "codiceErrore" : 2 }
-            res.write(json.dump(errore))
+            res.write(json.dumps(errore))
             return res
         
         return inviaOK(res)
@@ -577,15 +581,22 @@ def funzionalitaJS(request):
         #? Non esiste la partecipazione
         if esito == 1:
             errore = {"errore" : "La partecipazione '{}' non esiste nel DB".format(partecipazione), "codiceErrore" : 2 }
-            res.write(json.dump(errore))
+            res.write(json.dumps(errore))
             return res
         if esito == 2:
             errore = {"errore" : "Il quiz '{}' non esiste nel DB".format(partecipazione), "codiceErrore" : 2 }
-            res.write(json.dump(errore))
+            res.write(json.dumps(errore))
             return res
 
         return inviaOK(res)
-
+    
+    elif "get_max_partecipazione" == parametri["funzione"]:
+        query = "SELECT MAX(CODICE) as codice FROM PARTECIPAZIONE"
+        risultato = eseguiQuery(query)
+        print(risultato)
+        risposta = {"codice_partecipazione": risultato[0]["codice"]}
+        res.write(json.dumps(risposta))
+        return res
 
 def esisteUtente(nomeUtente):
     '''
@@ -597,11 +608,11 @@ def esisteUtente(nomeUtente):
     Returns:
     - True se l'utente è presente nel DB, altrimenti False  
     '''
-    query = "SELECT * FROM UTENTE WHERE  NOME_UTENTE = {}".format(nomeUtente)
+    query = "SELECT * FROM UTENTE WHERE NOME_UTENTE = '{}'".format(nomeUtente)
 
     ris = eseguiQuery(query)
     
-    return ris.count() > 0
+    return len(ris) > 0
 
 def esistePartecipazione(partecipazione):
     '''
@@ -618,7 +629,7 @@ def esistePartecipazione(partecipazione):
 
     ris = eseguiQuery(query)
 
-    return ris.count() > 0
+    return len(ris) > 0
 
 
 def esisteQuiz(id_quiz):
@@ -636,4 +647,4 @@ def esisteQuiz(id_quiz):
 
     ris = eseguiQuery(query)
 
-    return ris.count() > 0
+    return len(ris) > 0
