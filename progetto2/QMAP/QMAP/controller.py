@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
 
 
 templateIndex = "index.html"
@@ -18,7 +19,7 @@ import random
 OPEN_QUIZ = "reindirizzaQUIZ(this)";
 OPEN_UTENTE = "reindirizzaUTENTE(this)";
 OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
-OPEN_INFO_QUIZ = "";
+OPEN_INFO_QUIZ = "reindirizzaINFO_QUIZ(this)";
 OPEN_CREA_QUIZ = "openCreaQuiz(this)";
 
 def estrazioneParametriGet(request):
@@ -78,7 +79,7 @@ def quiz(request):
         
         date = dataInizio + " " + dataFine
 
-        o.append({"valore" : titolo , "impostazioni": {"id-quiz" : idQuiz , "implementa": "onClick" , "onClick" : OPEN_INFO_QUIZ}}) #todo
+        o.append({"valore" : titolo , "impostazioni": {"id-quiz" : idQuiz , "implementa": "onClick" , "onClick" : OPEN_INFO_QUIZ}})
         o.append({"valore" : autore , "impostazioni": {"class": "text-center ciao" , "implementa" : "onClick" , "onClick" : OPEN_UTENTE}})
         o.append({"valore" : dataInizio , "impostazioni": {"class": "text-center"  , "implementa" : "niente"}})
         o.append({"valore" : dataFine , "impostazioni": {"class": "text-center " , "implementa" : "niente"}})
@@ -222,24 +223,21 @@ def partecipazione(request):
     #? Oggetti contesto da passare al template
     context = {};
 
-    print(parametri)
-    # todo: Estrazione dati dal server e aggiunta al contesto
-    
     risultati = server.getPartecipazione(parametri.copy())
 
     valoriEstratti = []
 
     for riga in risultati:
 
-        codice = riga["codice"];
+        codiceQuiz = riga["codiceQuiz"];
         nick = riga["nomeUtente"]
         titolo = riga["quiz"]
         data = funzionalita.DataToString(riga["data"])
         nRisposte = riga["nRisposte"]
 
         o = []
-        o.append({"valore" : nick , "impostazioni": {}}) #TODO
-        o.append({"valore" : titolo , "impostazioni": {"class": "" , "implementa" : "" , "id-quiz": codice}}) #TODO
+        o.append({"valore" : nick , "impostazioni": {"onClick": OPEN_UTENTE}})
+        o.append({"valore" : titolo , "impostazioni": {"implementa" : "onClick" , "id-quiz": codiceQuiz , "onClick" : OPEN_QUIZ}})
         o.append({"valore" : data , "impostazioni": {"class": "text-center"}}) #TODO
         o.append({"valore" : nRisposte , "impostazioni": {"class": "text-center" , "implementa": ""}}) #TODO
 
@@ -357,47 +355,68 @@ def gioca(request):
     return res
 
 # ! Info Quiz
+@csrf_exempt
 def info(request):
+    '''
+    Funzione che crea la vista per info quiz, riceve un parametro POST con nome codice
+
+    '''
+    
+    # Devo farlo per sicurezza...sennò non va la pagina, bah
+    pass 
+    
     res = HttpResponse(content_type="text/html")
- 
     context = {}
     
-    #todo richiesta delle informazioni
-    testoDomanda = "Chi sono io"
-    testoRisposta = "emilio"
-    punteggio = 3
-    nomeAutore = "Benny"
-    dataInizio = "02/07/2022"
-    dataFine = "Non c'è"
-    titolo = "Quanto mi Conosci?"
+    richiestaServer = { "codice" : request.POST.get("codice")};
+    
+    quiz = server.getQuiz(richiestaServer);
+
+    # prendiamo il primo elemento 
+    quiz = quiz[0];
+
+    # Prendiamo tutte le domande per quel quiz
+    domandeDB = server.getDomandeQuiz(quiz["codice"])
 
     domande = []
-    risposte = []
+    for domanda in domandeDB:
+        risposteDB = server.getRisposteDomandaQuiz(codiceQuiz=quiz["codice"] , numeroDomanda = domanda["numero"])
+        
+        random.shuffle(risposteDB)
 
+        risposte = []
+        domandaPunteggio = 2
 
-    rispostaTrue = {"testo": testoRisposta , "corretta": True}
-    rispostaFalse = {"testo": testoRisposta , "corretta": False}
-    for i in range(0,2):
-        risposte.append(rispostaTrue)
-        risposte.append(rispostaFalse)
+        for risposta in risposteDB:
+            o_r = {}
+            o_r["testo"] = risposta["testo"]
+            o_r["corretta"] = risposta["tipo"] == 1 
+            o_r["numero"] = risposta["numero"]
 
-    domanda = {"testo": testoDomanda ,
-                "risposte" : risposte,
-                "punteggio" : punteggio}
+            if not risposta["punteggio"] == None:
+                domandaPunteggio = risposta["punteggio"]
 
-    for i in range(0,4):
-        domande.append(domanda)
+            risposte.append(o_r)
 
+        o_d = {}
 
-    infoQuiz = {"autore" : nomeAutore,
-                "dataInizio" : dataInizio,
-                "dataFine" : dataFine,
-                "titolo" : titolo,
+        o_d["testo"] = domanda["testo"]
+        o_d["numero"] = domanda["numero"]
+        o_d["punteggio"] = domandaPunteggio
+        o_d["risposte"] = risposte
+
+        domande.append(o_d)
+
+    infoQuiz = {"idQuiz" : quiz["codice"],
+                "autore" : quiz["creatore"],
+                "dataInizio" : funzionalita.DataToString(quiz["dataInizio"]),
+                "dataFine" : funzionalita.DataToString(quiz["dataFine"]),
+                "titolo" : quiz["titolo"],
                 "domande" : domande
-                }
-
+                }    
     context = infoQuiz
-    context["infoPagina"] = {"nomePagina" : "info"}
+    context["infoPagina"] = {"nomePagina" : "Info Quiz"}
+
 
     #? preparazione del template
     template = loader.get_template(templateInfoQuiz)

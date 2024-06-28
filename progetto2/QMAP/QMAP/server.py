@@ -9,7 +9,7 @@ import pymysql
 import json
 
 
-from . import funzionalita
+import funzionalita
 
 LIKE = " LIKE "
 AND = " AND "
@@ -232,7 +232,8 @@ def getQuiz(parametri):
             condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nPartecipazioni", valore=parametri["nPartecipazioni"] , tipologia=tipologia)
 
     query = QUERY_QUIZ  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
-    
+
+
     risultati = eseguiQuery(query)
 
     return risultati
@@ -648,3 +649,13 @@ def esisteQuiz(id_quiz):
     ris = eseguiQuery(query)
 
     return len(ris) > 0
+
+
+def eliminaQuiz(codice = 0):
+    query_elimina_risposte = "DELETE FROM RISPOSTA WHERE QUIZ = {}".format(codice);
+    query_elimina_risposte_utenti = "DELETE FROM RISPOSTA_UTENTE_QUIZ WHERE QUIZ = {}".format(codice);
+    query_elimina_partecipazioni = "DELETE FROM PARTECIPAZIONE WHERE QUIZ = {}".format(codice);
+    query_elimina_domanda = "DELETE FROM DOMANDA WHERE QUIZ = {}".format(codice);
+    query_elimina_quiz = "DELETE FROM QUIZ WHERE CODICE = {}".format(codice);
+
+    
