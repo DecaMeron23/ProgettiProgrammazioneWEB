@@ -29,5 +29,7 @@ urlpatterns = [
     path("info", controller.info , name= "info"),
     path("get_quiz", server.getQuiz , name= "get_quiz"),
     path("funzionalita_js", server.funzionalitaJS , name= "funzionalita_js"),
+    path("eliminaQuiz", server.eliminaQuiz , name= "eliminaQuiz"),
+    
 
 ]
