@@ -8,7 +8,6 @@ from django.template import loader
 
 import requests
 
-import pymysql
 import json
 
 # import funzionalita
@@ -31,38 +30,64 @@ TIPOLOGIA_RICERCA = {"minore": "1",
              "like": "like",
              "noLike": "2"}
 
-# Definisci le variabili per le credenziali di accesso
-MYSQL_HOST = 'quizmakeandplay-emiliomeroni99-5f9c.g.aivencloud.com'
-MYSQL_PORT = 21469
-MYSQL_USERNAME = 'avnadmin'
-MYSQL_PASSWORD = 'AVNS_M0qytOJWua25SLzRrGN'
-MYSQL_DATABASE = 'my_quizmakeandplay'
+# # Definisci le variabili per le credenziali di accesso
+# MYSQL_HOST = 'quizmakeandplay-emiliomeroni99-5f9c.g.aivencloud.com'
+# MYSQL_PORT = 21469
+# MYSQL_USERNAME = 'avnadmin'
+# MYSQL_PASSWORD = 'AVNS_M0qytOJWua25SLzRrGN'
+# MYSQL_DATABASE = 'my_quizmakeandplay'
 
-def connectDB():
-    timeout = 10
-    try:
-        connection = pymysql.connect(
-        charset="utf8mb4",
-        connect_timeout=timeout,
-        cursorclass=pymysql.cursors.DictCursor,
-        db=MYSQL_DATABASE,
-        host=MYSQL_HOST,
-        password=MYSQL_PASSWORD,
-        read_timeout=timeout,
-        port=MYSQL_PORT,
-        user=MYSQL_USERNAME,
-        write_timeout=timeout,
-        )
-        return connection
-    except:
-        print("Errore durante la connessione al database")
-        exit()
+# def connectDB():
+#     timeout = 10
+#     try:
+#         connection = pymysql.connect(
+#         charset="utf8mb4",
+#         connect_timeout=timeout,
+#         cursorclass=pymysql.cursors.DictCursor,
+#         db=MYSQL_DATABASE,
+#         host=MYSQL_HOST,
+#         password=MYSQL_PASSWORD,
+#         read_timeout=timeout,
+#         port=MYSQL_PORT,
+#         user=MYSQL_USERNAME,
+#         write_timeout=timeout,
+#         )
+#         return connection
+#     except:
+#         print("Errore durante la connessione al database")
+#         exit()
 
 # Tipologie di ricerche:
 # -minore
 # -uguale
 # -maggiore
 # -like
+
+def eseguiQuery(query):
+
+    # Indica se è un select o no
+    isSelect= 0
+    if "SELECT" in query:
+        isSelect = 1
+
+    richiesta = {"query" : query , "isSelect": isSelect}
+
+    # Ci connettiamo al vecchio DB di altervista
+    url = 'https://quizmakeandplay.altervista.org/api.php'
+    response = requests.get(url , params= richiesta)
+
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            return json.loads(data)
+        except:
+            return ""
+    else:
+        print(f"Errore nella richiesta: {response.status_code}")
+    
+
+
+
 def aggiungiCondizioneWhere(condizione, nome , valore , tipologia):
     condizione = aggiungiCondizione(condizione , nome , valore , tipologia)
     
@@ -109,27 +134,6 @@ def aggiungiCondizione(condizione, nome , valore , tipologia):
     
     return condizione
 
-def eseguiQuery(query):
-
-    # Indica se è un select o no
-    isSelect= 0
-    if "SELECT" in query:
-        isSelect = 1
-
-    richiesta = {"query" : query , "isSelect": isSelect}
-
-    url = 'https://quizmakeandplay.altervista.org/api.php'
-    response = requests.get(url , params= richiesta)
-
-    if response.status_code == 200:
-        try:
-            data = response.json()
-            return json.loads(data)
-        except:
-            return ""
-    else:
-        print(f"Errore nella richiesta: {response.status_code}")
-    
 
 
 # Lista dei parametri per le ricerce di QUIZ:
