@@ -1,3 +1,5 @@
+{% load static %}
+
 <!-- Footer -->
 <div class="row footer mt-3">
     <div class="row align-items-center">
@@ -8,19 +10,19 @@
                     <th>Contatti</th>
                 </tr>
                 <tr>
-                    <td>Benedetta Vitale</td>
-                    <td>b.vitale@studenti.unibg.it</td>
+                    <td data-toggle="tooltip" title="Ciaooo">Benedetta Vitale</td>
+                    <td data-toggle="tooltip" title="E-Mail">b.vitale@studenti.unibg.it</td>
                 </tr>
                 <tr>
-                    <td>Emilio Meroni</td>
-                    <td>e.meroni1@studenti.unibg.it</td>
+                    <td data-toggle="tooltip" title="Spero che vada bene questo sito!!">Emilio Meroni</td>
+                    <td data-toggle="tooltip" title="E-Mail">e.meroni1@studenti.unibg.it</td>
                 </tr>
             </table>
         </div>
         <div class="col-lg-3 col-sm-12">
             <div class="d-flex justify-content-center">
               <div id="logo">
-                <a href="https://www.unibg.it"><img class="logoUniBg" src="https://quizmakeandplay.altervista.org/logo/UniBg/logo.png" alt="Home"></a>
+                <a href="https://www.unibg.it" data-toggle="tooltip" title="Link Università di Bergamo"><img class="logoUniBg" src={% static "immagini/logoUniBG.png" %} alt="Home"></a>
               </div>
             </div>
           </div>
@@ -30,7 +32,7 @@
     <div class="row">
         <div class="col-12 text-center mt-1">
             <div class="copyright">
-                Copyright &copy 2024 quizmakeandplay.altervista.org - tutti i diritti riservati
+                Copyright &copy 2024 http://127.0.0.1:8000/{{infoPagina.nomePagina}} - tutti i diritti riservati
             </div>
         </div>        
     </div>

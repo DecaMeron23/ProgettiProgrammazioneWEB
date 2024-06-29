@@ -41,19 +41,19 @@
         <div class="row align-items-center mt-2">
             <div class="col-12 col-sm-4 ">
                 <div class="row">
-                    <div class="col-12 col-sm-12 order-3 order-sm-1"><i class="fa-regular fa-user"></i> {{ autore }}
+                    <div class="col-12 col-sm-12 order-3 order-sm-1" data-toggle="tooltip" title="Autore"><i class="fa-regular fa-user"></i> {{ autore }}
                     </div>
-                    <div class="col-6 col-sm-12 order-1 order-sm-2"><i class="fa-regular fa-calendar-xmark"></i>
+                    <div class="col-6 col-sm-12 order-1 order-sm-2" data-toggle="tooltip" title="Data di Inizio"><i class="fa-regular fa-calendar-xmark"></i>
                         {{dataInizio}}</div>
-                    <div class="col-6 col-sm-12 order-2 order-sm-3"><i class="fa-regular fa-calendar-xmark"></i>
+                    <div class="col-6 col-sm-12 order-2 order-sm-3" data-toggle="tooltip" title="Data di Fine"><i class="fa-regular fa-calendar-xmark"></i>
                         {{dataFine}}</div>
                 </div>
             </div>
-            <div class="col-12 col-sm-4 text-center titolo_quiz">
+            <div class="col-12 col-sm-4 text-center titolo_quiz" data-toggle="tooltip" title="Titolo">
                 {{ titolo }}
             </div>
             <div class="col-12 col-sm-4 ml-2 d-flex justify-content-center">
-                <a class="s_text" tabindex="-1" href="gioca">
+                <a class="s_text" tabindex="-1" href="gioca" data-toggle="tooltip" title="Cambia il Quiz... Non ti piace il titolo?">
                     <div class="pulsante d-inline-block">
                         Cambia QUIZ
                     </div>
@@ -70,7 +70,7 @@
                     <div class="col-8">
                         {{ forloop.counter }}) {{ domanda.testo }}
                     </div>
-                    <div class="col d-flex justify-content-end punteggio">
+                    <div class="col d-flex justify-content-end punteggio" data-toggle="tooltip" title="Punteggio della domanda">
                         [{{ domanda.punteggio }} pt.]
                     </div>
                     {% for risposta in domanda.risposte %}
@@ -86,13 +86,13 @@
                 <div class="row mb-2 mt-5 d-flex justify-content-center">
                     <div class="col-4 ml-2 d-flex justify-content-center">
                         <a href="gioca">
-                            <div class="pulsante d-inline-block pulsante_hover">
+                            <div class="pulsante d-inline-block pulsante_hover" data-toggle="tooltip" title="Cambia Quiz... Troppo difficile?">
                                 Cambia QUIZ
                             </div>
                         </a>
                     </div>
                     <div class="col-4 ml-2 d-flex justify-content-center">
-                        <div class="pulsante d-inline-block pulsante_hover" id="pulsane_invia" onclick="verifica_quiz()">
+                        <div class="pulsante d-inline-block pulsante_hover" id="pulsane_invia" onclick="verifica_quiz()" data-toggle="tooltip" title="Invia le risposte ;)">
                             Invia
                         </div>
                     </div>
