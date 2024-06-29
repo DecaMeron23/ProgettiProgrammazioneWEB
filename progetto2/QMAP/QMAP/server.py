@@ -1,9 +1,12 @@
-# Il DB è online hostato da https://aiven.io/ 
+# Il DB è online, è quello di altervista
 
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+
+
+import requests
 
 import pymysql
 import json
@@ -107,20 +110,26 @@ def aggiungiCondizione(condizione, nome , valore , tipologia):
     return condizione
 
 def eseguiQuery(query):
-    conn = connectDB()
 
-    cursore = conn.cursor()
-    # print(query)
-    cursore.execute(query)
+    # Indica se è un select o no
+    isSelect= 0
+    if "SELECT" in query:
+        isSelect = 1
 
-    try:
-        risultati = cursore.fetchall()
-    except:
-        return ["ok"]
-    finally:
-        conn.close()
+    richiesta = {"query" : query , "isSelect": isSelect}
+
+    url = 'https://quizmakeandplay.altervista.org/api.php'
+    response = requests.get(url , params= richiesta)
+
+    if response.status_code == 200:
+        try:
+            data = response.json()
+            return json.loads(data)
+        except:
+            return ""
+    else:
+        print(f"Errore nella richiesta: {response.status_code}")
     
-    return risultati
 
 
 # Lista dei parametri per le ricerce di QUIZ:
@@ -233,7 +242,6 @@ def getQuiz(parametri):
             condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nPartecipazioni", valore=parametri["nPartecipazioni"] , tipologia=tipologia)
 
     query = QUERY_QUIZ  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
-
 
     risultati = eseguiQuery(query)
 
@@ -381,8 +389,6 @@ def getDomandeQuiz(codice):
 
     query = "SELECT NUMERO as numero, TESTO as testo FROM DOMANDA WHERE QUIZ = {} ORDER BY NUMERO ASC".format(codice)
 
-    print(query)
-
     risultati = eseguiQuery(query)
 
     return risultati
@@ -406,7 +412,7 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
 
     risultati = eseguiQuery(query)
 
-    print(query)
+    print(risultati)
 
     return risultati
 
@@ -444,7 +450,7 @@ def aggiungiRispostaPartecipazione(partecipazione , id_quiz , domanda , risposta
     if not esisteQuiz(id_quiz):
         return 2
 
-    query = "INSERT INTO `RISPOSTA_UTENTE_QUIZ`(`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES ('{}','{}','{}','{}}')".format(partecipazione , id_quiz , domanda , risposta)
+    query = "INSERT INTO `RISPOSTA_UTENTE_QUIZ`(`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES ('{}','{}','{}','{}')".format(partecipazione , id_quiz , domanda , risposta)
 
     risultato = eseguiQuery(query)
     print("aggiunta partecipazione codice {}".format(risultato))
@@ -488,7 +494,7 @@ def funzionalitaJS(request):
 
 
     '''
-    # ! Creiamo le funzioni che ci servono
+    # ? Creiamo le funzioni che ci servono
     def parametroMancante(parametro):
         errore = {"errore" : "Manca il parametro '{}'.".format(parametro) , "codiceErrore" : 1}
         return json.dumps(errore)
@@ -508,7 +514,7 @@ def funzionalitaJS(request):
         res.write(json.dumps(errore))
         return res  
 
-    #  Estraiamo tutte le risposte corrette per domanda
+    #  ! Estraiamo tutte le risposte corrette per domanda
     if parametri["funzione"] == "getRisposteCorrette":
         if not "codiceQuiz" in parametri:
             res.write(parametroMancante("codiceQuiz"))
@@ -558,7 +564,7 @@ def funzionalitaJS(request):
         
         return inviaOK(res)
         
-
+    # ! Inserisci Risposta UTENTE
     elif parametri["funzione"]== "inserisci_risposta_utente":
         #? verifica errori 
 
@@ -594,6 +600,7 @@ def funzionalitaJS(request):
 
         return inviaOK(res)
     
+    # ! Prendi la massima partecipazione
     elif "get_max_partecipazione" == parametri["funzione"]:
         query = "SELECT MAX(CODICE) as codice FROM PARTECIPAZIONE"
         risultato = eseguiQuery(query)
@@ -616,6 +623,34 @@ def funzionalitaJS(request):
             errore = {"errore" : "Il quiz '{}' non è stato eliminato".format(codice), "codiceErrore" : 2 }
             res.write(json.dumps(errore))
             return res
+        
+    # ! CREA QUIZ 
+    elif parametri["funzione"] == "creaQuiz":
+        if not "autore" in parametri:
+            res.write(parametroMancante("autore"))
+            return res
+
+        if not "titolo" in parametri:
+            res.write(parametroMancante("titolo"))
+            return res
+
+        if not "dataInizio" in parametri:
+            res.write(parametroMancante("dataInizio"))
+            return res
+
+        if not "dataFine" in parametri:
+            res.write(parametroMancante("dataFine"))
+            return res
+
+        autore = parametri["autore"]
+        titolo = parametri["titolo"]
+        dataInizio = funzionalita.DataFormatoDataBase(parametri["dataInizio"])
+        dataFine = funzionalita.DataFormatoDataBase(parametri["dataFine"])
+
+        creaQuiz(autore , titolo , dataInizio , dataFine)
+        res.write(inviaOK(res))
+        return res
+
 
 def esisteUtente(nomeUtente):
     '''
@@ -691,7 +726,7 @@ def eliminaQuiz(codice = 0):
 def getQuizCodiceMassimo():
     query = "SELECT MAX(CODICE) as codice FROM QUIZ"
     risultato = eseguiQuery(query)
-    return risultato[0]["codice"] + 1
+    return int(risultato[0]["codice"])
 
 def creaQuiz(autore, titolo , dataInizio , dataFine):
     '''
@@ -703,7 +738,4 @@ def creaQuiz(autore, titolo , dataInizio , dataFine):
 
     query = "INSERT INTO QUIZ(`CODICE`, `CREATORE`, `TITOLO`, `DATA_INIZIO`, `DATA_FINE`) VALUES ('{}' , '{}','{}','{}','{}')".format( codice, autore , titolo , dataInizio , dataFine)
 
-    print(query)
-
     ris = eseguiQuery(query)
-    print(ris)
