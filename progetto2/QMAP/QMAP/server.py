@@ -8,8 +8,9 @@ from django.template import loader
 import pymysql
 import json
 
+# import funzionalita
 
-import funzionalita
+from . import funzionalita
 
 LIKE = " LIKE "
 AND = " AND "
@@ -473,6 +474,8 @@ def funzionalitaJS(request):
     - getRisposteCorrette(codiceQuiz) 
     - aggiungiPartecipazione(nomeUtente , codiceQuiz , dataPartecipazione)
     - inserisci_risposta_utente( partecipazione , id_quiz , domanda , risposta)
+    - eliminaQuiz(codice)
+    - creaQuiz(autore, titolo , dataInizio , dataFine)
 
     
     Returns(Se non ci sono stati errori):
@@ -486,7 +489,7 @@ def funzionalitaJS(request):
 
     '''
     # ! Creiamo le funzioni che ci servono
-    def prarmetroMancante(parametro):
+    def parametroMancante(parametro):
         errore = {"errore" : "Manca il parametro '{}'.".format(parametro) , "codiceErrore" : 1}
         return json.dumps(errore)
 
@@ -508,7 +511,7 @@ def funzionalitaJS(request):
     #  Estraiamo tutte le risposte corrette per domanda
     if parametri["funzione"] == "getRisposteCorrette":
         if not "codiceQuiz" in parametri:
-            res.write(prarmetroMancante("codiceQuiz"))
+            res.write(parametroMancante("codiceQuiz"))
             return res  
         domandeDB = getDomandeQuiz(codice=parametri["codiceQuiz"])
         risposteCorrette = []
@@ -531,16 +534,16 @@ def funzionalitaJS(request):
     elif parametri["funzione"] == "aggiungiPartecipazione":
         # ? Verifica errori
         if not "nomeUtente" in parametri:
-            res.write(prarmetroMancante("nomeUtente"))
+            res.write(parametroMancante("nomeUtente"))
             return res
         if not "codiceQuiz" in parametri:
-            res.write(prarmetroMancante("codiceQuiz"))
+            res.write(parametroMancante("codiceQuiz"))
             return res
         if not "dataPartecipazione" in parametri:
-            res.write(prarmetroMancante("dataPartecipazione"))
+            res.write(parametroMancante("dataPartecipazione"))
             return res 
         if not "partecipazione" in parametri:
-            res.write(prarmetroMancante("partecipazione"))
+            res.write(parametroMancante("partecipazione"))
             return res
 
         nomeUtente = parametri["nomeUtente"]
@@ -560,16 +563,16 @@ def funzionalitaJS(request):
         #? verifica errori 
 
         if not "partecipazione" in parametri:
-            res.write(prarmetroMancante("partecipazione"))
+            res.write(parametroMancante("partecipazione"))
             return res
         if not "id_quiz" in parametri:
-            res.write(prarmetroMancante("id_quiz"))
+            res.write(parametroMancante("id_quiz"))
             return res
         if not "domanda" in parametri:
-            res.write(prarmetroMancante("domanda"))
+            res.write(parametroMancante("domanda"))
             return res
         if not "risposta" in parametri:
-            res.write(prarmetroMancante("risposta"))
+            res.write(parametroMancante("risposta"))
             return res
 
         partecipazione = parametri["partecipazione"]
@@ -585,7 +588,7 @@ def funzionalitaJS(request):
             res.write(json.dumps(errore))
             return res
         if esito == 2:
-            errore = {"errore" : "Il quiz '{}' non esiste nel DB".format(partecipazione), "codiceErrore" : 2 }
+            errore = {"errore" : "Il quiz '{}' non esiste nel DB".format(id_quiz), "codiceErrore" : 2 }
             res.write(json.dumps(errore))
             return res
 
@@ -594,10 +597,25 @@ def funzionalitaJS(request):
     elif "get_max_partecipazione" == parametri["funzione"]:
         query = "SELECT MAX(CODICE) as codice FROM PARTECIPAZIONE"
         risultato = eseguiQuery(query)
-        print(risultato)
         risposta = {"codice_partecipazione": risultato[0]["codice"]}
         res.write(json.dumps(risposta))
         return res
+    
+    # ! Elimina QUIZ
+    elif parametri["funzione"]== "eliminaQuiz":
+        if not "codice" in parametri:
+            res.write(parametroMancante("codice"))
+            return res
+        
+        codice = parametri["codice"]
+
+        eliminaQuiz(codice)
+        if esisteQuiz(codice):
+            return inviaOK(res)
+        else:
+            errore = {"errore" : "Il quiz '{}' non è stato eliminato".format(codice), "codiceErrore" : 2 }
+            res.write(json.dumps(errore))
+            return res
 
 def esisteUtente(nomeUtente):
     '''
@@ -652,10 +670,40 @@ def esisteQuiz(id_quiz):
 
 
 def eliminaQuiz(codice = 0):
+    '''
+    Funzine che elimina un quiz dal data base, comprese tutte le occorrenze (lo facciamo a mano perchè MySql non sono sicuro che lo faccia)
+
+    '''
     query_elimina_risposte = "DELETE FROM RISPOSTA WHERE QUIZ = {}".format(codice);
     query_elimina_risposte_utenti = "DELETE FROM RISPOSTA_UTENTE_QUIZ WHERE QUIZ = {}".format(codice);
     query_elimina_partecipazioni = "DELETE FROM PARTECIPAZIONE WHERE QUIZ = {}".format(codice);
     query_elimina_domanda = "DELETE FROM DOMANDA WHERE QUIZ = {}".format(codice);
     query_elimina_quiz = "DELETE FROM QUIZ WHERE CODICE = {}".format(codice);
 
-    
+    eseguiQuery(query_elimina_risposte_utenti)
+    eseguiQuery(query_elimina_risposte)
+    eseguiQuery(query_elimina_domanda)
+    eseguiQuery(query_elimina_partecipazioni)
+    eseguiQuery(query_elimina_quiz)
+
+
+
+def getQuizCodiceMassimo():
+    query = "SELECT MAX(CODICE) as codice FROM QUIZ"
+    risultato = eseguiQuery(query)
+    return risultato[0]["codice"] + 1
+
+def creaQuiz(autore, titolo , dataInizio , dataFine):
+    '''
+    Funzione che crea il quiz sul DB
+    '''
+    #  prendiamo il codice massimo dei DB
+    codice = getQuizCodiceMassimo()+1;
+
+
+    query = "INSERT INTO QUIZ(`CODICE`, `CREATORE`, `TITOLO`, `DATA_INIZIO`, `DATA_FINE`) VALUES ('{}' , '{}','{}','{}','{}')".format( codice, autore , titolo , dataInizio , dataFine)
+
+    print(query)
+
+    ris = eseguiQuery(query)
+    print(ris)

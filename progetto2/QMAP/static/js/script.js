@@ -13,6 +13,9 @@ var inizzializzazione = function () {
     flatpickr("#dataInizio", formato);
     flatpickr("#dataFine", formato);
     flatpickr("#data", formato);
+    flatpickr("#modalDataFine", formato);
+    flatpickr("#modalDataInizio", formato);
+    
 }
 
 
@@ -49,22 +52,17 @@ function modificaQuiz(event) {
  */
 
 function eliminaQuiz() {
-    var id_quiz = $("#form_elimina_quiz").attr("codice");
-    $.ajax({
-        type: "GET",
-        url: 'https://quizmakeandplay.altervista.org/php/funzionalitaPHP_JS.php',
-        dataType: 'text',
-        data: { functionname: 'deleteQUIZ', id_quiz: id_quiz },
-        success: function (obj, textstatus) {
-            if (obj == "ok") {
-                alert("Quiz Eliminato");
-                window.location.replace("https://quizmakeandplay.altervista.org/quiz.php");
-            } else {
-                alert("Qualche cosa è andato storto:" + obj);
+    var id_quiz = $("body").attr("codice");
+    data = {funzione : "eliminaQuiz" , codice : id_quiz}
+    $.getJSON("funzionalita_js",data,
+        function (data, textStatus, jqXHR) {
+            if ("esito" in data){
+                alert("Quiz Eliminato")
+            }else{
+                alert("Qualche cosa è andato storto...");
             }
         }
-    });
-
+    );
 }
 
 //! Aggiungi Quiz

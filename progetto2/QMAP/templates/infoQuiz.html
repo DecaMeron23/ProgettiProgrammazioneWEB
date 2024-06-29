@@ -1,5 +1,6 @@
 {% comment %} ?
 ? Schema del contesto, stringhe se non specificato:
+! -idQuiz
 ! -autore
 ! -dataInizio
 ! -dataFine
@@ -31,7 +32,7 @@
 
 </head>
 
-<body>
+<body codice= '{{ idQuiz}}'>
     <div class="container-fluid">
 
         {% include "elementiPrincipali/header.html" %}
@@ -143,14 +144,14 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="eliminaQuizLabel">Elimina QUIZ</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
                     </div>
                     <div class="modal-body">
                         Sei sicuro di eliminare il quiz: "{{titolo}}"
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                        <button type="button" class="btn btn-danger">Elimina</button>
+                        <button type="button" class="btn btn-danger" onClick = "eliminaQuiz()">Elimina</button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,48 @@
+{% load static %}
+
+{% comment %} ! modal {% endcomment %}
+<div class="modal fade" id="creaQuiz" tabindex="-1" aria-labelledby="creaQuizLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <!-- Aggiungi 'modal-dialog-centered' per centrare il modal -->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="creaQuizLabel">Crea QUIZ</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group row mb-2">
+                        <label for="modalAutore" class="col-sm-4 col-form-label">Autore</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalAutore" placeholder="Autore" value="" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="modalTitolo" class="col-sm-4 col-form-label">Titolo</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalTitolo" placeholder="Titolo" value="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="modalDataInizio" class="col-sm-4 col-form-label">Data Inizio</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalDataInizio" placeholder="Data Inizio" value="">
+                        </div>
+                    </div>
+                    <div class="form-group row mb-2">
+                        <label for="modalDataFine" class="col-sm-4 col-form-label">Data Fine</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="modalDataFine" placeholder="Data Fine" value="">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-success" onClick="creaQuiz()">Crea Quiz</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static "js/jsModalCreaQuiz.js" %}"></script>

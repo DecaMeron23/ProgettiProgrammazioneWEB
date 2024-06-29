@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -73,63 +75,19 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-                {% comment %} <?php
-                $codice = "";
-                // Prelievo i dati dai campi
-                if ($_SERVER["REQUEST_METHOD"] == "GET") {
-                    $creatore = $_GET["creatore"];
-                    $titolo = $_GET["titolo"];
-                    $data_inizio = $_GET["data_inizio"];
-                    $data_fine = $_GET["data_fine"];
-                    $like =  $_GET["like"] == "false" ? FALSE : TRUE;
-                    if (isset($_GET["codice"])) {
-                        $codice  = $_GET["codice"];
-                    }
-                    $quale_data_inizio = $_GET["quale_data_inizio"];
-                    $quale_data_fine = $_GET["quale_data_fine"];
-                    $domande = $_GET["domande"];
-                    $quali_domande = $_GET["quali_domande"];
-                    $partecipazioni = $_GET["partecipazioni"];
-                    $quali_partecipazioni = $_GET["quali_partecipazioni"];
-                }
-                // echo $quale_data_inizio . "   " . $quale_data_fine . " ";
-
-                $risultato_query = query_quiz($codice, $creatore, $titolo, $data_inizio, $data_fine, $like, $quale_data_inizio, $quale_data_fine , $domande , $quali_domande , $partecipazioni , $quali_partecipazioni);
-                $risultato = (array) json_decode($risultato_query);
-                $n_righe = count($risultato);
-                if ($n_righe == 0) {
-                    echo "<h1>Non è stato trovato nessun quiz</h1>";
-                } else {
-                    echo $n_righe == 1 ? ("<h1>Ho trovato solo $n_righe quiz</h1>") : ("<h1>Sono stati trovati $n_righe quiz</h1>");
-
-                ?> {% endcomment %}
-
-                {% comment %} <?php
-
-                $centra_testo = "class = 'TD_centra'";
-                // creo un attributo per gli elementi che contengono onclik (per css)
-                $onclick = " implementa='onclick'";
-                // altre cose per css
-                $niente = " implementa='niente'";
-                foreach ($risultato as $riga) {
-                    $riga = (array)$riga;
-                    echo ("<tr $clsse>
-                    <td id-quiz = '$riga[codice]' onclick = 'clickTitoloQUIZ(this)' $onclick>" . $riga['titolo'] . "</td>
-                    <td onclick = 'clickCreatoreQUIZ(this)' $onclick>" . $riga['creatore'] . "</td>
-                    <td $centra_testo $niente>" . $riga['data_inizio'] . "</td>
-                    <td $centra_testo $niente>" . $riga['data_fine'] . "</td>
-                    <td $centra_testo $niente>" . $riga['domande'] . "</td>
-                    <td $centra_testo onclick = 'clickPartecipantiQUIZ(this)' id-quiz = '" . $riga["codice"] . "' $onclick>" . $riga['partecipazioni'] . "</td>
-                    </tr>");
-                }
-            }
-                ?> {% endcomment %}
                 </table>
             </div>
             {% endif %}
         </div>
         {% include "elementiPrincipali/footer.html" %}
     </div>
+
+
+    {% if infoPagina.nomePagina == "Utente" %}
+    
+        {% include "elementiPrincipali/modalCreaQuiz.html" %}
+
+    {% endif %}
 </body>
 
 </html>
