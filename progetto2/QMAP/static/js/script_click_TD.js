@@ -61,16 +61,6 @@ function reindirizzaINFO_QUIZ(el) {
 
 }
 
-// function reinderizzaINFO_QUIZ(dati) {
-//     var pagina = "https://quizmakeandplay.altervista.org/info_quiz.php";
-//     $.redirectPOST(pagina, dati);
-// }
-
-// function reinderizzaGIOCA(dati) {
-//     var pagina = "https://quizmakeandplay.altervista.org/gioca.php";
-//     $.redirectPOST(pagina, dati);
-// }
-
 // estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
 $.extend(
     {
