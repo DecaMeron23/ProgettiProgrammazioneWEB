@@ -1,9 +1,12 @@
-# Il DB è online hostato da https://aiven.io/ 
+# Il DB è online, è quello di altervista
 
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+
+
+import requests
 
 import pymysql
 import json
@@ -107,20 +110,23 @@ def aggiungiCondizione(condizione, nome , valore , tipologia):
     return condizione
 
 def eseguiQuery(query):
-    conn = connectDB()
 
-    cursore = conn.cursor()
-    # print(query)
-    cursore.execute(query)
+    # Indica se è un select o no
+    isSelect= 0
+    if "SELECT" in query:
+        isSelect = 1
 
-    try:
-        risultati = cursore.fetchall()
-    except:
-        return ["ok"]
-    finally:
-        conn.close()
+    richiesta = {"query" : query , "isSelect": isSelect}
+
+    url = 'https://quizmakeandplay.altervista.org/api.php'
+    response = requests.get(url , params= richiesta)
+
+    if response.status_code == 200:
+        data = response.json()
+    else:
+        print(f"Errore nella richiesta: {response.status_code}")
     
-    return risultati
+    return json.loads(data)
 
 
 # Lista dei parametri per le ricerce di QUIZ:
@@ -233,7 +239,6 @@ def getQuiz(parametri):
             condizioniHaving = aggiungiCondizioneHaving(condizione = condizioniWhere , nome= "nPartecipazioni", valore=parametri["nPartecipazioni"] , tipologia=tipologia)
 
     query = QUERY_QUIZ  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
-
 
     risultati = eseguiQuery(query)
 

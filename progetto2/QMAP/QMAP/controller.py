@@ -67,7 +67,10 @@ def quiz(request):
     rispostaServer = server.getQuiz(parametri.copy())
     valoriEstratti = []
 
+    # print(rispostaServer)
     for riga in rispostaServer:
+
+        # print(riga)
         o = []
         idQuiz = riga["codice"]
         titolo = riga["titolo"]

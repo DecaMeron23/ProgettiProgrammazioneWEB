@@ -18,4 +18,4 @@ def ConvertiFormatoDataDaA(data , formatoIn , formatoOut):
 
 # Converte in stringa una data lo mette nel formato view
 def DataToString(data):
-    return data.strftime(FORMATO_DATA_VIEW)
+    return data
