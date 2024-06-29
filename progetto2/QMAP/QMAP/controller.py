@@ -65,10 +65,8 @@ def quiz(request):
     rispostaServer = server.getQuiz(parametri.copy())
     valoriEstratti = []
 
-    # print(rispostaServer)
     for riga in rispostaServer:
 
-        # print(riga)
         o = []
         idQuiz = riga["codice"]
         titolo = riga["titolo"]
@@ -88,7 +86,6 @@ def quiz(request):
         o.append({"valore" : nPartecipazioni , "impostazioni": {"class": "text-center", "id-quiz" : idQuiz ,  "implementa": "onClick" , "onClick" : OPEN_PARTECIPAZIONE}})
 
         valoriEstratti.append(o)
-        # print(o)
 
     if "nDomande" in parametri:
         parametri["isSet_nDomande"] = parametri["nDomande"] != "";
@@ -136,7 +133,6 @@ def utente(request):
 
     parametri = estrazioneParametriGet(request); 
     
-    # print(parametri)
     #? Oggetti contesto da passare al template
     context = {};
 
@@ -163,7 +159,6 @@ def utente(request):
         o.append({"valore" : nQgiocati , "impostazioni": {"class": "text-center" , "implementa": "onClick" ,"onClick": OPEN_PARTECIPAZIONE, "nome_utente" : nick}})
 
         valoriEstratti.append(o)
-        # print(o)
 
 
     if "nQcreati" in parametri:
@@ -243,7 +238,6 @@ def partecipazione(request):
         o.append({"valore" : nRisposte , "impostazioni": {"class": "text-center" , "implementa": ""}}) #TODO
 
         valoriEstratti.append(o)
-        # print(o)
 
     #? preparazione contesto: risultati
     numeroRighe = len(valoriEstratti)

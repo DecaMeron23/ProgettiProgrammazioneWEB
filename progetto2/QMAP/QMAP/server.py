@@ -30,39 +30,12 @@ TIPOLOGIA_RICERCA = {"minore": "1",
              "like": "like",
              "noLike": "2"}
 
-# # Definisci le variabili per le credenziali di accesso
-# MYSQL_HOST = 'quizmakeandplay-emiliomeroni99-5f9c.g.aivencloud.com'
-# MYSQL_PORT = 21469
-# MYSQL_USERNAME = 'avnadmin'
-# MYSQL_PASSWORD = 'AVNS_M0qytOJWua25SLzRrGN'
-# MYSQL_DATABASE = 'my_quizmakeandplay'
-
-# def connectDB():
-#     timeout = 10
-#     try:
-#         connection = pymysql.connect(
-#         charset="utf8mb4",
-#         connect_timeout=timeout,
-#         cursorclass=pymysql.cursors.DictCursor,
-#         db=MYSQL_DATABASE,
-#         host=MYSQL_HOST,
-#         password=MYSQL_PASSWORD,
-#         read_timeout=timeout,
-#         port=MYSQL_PORT,
-#         user=MYSQL_USERNAME,
-#         write_timeout=timeout,
-#         )
-#         return connection
-#     except:
-#         print("Errore durante la connessione al database")
-#         exit()
 
 # Tipologie di ricerche:
 # -minore
 # -uguale
 # -maggiore
 # -like
-
 def eseguiQuery(query):
 
     # Indica se è un select o no
@@ -311,10 +284,7 @@ def getUtente(parametri):
 
     query = QUERY  + condizioniWhere + GROUP_BY + condizioniHaving + ORDER_BY
     
-    # print(query)
     risultati = eseguiQuery(query)
-
-    # print(risultati)
 
     return risultati
 
@@ -416,7 +386,6 @@ def getRisposteDomandaQuiz(codiceQuiz , numeroDomanda):
 
     risultati = eseguiQuery(query)
 
-    print(risultati)
 
     return risultati
 
@@ -457,7 +426,6 @@ def aggiungiRispostaPartecipazione(partecipazione , id_quiz , domanda , risposta
     query = "INSERT INTO `RISPOSTA_UTENTE_QUIZ`(`PARTECIPAZIONE`, `QUIZ`, `DOMANDA`, `RISPOSTA`) VALUES ('{}','{}','{}','{}')".format(partecipazione , id_quiz , domanda , risposta)
 
     risultato = eseguiQuery(query)
-    print("aggiunta partecipazione codice {}".format(risultato))
     return 0
 
 def getUtenti():

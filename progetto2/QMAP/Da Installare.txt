@@ -1,5 +1,17 @@
-Python
-Django
-	Usare: "pip install django"
-requests
-	Usare: "pip install requests"
+Questo file serve da aiuto a chi vuole utilizzare il nostro sito fatto con Django.
+In particolare è necessario avere queste cose prima di iniziare:
+
+- Python: Per far funzionare il server
+
+- Django: modulo per il server, per installare usare il comando sul prompt dei comandi: "pip install django"
+	
+- Requests: modulo per fare richieste a pagine esterne per installare usare il comando sul prompt dei comandi: "pip install requests"
+
+Dopo aver installato tutti i moduli necessari, siamo pronti a far partire il Server
+	
+	Aprire il prompt dei comandi, assicurarsi di essere nella directory contenente il file "manage.py" e digitare il seguente comando:
+		"python manage.py runserver"
+
+	Se compare una cosa simile allora il server è stato avviato! per quanto riguarda il DB non è necessario avviarlo poiché abbiamo utilizzato lo stesso DB del primo progetto aggiungendo una piccola porzione di codice nel primo progetto che fa da "API" per il secondo!
+
+Detto ciò godetevi la nostra applicazione! essa è raggiungibile da un browser andando al link: "http://127.0.0.1:8000/" (a meno che non venga specificato diversamente dalla console, all'avvio del server)
