@@ -3,13 +3,19 @@ from datetime import datetime
 
 
 FORMATO_DATA_VIEW = "%d/%m/%Y"
-FORMATO_DATA_DATABASE = "%Y/%m/%d"
+FORMATO_DATA_DATABASE = "%Y-%m-%d"
 
 
 def DataFormatoView(data):
+    '''
+    Funzione che converte da DB a formato VIEW
+    '''
     return ConvertiFormatoDataDaA(data , FORMATO_DATA_DATABASE , FORMATO_DATA_VIEW)
 
 def DataFormatoDataBase(data):
+    '''
+    Funzione che converte da formato VIEW a formato DB
+    '''
     return ConvertiFormatoDataDaA(data , FORMATO_DATA_VIEW , FORMATO_DATA_DATABASE)
 
 def ConvertiFormatoDataDaA(data , formatoIn , formatoOut):

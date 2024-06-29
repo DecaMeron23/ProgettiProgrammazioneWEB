@@ -120,7 +120,7 @@ function verifica_quiz() {
             var corretta = data["risposteCorrette"];
 
 
-            // inserisci_partecipazione(getIdQuiz());
+            inserisci_partecipazione(getIdQuiz());
 
             // scorriamo tutte le domande
             for (let i = 0; i < domande.length; i++) {
@@ -130,7 +130,7 @@ function verifica_quiz() {
                 var domanda = parseInt($(element).attr("domanda_numero"));
 
                 // * Verifichiamo se la risposta data è gista
-                verifica_risposte(element, parseInt(corretta[domanda - 1]["numero"]), parseInt(domanda));
+                verifica_risposte(element, parseInt(corretta[domanda - 1]["numeroDomanda"]), parseInt(domanda));
             }
         }
     ).fail(function (jqXHR, textStatus, errorThrown) {
@@ -160,7 +160,7 @@ function verifica_risposte(domande, corretta, numero_domanda) {
         remove_on_click(pallino);
 
         if (is_selezionato(pallino)) {
-            // inserisci_risposta_utente(codice_partecipazione, id_quiz, numero_domanda, numero_risposta);
+            inserisci_risposta_utente(codice_partecipazione, id_quiz, numero_domanda, numero_risposta);
         }
         if (numero_risposta == corretta) {
             colora_risposta(risposte[i], pallino, true);
@@ -197,29 +197,38 @@ function remove_on_click(element) {
 }
 
 /**
- * Funzione che inserisce la pertecipazione dell'utente
+ * Funzione che inserisce la pertecipazione dell'utente eseguendo una chiamata sincorna
  * 
  * @param {string} id_quiz
  * 
  */
 function inserisci_partecipazione(id_quiz) {
-
-    //* prendiamo la data di oggi
+    // prendiamo la data di oggi
     let data = new Date();
     data = data.toISOString().split('T')[0];
 
-    dati = { funzione: "aggiungiPartecipazione",
+    let dati = {
+        funzione: "aggiungiPartecipazione",
         nomeUtente: utente,
         partecipazione: codice_partecipazione,
         codiceQuiz: id_quiz,
-        dataPartecipazione: data};
+        dataPartecipazione: data
+    };
 
-    $.getJSON("funzionalita_js", dati,
-        function (data, textStatus, jqXHR) {
-            if (!("esito" in data)){
-                console.error(data["errore"] + " codice: " + data["codiceErrore"])
+    $.ajax({
+        url: "funzionalita_js",
+        data: dati,
+        dataType: "json",
+        async: false, // Chiamata sincrona
+        success: function (data, textStatus, jqXHR) {
+            if (!("esito" in data)) {
+                console.error(data["errore"] + " codice: " + data["codiceErrore"]);
             }
-        });
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.error("Errore durante la chiamata sincrona:", textStatus, errorThrown);
+        }
+    });
 }
 
 /**
@@ -246,10 +255,9 @@ function inserisci_risposta_utente(partecipazione, id_quiz, domanda, risposta) {
     data = { funzione: "inserisci_risposta_utente", partecipazione: partecipazione, id_quiz: id_quiz, domanda: domanda, risposta: risposta };
     $.getJSON("funzionalita_js", data,
         function (data, textStatus, jqXHR) {
-            if (!("esito" in data)){
+            if (!("esito" in data)) {
                 console.error(data["errore"] + " Codice: " + data["codiceErrore"])
             }
-            console.error(data)
         });
 }
 

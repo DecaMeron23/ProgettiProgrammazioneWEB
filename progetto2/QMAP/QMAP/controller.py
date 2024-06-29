@@ -62,8 +62,6 @@ def quiz(request):
     #? Oggetti contesto da passare al template
     context = {};
 
-    # todo: Estrazione dati dal server e aggiunta al contesto
-    
     rispostaServer = server.getQuiz(parametri.copy())
     valoriEstratti = []
 
@@ -75,8 +73,8 @@ def quiz(request):
         idQuiz = riga["codice"]
         titolo = riga["titolo"]
         autore = riga["creatore"]
-        dataInizio = funzionalita.DataToString(riga["dataInizio"])
-        dataFine = funzionalita.DataToString(riga["dataFine"])
+        dataInizio = funzionalita.DataFormatoView(riga["dataInizio"])
+        dataFine = funzionalita.DataFormatoView(riga["dataFine"])
         nDomande = riga["nDomande"]
         nPartecipazioni = riga["nPartecipazioni"]
         
@@ -235,7 +233,7 @@ def partecipazione(request):
         codiceQuiz = riga["codiceQuiz"];
         nick = riga["nomeUtente"]
         titolo = riga["quiz"]
-        data = funzionalita.DataToString(riga["data"])
+        data = funzionalita.DataFormatoView(riga["data"])
         nRisposte = riga["nRisposte"]
 
         o = []
@@ -315,7 +313,7 @@ def gioca(request):
         for risposta in risposteDB:
             o_r = {}
             o_r["testo"] = risposta["testo"]
-            o_r["corretta"] = risposta["tipo"] == 1 
+            o_r["corretta"] = risposta["tipo"] == "1" 
             o_r["numero"] = risposta["numero"]
 
             if not risposta["punteggio"] == None:
@@ -328,9 +326,6 @@ def gioca(request):
         o_d = {}
 
 
-        print(domandaPunteggio)
-
-
         o_d["testo"] = domanda["testo"]
         o_d["numero"] = domanda["numero"]
         o_d["punteggio"] = domandaPunteggio
@@ -340,8 +335,8 @@ def gioca(request):
 
     infoQuiz = {"idQuiz" : quiz["codice"],
                 "autore" : quiz["creatore"],
-                "dataInizio" : funzionalita.DataToString(quiz["dataInizio"]),
-                "dataFine" : funzionalita.DataToString(quiz["dataFine"]),
+                "dataInizio" : funzionalita.DataFormatoView(quiz["dataInizio"]),
+                "dataFine" : funzionalita.DataFormatoView(quiz["dataFine"]),
                 "titolo" : quiz["titolo"],
                 "domande" : domande
                 }    
@@ -393,7 +388,7 @@ def info(request):
         for risposta in risposteDB:
             o_r = {}
             o_r["testo"] = risposta["testo"]
-            o_r["corretta"] = risposta["tipo"] == 1 
+            o_r["corretta"] = risposta["tipo"] == "1" 
             o_r["numero"] = risposta["numero"]
 
             if not risposta["punteggio"] == None:
@@ -412,14 +407,13 @@ def info(request):
 
     infoQuiz = {"idQuiz" : quiz["codice"],
                 "autore" : quiz["creatore"],
-                "dataInizio" : funzionalita.DataToString(quiz["dataInizio"]),
-                "dataFine" : funzionalita.DataToString(quiz["dataFine"]),
+                "dataInizio" : funzionalita.DataFormatoView(quiz["dataInizio"]),
+                "dataFine" : funzionalita.DataFormatoView(quiz["dataFine"]),
                 "titolo" : quiz["titolo"],
                 "domande" : domande
                 }    
     context = infoQuiz
     context["infoPagina"] = {"nomePagina" : "Info Quiz"}
-
 
     #? preparazione del template
     template = loader.get_template(templateInfoQuiz)
