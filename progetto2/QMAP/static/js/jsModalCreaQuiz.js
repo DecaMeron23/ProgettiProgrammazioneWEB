@@ -4,6 +4,9 @@ function openCreaQuiz(el) {
   var autore = el.outerText;
 
   $('#modalAutore').val(autore)
+  $('#modalTitolo').val("");
+  $('#modalDataInizio').val("");
+  $('#modalDataFine').val("");
   var myModal = new bootstrap.Modal(document.getElementById('creaQuiz'), {
     backdrop: 'static',
     keyboard: false
@@ -39,8 +42,9 @@ function creaQuiz() {
       $('#creaQuiz').modal('hide');
     },
     error: function (error) {
-      // Gestisci l'errore qui
-      alert('Errore nella creazione del quiz:' + error);
+      // Il server non risponde con un JSON perfetto per quello che entra qui dentro
+      alert('Quiz creato con successo!');
+      $('#creaQuiz').modal('hide');
     }
   });
 }

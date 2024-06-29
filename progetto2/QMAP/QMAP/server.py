@@ -504,6 +504,12 @@ def funzionalitaJS(request):
         res.write(json.dumps(risposta))
         return res
 
+    def verificaParametri(parametri , prarmetriDaVerificare):
+        for parametro in prarmetriDaVerificare:
+            if not parametro in parametri:
+                return parametro
+            
+        return "ok"
 
     res = HttpResponse(content_type="application/json")
 
@@ -516,9 +522,11 @@ def funzionalitaJS(request):
 
     #  ! Estraiamo tutte le risposte corrette per domanda
     if parametri["funzione"] == "getRisposteCorrette":
-        if not "codiceQuiz" in parametri:
-            res.write(parametroMancante("codiceQuiz"))
-            return res  
+        errore = verificaParametri(parametri , ["codiceQuiz"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
+            return res
+
         domandeDB = getDomandeQuiz(codice=parametri["codiceQuiz"])
         risposteCorrette = []
         for domanda in domandeDB:
@@ -539,19 +547,11 @@ def funzionalitaJS(request):
     # ! Aggiungi partecipazione
     elif parametri["funzione"] == "aggiungiPartecipazione":
         # ? Verifica errori
-        if not "nomeUtente" in parametri:
-            res.write(parametroMancante("nomeUtente"))
+        errore = verificaParametri(parametri , ["nomeUtente" , "codiceQuiz" , "dataPartecipazione" , "partecipazione"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
             return res
-        if not "codiceQuiz" in parametri:
-            res.write(parametroMancante("codiceQuiz"))
-            return res
-        if not "dataPartecipazione" in parametri:
-            res.write(parametroMancante("dataPartecipazione"))
-            return res 
-        if not "partecipazione" in parametri:
-            res.write(parametroMancante("partecipazione"))
-            return res
-
+        
         nomeUtente = parametri["nomeUtente"]
         codiceQuiz = parametri["codiceQuiz"]
         partecipazione = parametri["partecipazione"]
@@ -567,20 +567,11 @@ def funzionalitaJS(request):
     # ! Inserisci Risposta UTENTE
     elif parametri["funzione"]== "inserisci_risposta_utente":
         #? verifica errori 
-
-        if not "partecipazione" in parametri:
-            res.write(parametroMancante("partecipazione"))
+        errore = verificaParametri(parametri , ["partecipazione" , "id_quiz" , "domanda" , "risposta"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
             return res
-        if not "id_quiz" in parametri:
-            res.write(parametroMancante("id_quiz"))
-            return res
-        if not "domanda" in parametri:
-            res.write(parametroMancante("domanda"))
-            return res
-        if not "risposta" in parametri:
-            res.write(parametroMancante("risposta"))
-            return res
-
+        
         partecipazione = parametri["partecipazione"]
         id_quiz = parametri["id_quiz"]
         domanda = parametri["domanda"]
@@ -610,14 +601,16 @@ def funzionalitaJS(request):
     
     # ! Elimina QUIZ
     elif parametri["funzione"]== "eliminaQuiz":
-        if not "codice" in parametri:
-            res.write(parametroMancante("codice"))
+        #? verifica errori 
+        errore = verificaParametri(parametri , ["codice"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
             return res
         
         codice = parametri["codice"]
 
         eliminaQuiz(codice)
-        if esisteQuiz(codice):
+        if not esisteQuiz(codice):
             return inviaOK(res)
         else:
             errore = {"errore" : "Il quiz '{}' non è stato eliminato".format(codice), "codiceErrore" : 2 }
@@ -626,30 +619,47 @@ def funzionalitaJS(request):
         
     # ! CREA QUIZ 
     elif parametri["funzione"] == "creaQuiz":
-        if not "autore" in parametri:
-            res.write(parametroMancante("autore"))
+        #? verifica errori 
+        errore = verificaParametri(parametri , ["autore" , "titolo" , "dataInizio" , "dataFine"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
             return res
-
-        if not "titolo" in parametri:
-            res.write(parametroMancante("titolo"))
-            return res
-
-        if not "dataInizio" in parametri:
-            res.write(parametroMancante("dataInizio"))
-            return res
-
-        if not "dataFine" in parametri:
-            res.write(parametroMancante("dataFine"))
-            return res
-
+        
         autore = parametri["autore"]
         titolo = parametri["titolo"]
         dataInizio = funzionalita.DataFormatoDataBase(parametri["dataInizio"])
         dataFine = funzionalita.DataFormatoDataBase(parametri["dataFine"])
 
         creaQuiz(autore , titolo , dataInizio , dataFine)
+
         res.write(inviaOK(res))
+
         return res
+    
+    # ! Modifica Quiz
+    elif "modificaQuiz" == parametri["funzione"]:
+        #? verifica errori 
+        errore = verificaParametri(parametri , ["codice" , "autore" , "titolo" , "dataInizio" , "dataFine"]);
+        if errore != "ok":
+            res.write(parametroMancante(errore))
+            return res
+        
+        codice = parametri["codice"]
+        autore = parametri["autore"]
+        titolo = parametri["titolo"]
+        dataInizio = funzionalita.DataFormatoDataBase(parametri["dataInizio"])
+        dataFine = funzionalita.DataFormatoDataBase(parametri["dataFine"])
+
+        if not modificaQuiz(codice , autore, titolo , dataInizio , dataFine):
+            errore = {"errore" : "L'utente '{}' non è presente nel DB".format(autore), "codiceErrore" : 2 }
+            res.write(json.dumps(errore))
+            return res
+
+        res.write(inviaOK(res))
+
+        return res
+        
+
 
 
 def esisteUtente(nomeUtente):
@@ -739,3 +749,16 @@ def creaQuiz(autore, titolo , dataInizio , dataFine):
     query = "INSERT INTO QUIZ(`CODICE`, `CREATORE`, `TITOLO`, `DATA_INIZIO`, `DATA_FINE`) VALUES ('{}' , '{}','{}','{}','{}')".format( codice, autore , titolo , dataInizio , dataFine)
 
     ris = eseguiQuery(query)
+
+
+def modificaQuiz(codice , autore, titolo , dataInizio , dataFine):
+
+    # Verifichiamo se l'utente esiste
+    if not esisteUtente(autore):
+        return False
+    
+    query = "UPDATE QUIZ SET CREATORE ='{}', TITOLO ='{}', DATA_INIZIO ='{}', DATA_FINE ='{}' WHERE CODICE = {}".format(autore , titolo , dataInizio , dataFine , codice)
+
+    eseguiQuery(query)
+
+    return True
