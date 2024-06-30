@@ -40,11 +40,13 @@ function creaQuiz() {
       // Gestisci la risposta del server qui
       alert('Quiz creato con successo!');
       $('#creaQuiz').modal('hide');
+      location.reload();
     },
     error: function (error) {
       // Il server non risponde con un JSON perfetto per quello che entra qui dentro
       alert('Quiz creato con successo!');
       $('#creaQuiz').modal('hide');
+      location.reload();
     }
   });
 }
