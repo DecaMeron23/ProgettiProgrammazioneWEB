@@ -8,7 +8,7 @@ templateIndex = "index.html"
 templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
-
+templateOps = "ops.html"
 
 from . import funzionalita
 from . import server
@@ -365,6 +365,20 @@ def info(request):
     quiz = server.getQuiz(richiestaServer);
 
     # prendiamo il primo elemento 
+
+    if len(quiz) < 1:
+        #? preparazione del template
+        template = loader.get_template(templateOps)
+        
+        context["codiceQuiz"] = richiestaServer["codice"];
+        context["testo"] = "Ops, il quiz non esiste più..."
+
+        page = template.render(context= context , request= request)
+
+        res.write(page)
+        return res
+
+
     quiz = quiz[0];
 
     # Prendiamo tutte le domande per quel quiz

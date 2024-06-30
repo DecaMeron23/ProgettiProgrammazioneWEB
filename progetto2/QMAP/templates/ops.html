@@ -1,0 +1,64 @@
+{% comment %} ?
+? Schema del contesto, stringhe se non specificato:
+! -idQuiz
+! -autore
+! -dataInizio
+! -dataFine
+! -titolo
+! -domande (array)
+! --testo
+! --punteggio (int)
+! --risposte (array)
+! ---testo
+! ---corretta (boolean)
+?{% endcomment %}
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include "elementiPrincipali/impostazioni.html" %}
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
+
+
+    <title>Ops....</title>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        {% include "elementiPrincipali/header.html" %}
+        {% include "elementiPrincipali/navigazione.html" %}
+
+        <div class="row mt-3">
+            <div class="col text-center display-4">
+                {{testo}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                Codice del QUIZ: {{codiceQuiz}}
+            </div>
+        </div>
+
+        
+        {% include "elementiPrincipali/footer.html" %}
+
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>

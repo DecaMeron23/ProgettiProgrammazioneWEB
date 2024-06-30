@@ -98,6 +98,7 @@
 
 html{
     min-width: 360px;
+    min-height: 100vh;
 }
 
 /* impostazioni generali */
