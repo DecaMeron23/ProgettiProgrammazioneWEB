@@ -134,6 +134,12 @@ a {
     transform: scale(110%);
 }
 
+.pulsante_diattivato{
+    color: #cdbeb5 !important;
+    background-color: #4e5453bd !important;
+    cursor: default !important;
+}
+
 
 
 /* ! Header */

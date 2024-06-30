@@ -270,8 +270,10 @@ function pulsante_invia_attiva(bool) {
     var element = $("#pulsane_invia");
     if (bool && !$(element).get(0).hasAttribute("onclick")) {
         $(element).addClass("pulsante_hover");
+        $(element).removeClass("pulsante_diattivato")
         $(element).attr("onclick", "verifica_quiz()");
     } else {
+        $(element).addClass("pulsante_diattivato")
         $(element).removeClass("pulsante_hover");
         remove_on_click(element)
     }
