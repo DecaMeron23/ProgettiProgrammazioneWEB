@@ -94,7 +94,7 @@ def quiz(request):
         parametri["isSet_nPartecipazioni"] = parametri["nPartecipazioni"] != "";
     
 
-    parametri["directory"] = "filtri/filtroQUiz.html"
+    parametri["directory"] = "filtri/filtroQuiz.html"
 
 
     #? preparazione contesto: risultati
