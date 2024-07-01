@@ -2,18 +2,51 @@
 
 <div class="header row p-2">
 
-  <div class="col-md-1 d-flex justify-content-center align-items-center ml-1 d-none d-md-block">
-    <div id="logo">
-      <a href="/" data-toggle="tooltip" title="Home"><img class="logoApp"
-          src={% static "immagini/logoQMAP.png" %} alt="non caricaa!!!"></a>
+  <div class="col-md-2 d-flex flex-column align-items-center justify-content-center ml-2 d-none d-md-block">
+    <div class="row">
+      <div id="logo" class="text-center">
+        <a href="/" data-toggle="tooltip" title="Home">
+          <img class="logoApp" src="{% static 'immagini/logoQMAP.png' %}" alt="non carica!!!">
+        </a>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center mx-auto">
+      <div class="col-6 d-flex justify-content-center align-items-center">
+        <button id="backButton" class="btn">
+          <i class="fa-regular fa-circle-left fa-lg"></i>
+        </button>
+      </div>
+      <div class="col-6 d-flex justify-content-center align-items-center">
+        <button id="forwardButton" class="btn">
+          <i class="fa-regular fa-circle-right fa-lg"></i>
+        </button>
+      </div>
     </div>
   </div>
 
-  <div class="col-md-10 col-6 mx-auto">
-    <div class="titolo_header">
-      <p>QUIZ</p>
-      <p>Make and Play</p>
+
+  <div class="col-md-8 col-4 mx-auto">
+    <div class="row">
+      <div class="titolo_header">
+        <p>QUIZ</p>
+        <p>Make and Play</p>
+      </div>
     </div>
+    <div class="row d-md-none">
+      <div class="row d-flex justify-content-center mx-auto">
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <button id="backButton2" class="btn">
+            <i class="fa-regular fa-circle-left fa-lg"></i>
+          </button>
+        </div>
+        <div class="col-6 d-flex justify-content-center align-items-center">
+          <button id="forwardButton2" class="btn">
+            <i class="fa-regular fa-circle-right fa-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    
   </div>
 
 
@@ -32,7 +65,7 @@
   
   {% endif %}
 
-  <div class="col-3 col-md-1 d-flex justify-content-center align-items-center">
+  <div class="col-4 col-md-2 d-flex justify-content-center align-items-center">
     <div class="navbar btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu"
       aria-controls="offcanvasMenu" data-toggle="tooltip" title="Menu">
       <img src={% static "immagini/iconaMenu.png" %} class="iconaMenu">
@@ -40,3 +73,6 @@
   </div>
 
 </div>
+
+
+<script src= {% static "js/jsHistory.js" %}></script>
