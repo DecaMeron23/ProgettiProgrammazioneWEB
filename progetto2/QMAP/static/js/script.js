@@ -1,7 +1,16 @@
+/**
+ * Funzionalità generali delle pagine
+ */
+
+
+// directori di flatpicker
 src = "https://cdn.jsdelivr.net/npm/flatpickr";
 
 
 //! Data Picker
+/**
+ * Inizzializzazione del data piker
+ */
 var inizzializzazione = function () {
 
     formato = {
@@ -19,14 +28,18 @@ var inizzializzazione = function () {
 }
 
 
-//! Reset della ricerca
+/**
+ * Funzione che resetta la ricerca dei filtri
+ */
 function resetRicerca() {
     var currentPageUrl = window.location.origin + window.location.pathname;
     window.location.replace(currentPageUrl);
 }
 
 
-
+/**
+ * Funzione che elimina il quiz
+ */
 function eliminaQuiz() {
     var id_quiz = $("body").attr("codice");
     data = {funzione : "eliminaQuiz" , codice : id_quiz}
@@ -44,9 +57,8 @@ function eliminaQuiz() {
 
 }
 
-//! funzione che gestisce i pulsanti dei filtri
 /**
- * 
+ * funzione che gestisce i pulsanti dei filtri (quelli minore/uguale/maggiore)
  * @param {Element} elemento 
  */
 function clickRadio(elemento) {
@@ -83,7 +95,9 @@ function clickRadio(elemento) {
     }
 }
 
-// ! Funzione che al click della form di ricerca esegue la chiamata get con altri valori aggiuntivi
+/** 
+ * Funzione che al click della form di ricerca esegue la chiamata get con altri valori aggiuntivi
+ */
 $(document).ready(function() {
     $('#form_ricerca').on('submit', function(event) {
         event.preventDefault(); // Evita che la pagina venga ricaricata
@@ -115,5 +129,7 @@ $(document).ready(function() {
         window.location.href = targetUrl;
     });
 });
+
+
 
 $(inizzializzazione);

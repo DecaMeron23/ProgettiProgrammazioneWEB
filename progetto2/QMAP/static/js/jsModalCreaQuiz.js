@@ -1,4 +1,12 @@
+/**
+ * Funzione che gestisce il modal (la finestra pop-up) per la creazione dei quiz
+ */
 
+/**
+ * Funzione che apre il modal
+ * 
+ * @param {*} el 
+ */
 function openCreaQuiz(el) {
 
   var autore = el.outerText;
@@ -15,6 +23,10 @@ function openCreaQuiz(el) {
 
 }
 
+/**
+ * Funzione che verifica ed esegue il crea quiz
+ * @returns nulla 
+ */
 function creaQuiz() {
   var autore = $('#modalAutore').val();
   var titolo = $('#modalTitolo').val();
@@ -51,7 +63,15 @@ function creaQuiz() {
   });
 }
 
-// Funzione che verifica se la form va bene
+/**
+ * Funzione che verifica se la form va bene
+ * 
+ * @param {String} autore 
+ * @param {String} titolo 
+ * @param {String} dataInizio 
+ * @param {String} dataFine 
+ * @returns true se va bene, false in tutti gli altri casi
+ */
 function validateForm(autore, titolo, dataInizio, dataFine) {
 
   if (autore === '' || titolo === '' || dataInizio === '' || dataFine === '') {
@@ -70,8 +90,11 @@ function validateForm(autore, titolo, dataInizio, dataFine) {
   return true
 }
 
-
-// Funzione che converte una stringa DD/MM/YYYY in un oggetto data
+/**
+ * Funzione che converte una stringa DD/MM/YYYY in un oggetto data
+ * @param {String} data 
+ * @returns {Date} la data
+ */
 function convertiData(data){
   // Converto la stringa in formato "MM/DD/YYYY" in "YYYY/MM/DD"
   var data = data.split("/");

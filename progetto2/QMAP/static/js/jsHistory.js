@@ -1,3 +1,8 @@
+/**
+ * File Js che serve per aggiungere le funzioni che implementano le freccie avanti, indietro e home
+ */
+
+
 document.getElementById('backButton').addEventListener('click', function() {
     window.history.back();
   });

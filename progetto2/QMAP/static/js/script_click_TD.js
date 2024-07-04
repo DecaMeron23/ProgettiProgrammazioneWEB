@@ -2,6 +2,12 @@
  * Questo file serve per effettuare le operazioni chiamate dai click sugli elementi TD
  */
 
+/**
+ * 
+ * Funzione che reindirizza su partecipazioni
+ * 
+ * @param {*} el elemento cui si è fatto il click
+ */
 function reindirizzaPARTECIPAZIONI(el) {
 
     var numero = el.innerText;
@@ -23,6 +29,12 @@ function reindirizzaPARTECIPAZIONI(el) {
     }
 }
 
+/**
+ * 
+ * Funzione che reindirizza su quiz
+ * 
+ * @param {*} el elemento cui si è fatto il click
+ */
 function reindirizzaQUIZ(el) {
     
     var pagina = "/quiz"
@@ -44,6 +56,12 @@ function reindirizzaQUIZ(el) {
     $.redirectGET(pagina, dati);
 }
 
+/**
+ * 
+ * Funzione che reindirizza su Utente
+ * 
+ * @param {*} el elemento cui si è fatto il click
+ */
 function reindirizzaUTENTE(el) {
     var utente = el.innerText;
     dati = { nomeUtente: utente, "vincoliNomeUtente": "noLike" }
@@ -51,6 +69,12 @@ function reindirizzaUTENTE(el) {
     $.redirectGET(pagina, dati);
 }
 
+/**
+ * 
+ * Funzione che reindirizza su info quiz
+ * 
+ * @param {*} el elemento cui si è fatto il click
+ */
 function reindirizzaINFO_QUIZ(el) {
     var idQuiz = $(el).attr("id-quiz");
     var pagina = "/info";
@@ -61,7 +85,9 @@ function reindirizzaINFO_QUIZ(el) {
 
 }
 
-// estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
+/**
+  * estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
+*/
 $.extend(
     {
         redirectGET: function (location, args) {
@@ -72,8 +98,9 @@ $.extend(
             $(`<form action="${location}"method="get">${form}</form>`).appendTo($(document.body)).submit();
         }
     });
-
-// estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
+/**
+* estendo JQUery con la funzione reirectget la quale reindirizza la pagina inviado il metodo get alla pagina obbiettivo
+ */
 $.extend(
     {
         redirectPOST: function (location, args) {
@@ -86,7 +113,10 @@ $.extend(
     });
 
 
-
+/**
+ * Funzione che preleva il nome della pagina
+ * @returns {String} il nome della pagina
+ */
 function getUrlName() {
     // Ottieni il percorso completo della pagina
     var path = window.location.pathname;

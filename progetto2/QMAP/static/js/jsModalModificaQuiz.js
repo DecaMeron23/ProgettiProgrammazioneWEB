@@ -1,3 +1,11 @@
+/**
+ * Funzione che gestisce il modal (la finestra pop-up) per la modifica dei quiz
+ */
+
+
+/**
+ * Funzione che apre la modal
+ */
 function openModificaQuiz() {
 
   autore = $("body").attr("autore");
@@ -17,6 +25,10 @@ function openModificaQuiz() {
 
 }
 
+/**
+ * Funzione che viene chiamata al click conferma modifica
+ * @returns nulla
+ */
 function modificaQuiz() {
   var autore = $('#autore').val();
   var titolo = $('#titolo').val();
@@ -55,7 +67,15 @@ function modificaQuiz() {
 });
 }
 
-// Funzione che verifica se la form va bene
+/**
+ * Funzione che verifica se la form va bene
+ * 
+ * @param {String} autore 
+ * @param {String} titolo 
+ * @param {String} dataInizio 
+ * @param {String} dataFine 
+ * @returns true se va bene, false in tutti gli altri casi
+ */
 function validateForm(autore, titolo, dataInizio, dataFine) {
 
   if (autore === '' || titolo === '' || dataInizio === '' || dataFine === '') {
@@ -74,8 +94,11 @@ function validateForm(autore, titolo, dataInizio, dataFine) {
   return true
 }
 
-
-// Funzione che converte una stringa DD/MM/YYYY in un oggetto data
+/**
+ * Funzione che converte una stringa DD/MM/YYYY in un oggetto data
+ * @param {String} data 
+ * @returns {Date} la data
+ */
 function convertiData(data){
   // Converto la stringa in formato "MM/DD/YYYY" in "YYYY/MM/DD"
   var data = data.split("/");
@@ -84,6 +107,10 @@ function convertiData(data){
   return new Date(data);
 }
 
+/**
+ * Funzione che preleva l'id del quiz
+ * @returns id del quiz
+ */
 function getIdQuiz() {
   id_quiz = $("body").attr("codice");
   return id_quiz;
