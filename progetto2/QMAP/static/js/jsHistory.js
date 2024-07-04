@@ -18,3 +18,7 @@ document.getElementById('forwardButton2').addEventListener('click', function() {
 document.getElementById('goHome').addEventListener('click', function() {
   location.href = "/index";
 });
+
+document.getElementById('goHome2').addEventListener('click', function() {
+  location.href = "/index";
+});
