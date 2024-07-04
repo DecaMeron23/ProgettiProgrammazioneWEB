@@ -1,5 +1,8 @@
-# Il DB è online, è quello di altervista
+'''
+Questo file prevede tutte le funzionalità necessarie per effettuare chiamate al DB o cose simili
 
+Il DB è online, è quello di altervista
+'''
 
 from django.shortcuts import render
 from django.http import HttpResponse
@@ -37,6 +40,9 @@ TIPOLOGIA_RICERCA = {"minore": "1",
 # -maggiore
 # -like
 def eseguiQuery(query):
+    '''
+    Questa funzione serve per eseguire le query, in particolare si deve inviare la query in formato string
+    '''
 
     # Indica se è un select o no
     isSelect= 0
@@ -62,6 +68,9 @@ def eseguiQuery(query):
 
 
 def aggiungiCondizioneWhere(condizione, nome , valore , tipologia):
+    '''
+    Funzine che aggiunge una condizione alla stringa della query(per le condizioni del Where) 
+    '''
     condizione = aggiungiCondizione(condizione , nome , valore , tipologia)
     
     if not (WHERE in condizione):
@@ -70,6 +79,9 @@ def aggiungiCondizioneWhere(condizione, nome , valore , tipologia):
     return condizione
 
 def aggiungiCondizioneHaving(condizione, nome , valore , tipologia):
+    '''
+    Funzine che aggiunge una condizione alla stringa della query(per le condizioni del Having) 
+    '''
     condizione = aggiungiCondizione(condizione , nome , valore , tipologia)
     
     if not(HAVING in condizione):
@@ -78,9 +90,9 @@ def aggiungiCondizioneHaving(condizione, nome , valore , tipologia):
     return condizione
 
 def aggiungiCondizione(condizione, nome , valore , tipologia):
-
-    # if not isinstance(valore , int):
-    #     valore = f"'{valore}'"
+    '''
+    Funzine che prevede l'aggiunta delle condizioni nelle query
+    '''
 
     if tipologia == TIPOLOGIA_RICERCA["minore"]:
         if not isinstance(valore , int):
@@ -226,6 +238,34 @@ def getQuiz(parametri):
 
 
 def getUtente(parametri):
+    """
+    Preleva gli utenti secondo i parametri passati.
+    
+
+    Args:
+        parametri (dizionario): Un dizionario con argomenti:
+
+                - nomeUtente
+                - nome
+                    - vincoloNome
+                - cognome
+                    - vincoloCognome
+                - email
+                    - vincoloEmail
+                - nQcreati
+                    - radio_quale_nQcreati
+                - nQgiocati
+                    - radio_nQgiocati
+
+    Returns:
+        Un array di dizionario, con elementi:
+            - nomeUtente
+            - nome
+            - cognome
+            - email
+            - nQcreati
+            - nQgiocati
+    """
     
     QUERY = "SELECT UTENTE.NOME_UTENTE AS nomeUtente , UTENTE.NOME AS nome , UTENTE.COGNOME AS cognome , UTENTE.EMAIL AS email , COUNT(DISTINCT QUIZ.CODICE) as nQcreati , COUNT(DISTINCT PARTECIPAZIONE.QUIZ) as nQgiocati FROM UTENTE LEFT JOIN QUIZ ON UTENTE.NOME_UTENTE = QUIZ.CREATORE LEFT JOIN PARTECIPAZIONE ON UTENTE.NOME_UTENTE = PARTECIPAZIONE.UTENTE"
 
@@ -289,6 +329,33 @@ def getUtente(parametri):
     return risultati
 
 def getPartecipazione(parametri):
+    """
+    Preleva le partecipazioni secondo i parametri passati.
+    
+
+    Args:
+        parametri (dizionario): Un dizionario con argomenti:
+
+                - codiceQuiz
+                - codice
+                - quiz
+                    - vincoloQuiz
+                - nomeUtente
+                    - vincoloNomeUtente
+                - data
+                    - radio_quale_data
+                - nRisposte
+                    - radio_nRisposte
+
+    Returns:
+        Un array di dizionario, con elementi:
+            - codice
+            - nomeUtente
+            - quiz
+            - codiceQuiz
+            - data
+            - nRisposte
+    """
     
     QUERY = " SELECT PARTECIPAZIONE.CODICE AS codice , PARTECIPAZIONE.UTENTE AS nomeUtente , QUIZ.TITOLO AS quiz, QUIZ.CODICE AS codiceQuiz, PARTECIPAZIONE.DATA AS data, COUNT(RISPOSTA_UTENTE_QUIZ.RISPOSTA) AS nRisposte FROM (PARTECIPAZIONE JOIN RISPOSTA_UTENTE_QUIZ ON PARTECIPAZIONE.CODICE = RISPOSTA_UTENTE_QUIZ.PARTECIPAZIONE) JOIN QUIZ ON PARTECIPAZIONE.QUIZ = QUIZ.CODICE "
 
@@ -706,6 +773,9 @@ def eliminaQuiz(codice = 0):
 
 
 def getQuizCodiceMassimo():
+    '''
+    Funzione che preleva il numero massimo dei codici quiz
+    '''
     query = "SELECT MAX(CODICE) as codice FROM QUIZ"
     risultato = eseguiQuery(query)
     return int(risultato[0]["codice"])
@@ -724,7 +794,9 @@ def creaQuiz(autore, titolo , dataInizio , dataFine):
 
 
 def modificaQuiz(codice , autore, titolo , dataInizio , dataFine):
-
+    '''
+    Funzione che modifica un quiz eseguendo l'update
+    '''
     # Verifichiamo se l'utente esiste
     if not esisteUtente(autore):
         return False

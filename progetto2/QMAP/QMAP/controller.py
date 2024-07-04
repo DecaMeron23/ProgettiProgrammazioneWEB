@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
-
+# Definizine delle variabili contenenti i nomi dei template
 templateIndex = "index.html"
 templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
@@ -11,6 +11,7 @@ templateInfoQuiz = "infoQuiz.html"
 templateOps = "ops.html"
 template404 = "404.html"
 
+# Definizione delle Variabili per il click sulle tabelle
 OPEN_QUIZ = "reindirizzaQUIZ(this)";
 OPEN_UTENTE = "reindirizzaUTENTE(this)";
 OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
@@ -25,6 +26,9 @@ import random
 
 
 def estrazioneParametriGet(request):
+    '''
+    Questa funzione prevede di estrarre i parametri GET e metterli in un dizionario in un formato migliore
+    '''
     parametri = request.GET
 
     parametri = {k: v[0] if len(v) == 1 else v for k, v in parametri.lists()}
@@ -32,6 +36,9 @@ def estrazioneParametriGet(request):
     return parametri
 
 def index(request):
+    '''
+    Controllore per la pagina index
+    '''
     res = HttpResponse(content_type="text/html")
 
     context = {};
@@ -58,6 +65,9 @@ def index(request):
 
 
 def quiz(request):
+    '''
+    Controllore per la pagina quiz
+    '''
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
@@ -131,6 +141,9 @@ def quiz(request):
 
 # ! UTENTE
 def utente(request):
+    '''
+    Controllore per la pagina utente
+    '''
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request); 
@@ -184,8 +197,6 @@ def utente(request):
         infoRicerca = "sono stati trovati {} utenti".format(numeroRighe)
 
 
-    # noInferioreMd = {"class": "d-none d-md-table-cell"}
-
     listaIntestazioni = [{"valore":"Nickname" , "impostazioni":{}},
                          {"valore":"Nome" , "impostazioni":{"class": ""}},
                          {"valore":"Cognome" , "impostazioni":{"class": ""}},
@@ -214,6 +225,9 @@ def utente(request):
 
 # ! Partecipazione
 def partecipazione(request):
+    '''
+    Controllore per la pagina partecipazione
+    '''
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
@@ -283,6 +297,9 @@ def partecipazione(request):
 # ! Gioca
 
 def gioca(request):
+    '''
+    Controllore per la pagina gioca
+    '''
     res = HttpResponse(content_type="text/html")
  
     context = {}
@@ -434,6 +451,9 @@ def info(request):
     return res
 
 def  page_not_found(request, exception):
+    '''
+    Controllore per la gestione dell'errore 404 page not found, si può visualizzare solo in modalità debug false ma non posso metterla sennò dovrei fare molte di più (cose che non abbiamo studiato...) 
+    '''
     context = {}
     context["testo"] = "Ops... Questa pagina non esiste!"
     context["pagina"] = request.build_absolute_uri()
