@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {% include "elementiPrincipali/impostazioni.html" %}
+
+    <link rel="stylesheet" href="{% static 'css/stile-introduzione.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stile_info_quiz.css' %}">
+
+
+    <title>404</title>
+
+</head>
+
+<body>
+    <div class="container-fluid">
+
+        {% include "elementiPrincipali/header.html" %}
+        {% include "elementiPrincipali/navigazione.html" %}
+
+        <div clas="col">
+            <div class="row mt-3">
+                <div class="col text-center display-3 min-vh-100">
+                    {{testo}}
+                    <div class="text-center display-6">
+                        Pagina cercata: {{pagina}}
+                        <div>
+                            torna alla <a href="/index">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% include "elementiPrincipali/footer.html" %}
+
+
+    </div>
+
+
+
+
+
+</body>
+
+</html>

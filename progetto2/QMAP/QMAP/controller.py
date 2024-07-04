@@ -9,6 +9,7 @@ templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
 templateOps = "ops.html"
+template404 = "404.html"
 
 from . import funzionalita
 from . import server
@@ -430,3 +431,9 @@ def info(request):
     res.write(page)
 
     return res
+
+def  page_not_found(request, exception):
+    context = {}
+    context["testo"] = "Ops... Questa pagina non esiste!"
+    context["pagina"] = request.build_absolute_uri()
+    return render(request, template404, context)

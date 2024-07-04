@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import handler404
 
 from . import controller
 from . import server
@@ -33,3 +34,5 @@ urlpatterns = [
     path("eliminaQuiz", server.eliminaQuiz , name= "eliminaQuiz"),
  
 ]
+
+handler404 = controller.page_not_found
