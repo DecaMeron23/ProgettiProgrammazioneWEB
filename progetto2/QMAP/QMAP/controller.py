@@ -3,32 +3,26 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
-from . import funzionalita
-from . import server
 
-import random
-
-# Definizine delle variabili contenenti i nomi dei template
 templateIndex = "index.html"
 templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
 templateOps = "ops.html"
 
-# Definizione delle Variabili per il click sulle tabelle
+from . import funzionalita
+from . import server
+
+import random
+
+
 OPEN_QUIZ = "reindirizzaQUIZ(this)";
 OPEN_UTENTE = "reindirizzaUTENTE(this)";
 OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
 OPEN_INFO_QUIZ = "reindirizzaINFO_QUIZ(this)";
 OPEN_CREA_QUIZ = "openCreaQuiz(this)";
 
-
-
-
 def estrazioneParametriGet(request):
-    '''
-    Questa funzione prevede di estrarre i parametri GET e metterli in un dizionario in un formato migliore
-    '''
     parametri = request.GET
 
     parametri = {k: v[0] if len(v) == 1 else v for k, v in parametri.lists()}
@@ -36,9 +30,6 @@ def estrazioneParametriGet(request):
     return parametri
 
 def index(request):
-    '''
-    Controllore per la pagina index
-    '''
     res = HttpResponse(content_type="text/html")
 
     context = {};
@@ -65,9 +56,6 @@ def index(request):
 
 
 def quiz(request):
-    '''
-    Controllore per la pagina quiz
-    '''
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
@@ -141,10 +129,6 @@ def quiz(request):
 
 # ! UTENTE
 def utente(request):
-    '''
-    Controllore per la pagina utente
-    '''
-
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request); 
@@ -197,6 +181,9 @@ def utente(request):
     else:
         infoRicerca = "sono stati trovati {} utenti".format(numeroRighe)
 
+
+    # noInferioreMd = {"class": "d-none d-md-table-cell"}
+
     listaIntestazioni = [{"valore":"Nickname" , "impostazioni":{}},
                          {"valore":"Nome" , "impostazioni":{"class": ""}},
                          {"valore":"Cognome" , "impostazioni":{"class": ""}},
@@ -225,10 +212,6 @@ def utente(request):
 
 # ! Partecipazione
 def partecipazione(request):
-    '''
-    Controllore per la pagina partecipazione
-    '''
-
     res = HttpResponse(content_type="text/html")
 
     parametri = estrazioneParametriGet(request);
@@ -298,9 +281,6 @@ def partecipazione(request):
 # ! Gioca
 
 def gioca(request):
-    '''
-    Controllore per la pagina gioca
-    '''
     res = HttpResponse(content_type="text/html")
  
     context = {}
@@ -369,7 +349,6 @@ def gioca(request):
 # ! Info Quiz
 @csrf_exempt
 def info(request):
-    
     '''
     Funzione che crea la vista per info quiz, riceve un parametro POST con nome codice
 

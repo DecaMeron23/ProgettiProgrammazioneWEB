@@ -1,7 +1,3 @@
-/**
- * Questo file prevede tutte le funzionalità richeste per giocare ai quiz 
-*/
-
 // definizioni costanti: classi
 const pallino_check = "fa-solid fa-circle-check";
 const pallino_vuoto = "fa-regular fa-circle";
@@ -10,17 +6,10 @@ const pallino_errato = "fa-solid fa-circle-xmark";
 // preleviamo l'host
 const host = `${window.location.host}`;
 
-
 var utente = "utenteMain";
 var codice_partecipazione = 0;
 get_codice_partecipazione();
 
-/**
- * 
- * Funzione che preleva l'id del quiz
- * 
- * @returns l'id del quiz
- */
 function getIdQuiz() {
     id_quiz = $("body").attr("idQuiz");
     return id_quiz;
@@ -58,7 +47,6 @@ function rimuovi_selezioni(elemento) {
 }
 
 /**
- * Funzione che estrae tutte le risposte possibili di una domanda
  * 
  * @param {Element} domanda 
  * @returns {Array} un array di elementi parenti di domanda che anno come classe "risposta_quiz" 

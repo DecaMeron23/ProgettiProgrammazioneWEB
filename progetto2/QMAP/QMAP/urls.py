@@ -20,8 +20,6 @@ from django.urls import path
 from . import controller
 from . import server
 
-
-# url
 urlpatterns = [
     path("", controller.index , name= "index"),
     path("index", controller.index , name= "index"),
