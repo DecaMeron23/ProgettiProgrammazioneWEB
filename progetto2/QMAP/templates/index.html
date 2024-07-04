@@ -34,7 +34,7 @@
         <div class="row ml-3 mt-3 d-flex justify-content-center">
             <div class="col-sm-9 norm-text caratteristiche p-3 ">
                 Ristrutturazione del progetto #1, utilizzando <span class="evidenzia">BootStrap</span> e <span class="evidenzia">Django</span><br>
-                Link la sito del primo progetto: <a href="https://quizmakeandplay.altervista.org/">QuizMake&Play</a>
+                Link al sito del primo progetto: <a href="https://quizmakeandplay.altervista.org/">QuizMake&Play</a>
             </div>
         </div>
 
@@ -46,7 +46,7 @@
         <div class="row">
             <div class="col-12 norm-text testo-icone">
                 In alto a destra è <span class="evidenzia padding-lati">sempre</span> presente l'icona per la navigazione 
-                <img src="https://quizmakeandplay.altervista.org/immagini/iconaMenu.png" class="iconaMenu-spiegazione padding-lati"> 
+                <img src={% static "immagini/iconaMenu.png" %} class="iconaMenu-spiegazione padding-lati"> 
                 che al click aprirà un menù da cui si potrà accedere a:
             </div>
         </div>
@@ -58,7 +58,7 @@
                     <li class="evidenzia big mt-3"><a href="quiz">Quiz</a></li>
                     <li class="evidenzia big mt-3"><a href="utente">Utente</a></li>
                     <li class="evidenzia big mt-3"><a href="partecipazione">Partecipazione</a></li>
-                    <li class="evidenzia big mt-3"><a tabindex="-1" href="#" onclick="gioca_quiz()"> Gioca</a></li>
+                    <li class="evidenzia big mt-3"><a href="gioca"> Gioca</a></li>
                 </ul>
             </div>
         </div>
