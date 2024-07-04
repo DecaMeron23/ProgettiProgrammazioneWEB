@@ -1,6 +1,6 @@
 Questo file serve da aiuto a chi vuole utilizzare il nostro sito fatto con Django.
 
-Tutto ciò che serve è avviare il Server, per il DB non è necessario avviarlo, poiché abbiamo utilizzato lo stesso DB del primo progetto aggiungendo una piccola porzione di codice nel primo progetto che fa da "API" per il secondo!
+Tutto ciò che serve è avviare il Server, per il DB non è necessario avviarlo, poiché abbiamo utilizzato lo stesso DB del primo progetto aggiungendo una piccola porzione di codice nel primo progetto che fa da "API" per il secondo! (Quindi è necessario avere una connessione di rete)
 
 Ci sono due metodi per avviare il server (consigliamo l'opzione 1):
 1) Tramite l'eseguibile "AvviaServer.bat" che verifica la presenza dei moduli necessari per l'utilizzo dell'applicazione, e se non presenti li installa in automatico o spiega come installarli. Dopo ciò avvia il server, raggiungibile al link: "http://127.0.0.1:8000/".
