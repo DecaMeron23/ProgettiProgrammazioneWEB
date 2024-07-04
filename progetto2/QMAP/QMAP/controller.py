@@ -9,6 +9,13 @@ templateDati = "presentazioneDati.html"
 templateGioca = "gioca.html"
 templateInfoQuiz = "infoQuiz.html"
 templateOps = "ops.html"
+template404 = "404.html"
+
+OPEN_QUIZ = "reindirizzaQUIZ(this)";
+OPEN_UTENTE = "reindirizzaUTENTE(this)";
+OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
+OPEN_INFO_QUIZ = "reindirizzaINFO_QUIZ(this)";
+OPEN_CREA_QUIZ = "openCreaQuiz(this)";
 
 from . import funzionalita
 from . import server
@@ -16,11 +23,6 @@ from . import server
 import random
 
 
-OPEN_QUIZ = "reindirizzaQUIZ(this)";
-OPEN_UTENTE = "reindirizzaUTENTE(this)";
-OPEN_PARTECIPAZIONE = "reindirizzaPARTECIPAZIONI(this)";
-OPEN_INFO_QUIZ = "reindirizzaINFO_QUIZ(this)";
-OPEN_CREA_QUIZ = "openCreaQuiz(this)";
 
 def estrazioneParametriGet(request):
     parametri = request.GET
@@ -430,3 +432,9 @@ def info(request):
     res.write(page)
 
     return res
+
+def  page_not_found(request, exception):
+    context = {}
+    context["testo"] = "Ops... Questa pagina non esiste!"
+    context["pagina"] = request.build_absolute_uri()
+    return render(request, template404, context)
