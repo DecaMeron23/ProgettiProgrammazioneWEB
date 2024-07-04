@@ -1,7 +1,11 @@
+'''
+Questo modulo da supporto per piccole funzionalita che possono servire alle diverse pagine o server
+'''
+
 # Per midificare le date
 from datetime import datetime
 
-
+# Definizioen delle costanti
 FORMATO_DATA_VIEW = "%d/%m/%Y"
 FORMATO_DATA_DATABASE = "%Y-%m-%d"
 
@@ -19,9 +23,16 @@ def DataFormatoDataBase(data):
     return ConvertiFormatoDataDaA(data , FORMATO_DATA_VIEW , FORMATO_DATA_DATABASE)
 
 def ConvertiFormatoDataDaA(data , formatoIn , formatoOut):
+    '''
+    Funzione che converte una data da un fromato detto "formatoIn" in un formato detto "formatoOut"
+    '''
     data = datetime.strptime(data, formatoIn)
     return data.strftime(formatoOut)
 
 # Converte in stringa una data lo mette nel formato view
 def DataToString(data):
+    '''
+    Questa funzione serviva per trasformare la data in stringa.
+    dopo il cambio del server non è stato più necessario effettuare questo scambio... la funzione non serve più a nulla
+    '''
     return data
