@@ -65,38 +65,45 @@
         {% comment %} ! QUIZ {% endcomment %}
         <div class="row d-flex justify-content-center">
             <div class="col-11 col-md-10 m-2 mt-5 caratteristiche">
-                {% for domanda in domande %}
-                <div class='row mb-3 mt-3 domanda_risposte' domanda_numero = "{{domanda.numero}}">
-                    <div class="col-8">
-                        {{ forloop.counter }}) {{ domanda.testo }}
+
+                {% if domande|length == 0 %}
+                    <div class="col text-center m-2 min-vh-100 display-6">
+                        Sembra che questo quiz sia ancora in fase di sviluppo... Magari fra qualche giorno sarà pronto =)
                     </div>
-                    <div class="col d-flex justify-content-end punteggio" data-toggle="tooltip" title="Punteggio della domanda">
-                        [{{ domanda.punteggio }} pt.]
-                    </div>
-                    {% for risposta in domanda.risposte %}
-                    <div class="row m-2 mt-3 mb-3" id="risposta_quiz" risposta_numero="{{risposta.numero}}">
-                        <div class="col">
-                            <span id='opzione'><i class="fa-regular fa-circle"
-                                    onclick="seleziona_risposta(this)"></i></span><span class="p-2">{{ risposta.testo }}</span>
+                {% else %}
+                    {% for domanda in domande %}
+                    <div class='row mb-3 mt-3 domanda_risposte' domanda_numero = "{{domanda.numero}}">
+                        <div class="col-8">
+                            {{ forloop.counter }}) {{ domanda.testo }}
                         </div>
+                        <div class="col d-flex justify-content-end punteggio" data-toggle="tooltip" title="Punteggio della domanda">
+                            [{{ domanda.punteggio }} pt.]
+                        </div>
+                        {% for risposta in domanda.risposte %}
+                        <div class="row m-2 mt-3 mb-3" id="risposta_quiz" risposta_numero="{{risposta.numero}}">
+                            <div class="col">
+                                <span id='opzione'><i class="fa-regular fa-circle"
+                                        onclick="seleziona_risposta(this)"></i></span><span class="p-2">{{ risposta.testo }}</span>
+                            </div>
+                        </div>
+                        {% endfor %}
                     </div>
                     {% endfor %}
-                </div>
-                {% endfor %}
-                <div class="row mb-2 mt-5 d-flex justify-content-center">
-                    <div class="col-4 ml-2 d-flex justify-content-center">
-                        <a href="gioca">
-                            <div class="pulsante d-inline-block pulsante_hover" data-toggle="tooltip" title="Cambia Quiz... Troppo difficile?">
-                                Cambia QUIZ
+                    <div class="row mb-2 mt-5 d-flex justify-content-center">
+                        <div class="col-4 ml-2 d-flex justify-content-center">
+                            <a href="gioca">
+                                <div class="pulsante d-inline-block pulsante_hover" data-toggle="tooltip" title="Cambia Quiz... Troppo difficile?">
+                                    Cambia QUIZ
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4 ml-2 d-flex justify-content-center">
+                            <div class="pulsante d-inline-block pulsante_hover " id="pulsane_invia" onclick="verifica_quiz()" data-toggle="tooltip" title="Invia le risposte ;)">
+                                Invia
                             </div>
-                        </a>
-                    </div>
-                    <div class="col-4 ml-2 d-flex justify-content-center">
-                        <div class="pulsante d-inline-block pulsante_hover " id="pulsane_invia" onclick="verifica_quiz()" data-toggle="tooltip" title="Invia le risposte ;)">
-                            Invia
                         </div>
                     </div>
-                </div>
+                {% endif %}
             </div>
         </div>
         
